@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
+    <title>Login Básico - SAE</title>
+    <link rel="stylesheet" href="style_basico.css">
+    <link rel="stylesheet" href="../../styles/sae-theme.css">
+    <script src="../../styles/theme-toggle.js" defer></script>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <div class="bg-particles" id="particlesContainer"></div>
+    <div class="glow-ring glow-1"></div>
+    <div class="glow-ring glow-2"></div>
+
+    <main class="login-wrapper">
+        <section class="login-card">
+            <div class="header-section">
+                <div class="logo-container">
+                    <div class="logo-badge">S</div>
+                </div>
+                <h1>SAE</h1>
+                <p class="subtitle">Sistema Avanzado de Entrevistas</p>
+                <span class="badge-advanced">Nivel Básico</span>
+                <div class="divider"></div>
+            </div>
+
+            <div id="errorMessage" class="message error"></div>
+            <div id="successMessage" class="message success"></div>
+            <div id="warningMessage" class="message warning"></div>
+
+            <div class="security-alert">
+                Acceso restringido solo a personal autorizado. Se requiere verificación de identidad.
+            </div>
+
+            <form id="loginForm">
+                <div class="form-wrapper">
+                    <div class="form-group">
+                        <label for="nombreUsuario">Nombre completo</label>
+                        <input type="text" id="nombreUsuario" placeholder="Ej: Juan Pérez García" required minlength="3" maxlength="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numeroID">Cédula / Documento / ID</label>
+                        <input type="text" id="numeroID" placeholder="Ej: 123456789" required minlength="6" maxlength="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="institucion">Institución / Agencia</label>
+                        <select id="institucion" required>
+                            <option value="">-- Selecciona tu institución --</option>
+                            <option value="policia">Policía Nacional</option>
+                            <option value="inteligencia">Agencia de Inteligencia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cargo">Cargo / Función</label>
+                        <input type="text" id="cargo" placeholder="Ej: Investigador Especializado" required minlength="3" maxlength="50">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn-primary" id="submitBtn" onclick="irAContextos()">Acceder a SAE</button>
+                    <button type="button" class="btn-secondary" onclick="volverAlNivel()">← Volver al menú</button>
+                </div>
+            </form>
+
+            <div class="footer">
+                © 2026 SAE - Simulador Avanzado de Entrevistas<br>
+                <a href="#legal">Términos de uso</a> | <a href="#privacidad">Privacidad ARCOT</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="../agentes/bancoDeHistorias.js"></script>
+    <script src="login_basico.js"></script>
+</body>
+</html>

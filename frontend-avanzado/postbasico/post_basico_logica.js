@@ -1,0 +1,574 @@
+// =====================================================
+// POST_MISION_LOGICA.JS - FINAL CORREGIDA
+// =====================================================
+// ✅ Genera análisis COMPLETO incluso si calificación = 0/100
+// ✅ Descargar reporte CON CONTENIDO
+// ✅ Mostrar nombre completo
+// =====================================================
+
+// ===== UTILIDADES =====
+
+// @ts-ignore
+function formatearTiempo(tiempoMs) {
+    const minutos = Math.floor(tiempoMs / 60000);
+    const segundos = Math.floor((tiempoMs % 60000) / 1000);
+    return `${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+}
+
+function obtenerDatos() {
+    try {
+        console.log("🔍 Leyendo localStorage...");
+        
+        const calificacionStr = localStorage.getItem('calificacionFinal');
+        const respuestasCorrectasStr = localStorage.getItem('respuestasCorrectas');
+        const totalRespuestasStr = localStorage.getItem('totalRespuestasDelCaso');
+        const estadoMision = localStorage.getItem('estadoMision');
+        const nombreUsuario = localStorage.getItem('nombreUsuario');
+        
+        console.log("📊 Valores en localStorage:");
+        console.log({
+            calificacion: calificacionStr,
+            respuestasCorrectas: respuestasCorrectasStr,
+            totalRespuestas: totalRespuestasStr,
+            estado: estadoMision,
+            nombreUsuario: nombreUsuario
+        });
+
+        if (!calificacionStr) {
+            console.error("❌ CRÍTICO: calificacionFinal no encontrado");
+            return null;
+        }
+
+        // ✅ ASEGURAR QUE LA CALIFICACIÓN NUNCA SEA NEGATIVA
+        let calificacion = parseInt(calificacionStr);
+        calificacion = Math.max(0, Math.min(50, calificacion));
+
+        const datos = {
+            calificacion: calificacion,  // ✅ SIEMPRE 0-50
+            respuestasCorrectas: parseInt(respuestasCorrectasStr || '0'),
+            totalRespuestas: parseInt(totalRespuestasStr || '34'),
+            contradicciones: parseInt(localStorage.getItem('evidenciasFinal') || '0'),
+            preguntas: parseInt(localStorage.getItem('totalPreguntas') || '0'),
+            estado: estadoMision || 'DESCONOCIDO',
+            sospechoso: localStorage.getItem('nombreSospechoso') || 'Desconocido',
+            delito: localStorage.getItem('delitoSospechoso') || 'Delito desconocido',
+            rango: localStorage.getItem('rangoFinal') || 'D (INAPTO)',
+            descripcionRango: localStorage.getItem('descripcionRango') || 'DESEMPEÑO DESCONOCIDO',
+            tacticaUsada: localStorage.getItem('tacticaSeleccionada') || 'Estándar',
+            tiempoInicio: parseInt(localStorage.getItem('startTime') || '0'),
+            // @ts-ignore
+            preguntasRealizadas: localStorage.getItem('preguntasRealizadas') ? JSON.parse(localStorage.getItem('preguntasRealizadas')) : [],
+            nombreInvestigador: nombreUsuario || 'AGENTE ESPECIAL'  // ✅ NUEVO: Nombre del login
+        };
+
+        console.log("✅ Datos extraídos:", datos);
+        return datos;
+
+    } catch (error) {
+        console.error('❌ Error al obtener datos:', error);
+        return null;
+    }
+}
+
+// ===== FUNCIONES PRINCIPALES =====
+
+function inicializarPantalla() {
+    console.log("🚀 Inicializando pantalla de post-misión...");
+    
+    const datos = obtenerDatos();
+
+    if (!datos) {
+        console.error('❌ FALLO CRÍTICO: No se pudieron obtener los datos');
+        // @ts-ignore
+        document.querySelector('.debriefing-container').innerHTML = `
+            <div style="color:#ff4444; padding:40px; text-align:center; border: 2px solid #ff4444; border-radius: 6px;">
+                <h2>⚠ ERROR DE SINCRONIZACIÓN</h2>
+                <p><strong>No se encontraron datos de la misión completada.</strong></p>
+                <p style="font-size: 12px; color: #7fb3ff; margin: 20px 0;">
+                    Parece que llegaste a esta página sin completar una entrevista correctamente.
+                </p>
+                <button onclick="volverAlNivel()" style="background: #ff4444; color: white; border: none; padding: 12px 24px; cursor: pointer; border-radius: 4px; font-size: 12px; text-transform: uppercase; font-weight: bold;">
+                    ← VOLVER AL MENÚ
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    console.log("✅ Datos obtenidos, inyectando en DOM...");
+    inyectarDatos(datos);
+    generarAnalisis(datos);
+
+    console.log('✅ Pantalla inicializada correctamente');
+}
+
+// @ts-ignore
+function inyectarDatos(datos) {
+    console.log("📝 Inyectando datos en DOM...");
+    
+    // Estado de misión
+    const estadoEl = document.getElementById('estado-mision');
+    if (estadoEl) {
+        estadoEl.className = datos.estado === 'EXITOSA' ? 'estado exitosa' : 'estado fallida';
+        estadoEl.textContent = `MISIÓN ${datos.estado}`;
+    }
+
+    // Rango
+    const rangoValor = document.getElementById('rango-valor');
+    const rangoDesc = document.getElementById('rango-desc');
+    if (rangoValor) rangoValor.textContent = datos.rango.split(' ')[0];
+    if (rangoDesc) rangoDesc.textContent = datos.descripcionRango;
+
+    // ✅ Calificación (0-50)
+    // @ts-ignore
+    document.getElementById('credibilidad-valor').textContent = `${datos.calificacion}/50`;
+    
+    // Contradicciones
+    // @ts-ignore
+    document.getElementById('contradicciones-valor').textContent = `${datos.contradicciones}/5`;
+    
+    // Preguntas
+    // @ts-ignore
+    document.getElementById('preguntas-valor').textContent = datos.preguntas;
+
+    // ✅ Información del caso
+    // @ts-ignore
+    document.getElementById('sospechoso-nombre').textContent = datos.sospechoso;
+    // @ts-ignore
+    document.getElementById('sospechoso-delito').textContent = datos.delito;
+    
+    // ✅ NUEVO: Mostrar nombre completo del investigador
+    // @ts-ignore
+    document.getElementById('nombreInvestigador').textContent = datos.nombreInvestigador;
+
+    // Tiempo
+    const ahora = Date.now();
+    const tiempoMs = ahora - datos.tiempoInicio;
+    const tiempoFormato = formatearTiempo(tiempoMs);
+    
+    // @ts-ignore
+    document.getElementById('tiempo-valor').textContent = tiempoFormato;
+    // @ts-ignore
+    document.getElementById('tiempo-total-display').textContent = tiempoFormato;
+
+    console.log("✅ Datos inyectados correctamente");
+}
+
+// @ts-ignore
+function generarAnalisis(datos) {
+    console.log("📊 Generando análisis detallado...");
+    
+    const calificacion = datos.calificacion;
+    const respuestasCorrectas = datos.respuestasCorrectas;
+    const totalRespuestas = datos.totalRespuestas;
+    const porcentajeCorrecciones = totalRespuestas > 0 ? Math.round((respuestasCorrectas / totalRespuestas) * 50) : 0;
+    
+    // ========================================
+    // ANÁLISIS DE DESEMPEÑO
+    // ========================================
+    
+    let nivelDesempenio = 'CATASTRÓFICO';
+    let descripcionDesempenio = 'No acertaste ninguna pregunta. Falta total de preparación.';
+    
+    if (calificacion === 0) {
+        nivelDesempenio = 'CATASTRÓFICO';
+        descripcionDesempenio = 'No acertaste NINGUNA pregunta durante la entrevista. Falta crítica de preparación y conocimiento del caso.';
+    } else if (calificacion >= 95) {
+        nivelDesempenio = 'EXCEPCIONAL';
+        descripcionDesempenio = 'Demostraste un dominio absoluto de la entrevista. Desempeño magistral.';
+    } else if (calificacion >= 85) {
+        nivelDesempenio = 'EXCELENTE';
+        descripcionDesempenio = 'Realizaste una entrevista de alta calidad con excelente manejo de presión.';
+    } else if (calificacion >= 75) {
+        nivelDesempenio = 'BUENO';
+        descripcionDesempenio = 'Tu desempeño fue competente con buen manejo de timing y técnicas.';
+    } else if (calificacion >= 60) {
+        nivelDesempenio = 'ACEPTABLE';
+        descripcionDesempenio = 'Alcanzaste el mínimo requerido. Hay margen significativo de mejora.';
+    } else if (calificacion < 60) {
+        nivelDesempenio = 'DEFICIENTE';
+        descripcionDesempenio = 'No cumpliste los requisitos mínimos de la evaluación.';
+    }
+    
+    // ========================================
+    // ERRORES DETECTADOS - ✅ SIEMPRE SE GENERAN
+    // ========================================
+    
+    const errores = [];
+    
+    if (respuestasCorrectas === 0) {
+        errores.push({
+            titulo: '❌❌ FALLO TOTAL - CERO RESPUESTAS CORRECTAS',
+            desc: 'No respondiste correctamente NINGUNA pregunta. Esto indica que no estudiaste el caso ni entiendes las técnicas de entrevista investigativa.'
+        });
+        errores.push({
+            titulo: '⚠️ INCOMPETENCIA DEMOSTRADA',
+            desc: 'Tu calificación de 0/100 demuestra falta absoluta de preparación. No estás listo para realizar entrevistas investigativas.'
+        });
+    } else if (respuestasCorrectas < totalRespuestas * 0.25) {
+        errores.push({
+            titulo: 'FALTA CRÍTICA DE PREPARACIÓN',
+            desc: 'Solo respondiste correctamente menos del 25% de las preguntas. Necesitas estudiar ANTES de entrar.'
+        });
+    } else if (respuestasCorrectas < totalRespuestas * 0.4) {
+        errores.push({
+            titulo: 'PREPARACIÓN INSUFICIENTE',
+            desc: 'Tu conocimiento del caso fue limitado. Revisa el perfil y antecedentes del sospechoso.'
+        });
+    }
+    
+    if (calificacion < 60) {
+        errores.push({
+            titulo: '❌ CALIFICACIÓN NO APROBATORIA',
+            desc: `Obtuviste ${calificacion}/50. Necesitas ${30 - calificacion} puntos más para pasar. REPROBASTE.`
+        });
+    }
+    
+    if (datos.preguntas < 8) {
+        errores.push({
+            titulo: 'ENTREVISTA PASIVA O INEXISTENTE',
+            desc: `Solo formulaste ${datos.preguntas} preguntas. Una entrevista efectiva requiere 15-20 preguntas mínimo.`
+        });
+    }
+    
+    if (respuestasCorrectas < totalRespuestas * 0.5 && respuestasCorrectas > 0) {
+        errores.push({
+            titulo: 'BAJA CALIDAD DE ENTREVISTA',
+            desc: 'Tus preguntas fueron demasiado generales. Debes ser específico e investigativo.'
+        });
+    }
+    
+    if (calificacion >= 30 && calificacion < 50) {
+        errores.push({
+            titulo: 'INCONSISTENCIAS EN TÉCNICA',
+            desc: 'Tu entrevista fue desigual. Mantén un nivel de profundidad consistente.'
+        });
+    }
+    
+    // ========================================
+    // FORTALEZAS IDENTIFICADAS - ✅ SIEMPRE SE GENERAN (INCLUSO SI SON POCAS)
+    // ========================================
+    
+    const fortalezas = [];
+    
+    if (calificacion >= 60) {
+        fortalezas.push({
+            titulo: '✅ MISIÓN APROBADA',
+            desc: `Alcanzaste una calificación de ${calificacion}/50. Cumpliste los requisitos mínimos.`
+        });
+    }
+    
+    if (respuestasCorrectas >= totalRespuestas * 0.8) {
+        fortalezas.push({
+            titulo: 'ALTÍSIMO PORCENTAJE DE ACIERTOS',
+            desc: `Respondiste correctamente el ${porcentajeCorrecciones}% de las preguntas. Excelente investigación.`
+        });
+    } else if (respuestasCorrectas >= totalRespuestas * 0.7) {
+        fortalezas.push({
+            titulo: 'ALTO PORCENTAJE DE ACIERTOS',
+            desc: `Respondiste correctamente el ${porcentajeCorrecciones}% de las preguntas. Buen desempeño.`
+        });
+    } else if (respuestasCorrectas >= totalRespuestas * 0.6) {
+        fortalezas.push({
+            titulo: 'DESEMPEÑO SATISFACTORIO',
+            desc: `Respondiste correctamente el ${porcentajeCorrecciones}% de las preguntas. Aceptable.`
+        });
+    }
+    
+    if (datos.contradicciones >= 4) {
+        fortalezas.push({
+            titulo: 'EXCELENTE DETECCIÓN DE INCONSISTENCIAS',
+            desc: 'Lograste identificar múltiples contradicciones. Eso es fundamental en investigación.'
+        });
+    } else if (datos.contradicciones >= 2) {
+        fortalezas.push({
+            titulo: 'DETECTASTE CONTRADICCIONES',
+            desc: 'Lograste identificar inconsistencias en el relato del sospechoso. Bien ejecutado.'
+        });
+    }
+    
+    if (datos.preguntas >= 15) {
+        fortalezas.push({
+            titulo: 'ENTREVISTA SOSTENIDA',
+            desc: `Formulaste ${datos.preguntas} preguntas. Mantuviste presión constante y ritmo efectivo.`
+        });
+    } else if (datos.preguntas >= 10) {
+        fortalezas.push({
+            titulo: 'BUEN VOLUMEN DE ENTREVISTA',
+            desc: `Formulaste ${datos.preguntas} preguntas. Actividad satisfactoria.`
+        });
+    }
+    
+    if (calificacion >= 45) {
+        fortalezas.push({
+            titulo: '🏆 DESEMPEÑO EXCEPCIONAL',
+            desc: 'Alcanzaste un rango superior. Considerase para misiones de mayor dificultad.'
+        });
+    } else if (calificacion >= 40) {
+        fortalezas.push({
+            titulo: '⭐ DESEMPEÑO DESTACADO',
+            desc: 'Tu rango indica especialización en entrevistas. Excelente trabajo.'
+        });
+    }
+    
+    // ✅ NUEVO: Si no hay fortalezas, agregar una default
+    if (fortalezas.length === 0) {
+        fortalezas.push({
+            titulo: '📌 NOTA SOBRE TU DESEMPEÑO',
+            desc: 'Aunque tu calificación fue baja, cada intento es una oportunidad de aprendizaje. Revisa tus errores y vuelve a intentar.'
+        });
+    }
+    
+    // ========================================
+    // SUGERENCIAS DE MEJORA - ✅ SIEMPRE SE GENERAN
+    // ========================================
+    
+    const sugerencias = [];
+    
+    if (calificacion === 0) {
+        sugerencias.push({
+            titulo: '🚨 REQUIERE REENTRENAMIENTO URGENTE',
+            desc: 'Con una calificación de 0/50, necesitas volver a capacitación básica antes de intentar otra entrevista.'
+        });
+    }
+    
+    if (calificacion < 50) {
+        sugerencias.push({
+            titulo: 'ESTUDIA MÁS EL PERFIL DEL SOSPECHOSO',
+            desc: 'Revisa antecedentes, inconsistencias, debilidades. Llega a la entrevista PREPARADO y con un plan.'
+        });
+    }
+    
+    if (respuestasCorrectas < totalRespuestas * 0.8) {
+        sugerencias.push({
+            titulo: 'SÉ MÁS ESPECÍFICO EN TUS PREGUNTAS',
+            desc: 'Pregunta sobre hechos concretos, no generales. Ejemplo: operaciones específicas, fechas, lugares, contactos.'
+        });
+    }
+    
+    if (datos.preguntas < 15) {
+        sugerencias.push({
+            titulo: 'AUMENTA EL VOLUMEN DE PREGUNTAS',
+            desc: 'Haz 15-20 preguntas mínimo. Cubre TODOS los aspectos del caso. No dejes puntos sin explorar.'
+        });
+    }
+    
+    sugerencias.push({
+        titulo: 'USA SILENCIOS ESTRATÉGICOS',
+        desc: 'Después de una respuesta sospechosa, quédate callado. Los silencios incómodos hacen que el sospechoso hable más y se contradiga.'
+    });
+    
+    if (datos.contradicciones < 3) {
+        sugerencias.push({
+            titulo: 'MEJORA DETECCIÓN DE CONTRADICCIONES',
+            desc: 'Anota inconsistencias mientras las detectas. Confronta al final con toda la evidencia junta.'
+        });
+    }
+    
+    sugerencias.push({
+        titulo: 'ADAPTA TU TÁCTICA AL SOSPECHOSO',
+        desc: 'Si es evasivo, sé directo y agresivo. Si es cooperativo, construye rapport. Lee sus patrones de comportamiento.'
+    });
+    
+    if (calificacion < 75) {
+        sugerencias.push({
+            titulo: 'REVISAR TÉCNICAS FUNDAMENTALES',
+            desc: 'Recapacita en: rapport, escucha activa, timing de confrontación, lectura de lenguaje corporal y presión psicológica.'
+        });
+    }
+    
+    // ========================================
+    // RESUMEN DE DESEMPEÑO
+    // ========================================
+    
+    // @ts-ignore
+    document.getElementById('analisis-desempenio').innerHTML = `
+        <div style="background:rgba(0,247,255,0.05); padding:15px; border-left:3px solid #00f7ff; border-radius:3px;">
+            <p style="color:#cbd5e1; line-height:1.6; margin:0;">
+                Tu desempeño fue <strong>${nivelDesempenio}</strong>. ${descripcionDesempenio}
+                <br><br>
+                <strong>Respuestas Correctas:</strong> ${respuestasCorrectas}/${totalRespuestas} (${porcentajeCorrecciones}%)
+                <br>
+                <strong>Calificación Final:</strong> ${calificacion}/50 ${calificacion >= 30 ? '✅ APROBADO' : '❌ NO APROBADO'}
+            </p>
+        </div>
+    `;
+    
+    // ===== RENDERIZAR ERRORES =====
+    if (errores.length > 0) {
+        // @ts-ignore
+        document.getElementById('errores-container').innerHTML = errores.map(e => `
+            <div class="error-item">
+                <div class="error-label">⚠ ${e.titulo}</div>
+                <div class="error-texto">${e.desc}</div>
+            </div>
+        `).join('');
+    } else {
+        // @ts-ignore
+        document.getElementById('errores-container').innerHTML = 
+            '<div style="color:#4caf82; padding:10px; text-align:center;">✅ No hay errores críticos. Buen desempeño.</div>';
+    }
+    
+    // ===== RENDERIZAR FORTALEZAS =====
+    // @ts-ignore
+    document.getElementById('fortalezas-container').innerHTML = 
+        fortalezas.length > 0 ? 
+        fortalezas.map(f => `
+            <div class="sugerencia-item">
+                <div class="sugerencia-label">✓ ${f.titulo}</div>
+                <div class="sugerencia-texto">${f.desc}</div>
+            </div>
+        `).join('') :
+        '<div style="color:#7fb3ff; padding:10px; text-align:center;">Sin fortalezas detectadas.</div>';
+    
+    // ===== RENDERIZAR SUGERENCIAS =====
+    // @ts-ignore
+    document.getElementById('sugerencias-container').innerHTML = sugerencias.map(s => `
+        <div class="sugerencia-item">
+            <div class="sugerencia-label">→ ${s.titulo}</div>
+            <div class="sugerencia-texto">${s.desc}</div>
+        </div>
+    `).join('');
+    
+    console.log("✅ Análisis generado completamente");
+}
+
+// ===== REPORTE COMPLETO =====
+
+function mostrarReporte() {
+    const datos = obtenerDatos();
+    if (!datos) {
+        alert('Error: No hay datos para mostrar');
+        return;
+    }
+
+    const ahora = Date.now();
+    const tiempoMs = ahora - datos.tiempoInicio;
+    const tiempoFormato = formatearTiempo(tiempoMs);
+    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 100);
+
+    const contenido = `
+═══════════════════════════════════════════════════════════════
+                    REPORTE DE MISIÓN COMPLETO
+═══════════════════════════════════════════════════════════════
+
+FECHA: ${new Date().toLocaleString('es-CO')}
+INVESTIGADOR: ${datos.nombreInvestigador}
+SOSPECHOSO: ${datos.sospechoso}
+DELITO: ${datos.delito}
+ESTADO: ${datos.estado}
+
+─────────────────────────────────────────────────────────────
+CALIFICACIÓN Y RESULTADOS
+─────────────────────────────────────────────────────────────
+Calificación Final:        ${datos.calificacion}/100
+Respuestas Correctas:      ${datos.respuestasCorrectas}/${datos.totalRespuestas}
+Porcentaje:                ${porcentaje}%
+Rango de Desempeño:        ${datos.rango}
+Preguntas Formuladas:      ${datos.preguntas}
+Duración:                  ${tiempoFormato}
+
+─────────────────────────────────────────────────────────────
+INTERPRETACIÓN
+─────────────────────────────────────────────────────────────
+
+${datos.calificacion >= 30 ? '✅ APROBADO' : '❌ NO APROBADO'}
+
+${datos.calificacion === 0 ? 
+  'RESULTADO: Calificación de 0/50. No acertaste ninguna pregunta. Falta crítica de preparación.' :
+  datos.calificacion >= 45 ? 
+  'Desempeño Excepcional: Demostraste dominio absoluto.' :
+  datos.calificacion >= 40 ?
+  'Desempeño Excelente: Realizaste una entrevista de alta calidad.' :
+  datos.calificacion >= 30 ?
+  'Desempeño Bueno: Competencia probada en entrevistas.' :
+  datos.calificacion >= 30 ?
+  'Desempeño Aceptable: Alcanzaste el mínimo requerido.' :
+  'Desempeño Insuficiente: Requieres reentrenamiento urgente.'}
+
+═══════════════════════════════════════════════════════════════
+                 FIN DEL REPORTE
+═══════════════════════════════════════════════════════════════
+    `;
+
+    // @ts-ignore
+    document.getElementById('contenido-reporte').textContent = contenido;
+    // @ts-ignore
+    document.getElementById('modal-reporte').style.display = 'block';
+}
+
+// ✅ Descargar reporte con nombre completo
+function descargarResultados() {
+    const datos = obtenerDatos();
+    if (!datos) {
+        alert('Error: No hay datos para descargar');
+        return;
+    }
+
+    const ahora = Date.now();
+    const tiempoMs = ahora - datos.tiempoInicio;
+    const tiempoFormato = formatearTiempo(tiempoMs);
+    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 50);
+    
+    // ✅ Incluir nombre completo del investigador
+    const contenido = `═══════════════════════════════════════════════════════════════
+                    REPORTE DE MISIÓN COMPLETO
+═══════════════════════════════════════════════════════════════
+
+FECHA: ${new Date().toLocaleString('es-CO')}
+INVESTIGADOR: ${datos.nombreInvestigador}
+SOSPECHOSO: ${datos.sospechoso}
+DELITO: ${datos.delito}
+ESTADO: ${datos.estado}
+RANGO: ${datos.rango}
+
+─────────────────────────────────────────────────────────────
+CALIFICACIÓN
+─────────────────────────────────────────────────────────────
+Calificación Final:        ${datos.calificacion}/100
+Respuestas Correctas:      ${datos.respuestasCorrectas}/${datos.totalRespuestas}
+Porcentaje:                ${porcentaje}%
+Preguntas Formuladas:      ${datos.preguntas}
+Duración:                  ${tiempoFormato}
+Táctica Utilizada:         ${datos.tacticaUsada}
+
+─────────────────────────────────────────────────────────────
+RESULTADO
+─────────────────────────────────────────────────────────────
+${datos.calificacion >= 30 ? '✅ MISIÓN APROBADA' : '❌ MISIÓN NO APROBADA'}
+
+Desempeño: ${datos.calificacion >= 45 ? 'Excepcional' : 
+             datos.calificacion >= 40 ? 'Excelente' : 
+             datos.calificacion >= 30 ? 'Bueno' : 
+             datos.calificacion >= 30 ? 'Aceptable' : 
+             datos.calificacion === 0 ? 'Catastrófico - Reentrenamiento Obligatorio' : 'Insuficiente'}
+
+═══════════════════════════════════════════════════════════════
+Reporte generado automáticamente por SAE - Sistema Avanzado de Entrevistas
+═══════════════════════════════════════════════════════════════`;
+
+    // ✅ Crear archivo con nombre descriptivo
+    const elemento = document.createElement('a');
+    elemento.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contenido));
+    
+    // Nombre del archivo con información relevante
+    const nombreArchivo = `REPORTE_${datos.nombreInvestigador.replace(/\s+/g, '_')}_${new Date().getTime()}.txt`;
+    elemento.setAttribute('download', nombreArchivo);
+    
+    elemento.style.display = 'none';
+    document.body.appendChild(elemento);
+    
+    console.log('✅ Descargando reporte:', nombreArchivo);
+    elemento.click();
+    document.body.removeChild(elemento);
+}
+
+function volverAlNivel() {
+    if (confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
+        localStorage.clear();
+        window.location.href = "../../inicio/niveles/niveles.html";
+    }
+}
+
+// ===== INICIALIZACIÓN =====
+window.addEventListener('DOMContentLoaded', inicializarPantalla);

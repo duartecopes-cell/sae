@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niveles - SAE</title>
+    <link rel="stylesheet" href="../styles/platform.css">
+    <script src="../styles/theme-toggle.js" defer></script>
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Navegación principal">
+            <a class="brand" href="../index.html" aria-label="Inicio SAE">
+                <span class="brand-mark">S</span>
+                <span class="brand-name">SAE</span>
+            </a>
+            <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-nav-toggle>
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links" data-nav-links>
+                <a href="../index.html">Inicio</a>
+                <a href="#niveles">Niveles</a>
+                <a href="../frontend-basico/login_basico/login_basico.html">Básico</a>
+                <a href="../frontend-avanzado/login_basico/login_basico.html">Avanzado</a>
+                <a href="../frontend-experto/login_experto/login_experto.html">Experto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="shell">
+                <p class="eyebrow">Tres niveles funcionales</p>
+                <h1>Elige el nivel real que quieres practicar.</h1>
+                <p class="hero-copy">
+                    Esta pantalla conserva únicamente las rutas que existen en el proyecto: Básico, Avanzado y Experto. Cada una abre su login conectado al simulador correspondiente.
+                </p>
+            </div>
+        </section>
+
+        <section class="section" id="niveles">
+            <div class="shell">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">Acceso por nivel</p>
+                        <h2>Selecciona una ruta de entrenamiento.</h2>
+                    </div>
+                    <p class="section-copy">
+                        Las tarjetas muestran solo acciones reales: entrar al login del nivel y continuar con el flujo existente.
+                    </p>
+                </div>
+
+                <div class="level-grid">
+                    <article class="level-card">
+                        <div class="card-topline">
+                            <span class="status-pill">Disponible</span>
+                            <span class="level-code">01</span>
+                        </div>
+                        <h3>Básico</h3>
+                        <p>Ruta inicial para practicar con historias, contexto del caso, entrevista guiada y reporte básico.</p>
+                        <div class="tag-row">
+                            <span>Login</span>
+                            <span>Historia</span>
+                            <span>Chat</span>
+                            <span>Reporte</span>
+                        </div>
+                        <a class="btn btn-primary" href="../frontend-basico/login_basico/login_basico.html">Entrar a Básico</a>
+                    </article>
+
+                    <article class="level-card">
+                        <div class="card-topline">
+                            <span class="status-pill">Disponible</span>
+                            <span class="level-code">02</span>
+                        </div>
+                        <h3>Avanzado</h3>
+                        <p>Ruta con banco de historias avanzado, contexto del caso, sala de entrevista y cierre de práctica.</p>
+                        <div class="tag-row">
+                            <span>Login</span>
+                            <span>Contexto</span>
+                            <span>Chat</span>
+                            <span>Post práctica</span>
+                        </div>
+                        <a class="btn btn-primary" href="../frontend-avanzado/login_basico/login_basico.html">Entrar a Avanzado</a>
+                    </article>
+
+                    <article class="level-card">
+                        <div class="card-topline">
+                            <span class="status-pill">Disponible</span>
+                            <span class="level-code">03</span>
+                        </div>
+                        <h3>Experto</h3>
+                        <p>Ruta experta con login, selección de delito, expediente especializado y entrevista libre del sospechoso.</p>
+                        <div class="tag-row">
+                            <span>Login</span>
+                            <span>Delito</span>
+                            <span>Expediente</span>
+                            <span>Entrevista</span>
+                        </div>
+                        <a class="btn btn-primary" href="../frontend-experto/login_experto/login_experto.html">Entrar a Experto</a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner shell">
+            <div>
+                <a class="brand" href="../index.html" aria-label="Inicio SAE">
+                    <span class="brand-mark">S</span>
+                    <span class="brand-name">SAE</span>
+                </a>
+                <p>Vista de niveles conectada únicamente a las rutas funcionales del simulador.</p>
+            </div>
+            <div class="footer-links">
+                <a href="../index.html">Inicio</a>
+                <a href="../frontend-basico/login_basico/login_basico.html">Básico</a>
+                <a href="../frontend-avanzado/login_basico/login_basico.html">Avanzado</a>
+                <a href="../frontend-experto/login_experto/login_experto.html">Experto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const toggle = document.querySelector("[data-nav-toggle]");
+        const links = document.querySelector("[data-nav-links]");
+
+        toggle?.addEventListener("click", () => {
+            const isOpen = links.classList.toggle("is-open");
+            toggle.setAttribute("aria-expanded", String(isOpen));
+            toggle.setAttribute("aria-label", isOpen ? "Cerrar menú" : "Abrir menú");
+        });
+
+        links?.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+                links.classList.remove("is-open");
+                toggle?.setAttribute("aria-expanded", "false");
+            });
+        });
+    </script>
+</body>
+</html>

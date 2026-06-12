@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
+    <title>Selección de Delito - Nivel Experto</title>
+    <link rel="stylesheet" href="style_experto.css">
+    <link rel="stylesheet" href="../styles/sae-theme.css">
+    <script src="../styles/theme-toggle.js" defer></script>
+    <link rel="icon" href="data:,">
+    <style>
+        .delitos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin: 24px 0 30px;
+        }
+
+        .delito-card {
+            min-height: 86px;
+            padding: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="body-seleccion">
+    <main class="expediente-container experto-theme">
+        <h1 class="glitch-text">Selección de delito</h1>
+
+        <div class="instruccion">
+            Selecciona el delito a investigar. El sistema asignará el caso correspondiente y abrirá el expediente experto.
+        </div>
+
+        <div class="delitos-grid" id="grid-delitos"></div>
+
+        <div class="volver-link">
+            <a href="../inicio/niveles/niveles.html">← Volver al menú</a>
+        </div>
+    </main>
+
+    <script src="js/banco_de_casos.js"></script>
+    <script>
+        const delitosList = [
+            "Homicidio",
+            "Feminicidio",
+            "Desaparición forzada",
+            "Tortura",
+            "Secuestro extorsivo",
+            "Tráfico de migrantes",
+            "Acceso carnal violento",
+            "Actos sexuales violentos",
+            "Extorsión",
+            "Concierto para delinquir",
+            "Terrorismo",
+            "Rebelión",
+            "Desplazamiento forzado",
+            "Lavado de activos",
+            "Tráfico, fabricación o porte de estupefacientes",
+            "Tráfico, fabricación o porte de armas de fuego",
+            "Tráfico de armas de uso privativo de las Fuerzas Armadas",
+            "Abuso de autoridad por acto arbitrario",
+            "Cohecho",
+            "Peculado"
+        ];
+
+        function crearClaveDelito(delito) {
+            return delito
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, "_")
+                .replace(/[(),]/g, "");
+        }
+
+        const casosPorDelito = {
+            homicidio: "homicidio_001",
+            feminicidio: "feminicidio_001",
+            desaparicion_forzada: "desaparicion_forzada_001",
+            tortura: "privacion_coercion_001",
+            secuestro_extorsivo: "secuestro_extorsivo_001",
+            trafico_de_migrantes: "trafico_migrantes_002",
+            acceso_carnal_violento: "acceso_carnal_violento_001",
+            actos_sexuales_violentos: "actos_sexuales_violentos_001",
+            extorsion: "extorsion_001",
+            concierto_para_delinquir: "concierto_delinquir_001",
+            terrorismo: "terrorismo_001",
+            rebelion: "rebelion_001",
+            desplazamiento_forzado: "desplazamiento_forzado_001",
+            lavado_de_activos: "lavado_activos_001",
+            trafico_fabricacion_o_porte_de_estupefacientes: "trafico_estupefacientes_001",
+            trafico_fabricacion_o_porte_de_armas_de_fuego: "trafico_armas_001",
+            trafico_de_armas_de_uso_privativo_de_las_fuerzas_armadas: "trafico_armas_privativo_001",
+            abuso_de_autoridad_por_acto_arbitrario: "abuso_autoridad_001",
+            cohecho: "cohecho_001",
+            peculado: "peculado_001"
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.getElementById("grid-delitos");
+
+            delitosList.forEach((delito) => {
+                const delitoKey = crearClaveDelito(delito);
+                const card = document.createElement("button");
+                card.type = "button";
+                card.className = "delito-card";
+                card.innerHTML = `<h3>${delito}</h3>`;
+                card.addEventListener("click", () => seleccionarDelito(delitoKey, delito));
+                grid.appendChild(card);
+            });
+        });
+
+        function seleccionarDelito(delitoKey, delitoNombre) {
+            const caseId = casosPorDelito[delitoKey] || `${delitoKey}_001`;
+
+            if (typeof BANCO_DE_CASOS === "undefined" || !BANCO_DE_CASOS[caseId]) {
+                alert("No se encontrÃ³ un caso activo para este delito.");
+                return;
+            }
+
+            localStorage.setItem("delitoSeleccionado", delitoKey);
+            localStorage.setItem("delitoNombre", delitoNombre);
+            localStorage.setItem("casoSeleccionado", caseId);
+
+            window.location.href = "contextos_experto.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+// Initialize particles
+function initializeParticles() {
+    const container = document.getElementById('particlesContainer');
+    if (!container) return;
+
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particle);
+    }
+}
+
+function showError(msg) {
+    const errorEl = document.getElementById('errorMessage');
+    errorEl.textContent = msg;
+    errorEl.classList.add('show');
+    setTimeout(() => errorEl.classList.remove('show'), 5000);
+}
+
+function showSuccess(msg) {
+    const successEl = document.getElementById('successMessage');
+    successEl.textContent = msg;
+    successEl.classList.add('show');
+    setTimeout(() => successEl.classList.remove('show'), 5000);
+}
+
+function validarCredenciales() {
+    const nombre = document.getElementById('nombreUsuario').value.trim();
+    const id = document.getElementById('numeroID').value.trim();
+    const institucion = document.getElementById('institucion').value;
+    const cargo = document.getElementById('cargo').value.trim();
+
+    if (!nombre || !id || !institucion || !cargo) {
+        showError('⚠️ Por favor completa todos los campos');
+        return;
+    }
+
+    if (nombre.length < 3) {
+        showError('⚠️ El nombre debe tener al menos 3 caracteres');
+        return;
+    }
+
+    if (id.length < 6) {
+        showError('⚠️ El documento ID debe tener al menos 6 caracteres');
+        return;
+    }
+
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '⏳ Validando...';
+    submitBtn.disabled = true;
+
+    setTimeout(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        autenticar({nombre, id, institucion, cargo});
+    }, 2000);
+}
+
+function autenticar(datos = {}) {
+    const nombre = datos.nombre || 'Profesional Autorizado';
+    const id = datos.id || 'Sin ID';
+    const institucion = datos.institucion || 'Sin Institución';
+    const cargo = datos.cargo || 'Operador Avanzado';
+
+    const usuarioData = {
+        nombre: nombre,
+        id: id,
+        institucion: institucion,
+        cargo: cargo,
+        nivelAcceso: 'experto',
+        fechaIngreso: new Date().toISOString(),
+        sesionID: 'sesion_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+    };
+
+    localStorage.setItem('usuarioSAE', JSON.stringify(usuarioData));
+    localStorage.setItem('nombreUsuario', nombre);
+    localStorage.setItem('idUsuario', id);
+    localStorage.setItem('nivelAcceso', 'experto');
+
+    showSuccess(`✅ Bienvenido ${nombre}. Redirigiendo a niveles...`);
+
+    setTimeout(() => {
+        window.location.href = '../../frontend-experto/seleccion_delito.html';
+    }, 2500);
+}
+
+function volverAlNivel() {
+    if (confirm('¿Deseas volver al menú?')) {
+        localStorage.clear();
+        window.location.href = '../../inicio/niveles/niveles.html';
+    }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+    initializeParticles();
+    console.log('🔐 SAE - Login Experto cargado');
+
+    const usuarioGuardado = localStorage.getItem('usuarioSAE');
+    if (usuarioGuardado) {
+        try {
+            const datos = JSON.parse(usuarioGuardado);
+            if (datos.nivelAcceso === 'experto') {
+                document.getElementById('nombreUsuario').value = datos.nombre || '';
+                document.getElementById('numeroID').value = datos.id || '';
+            }
+        } catch (e) {
+            console.log('No se pudo restaurar datos previos');
+        }
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            validarCredenciales();
+        });
+
+    }
+});
+
+function irASeleccionDelito() {
+    validarCredenciales();
+}

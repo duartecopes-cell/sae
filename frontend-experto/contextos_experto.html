@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
+    <title>Contexto del Caso - SAE</title>
+    <link rel="stylesheet" href="style_experto.css">
+    <link rel="icon" href="data:,">
+    <style>
+        body {
+            background: #0a1428;
+            color: #cbd5e1;
+            font-family: 'Rajdhani', sans-serif;
+            padding: 20px;
+        }
+
+        .contexto-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(14, 22, 47, 0.8);
+            border: 1px solid #243d7a;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(127, 179, 255, 0.1);
+        }
+
+        .header-contexto {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #7fb3ff;
+            padding-bottom: 20px;
+        }
+
+        .header-contexto h1 {
+            color: #fbbf24;
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .header-contexto .classified {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .sospechoso-card {
+            background: rgba(31, 60, 136, 0.4);
+            border: 1px solid #7fb3ff;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 20px;
+        }
+
+        .sospechoso-foto {
+            width: 150px;
+            height: 150px;
+            border-radius: 6px;
+            background: #1f3c88;
+            border: 2px solid #7fb3ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #7fb3ff;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+        }
+
+        .sospechoso-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-item {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(14, 22, 47, 0.5);
+            border-radius: 4px;
+        }
+
+        .info-label {
+            color: #fbbf24;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .info-valor {
+            color: #00f7ff;
+            margin-left: 10px;
+        }
+
+        .seccion {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(31, 60, 136, 0.2);
+            border-left: 3px solid #7fb3ff;
+            border-radius: 4px;
+        }
+
+        .seccion h2 {
+            color: #7fb3ff;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .seccion p {
+            margin: 0;
+            line-height: 1.6;
+            color: #cbd5e1;
+            font-size: 14px;
+            white-space: pre-line;
+        }
+
+        .debilidad {
+            color: #ff4444;
+            background: rgba(255, 68, 68, 0.1);
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #ff4444;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .dificultad {
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.1);
+            padding: 12px;
+            border-radius: 4px;
+            border-left: 3px solid #fbbf24;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #243d7a;
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, #1f3c88 0%, #2a4fa8 100%);
+            border: 2px solid #7fb3ff;
+            color: #00f7ff;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .btn-primario:hover {
+            background: linear-gradient(135deg, #2a4fa8 0%, #3d66c9 100%);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secundario {
+            background: transparent;
+            border: 2px solid #7fb3ff;
+            color: #7fb3ff;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .btn-secundario:hover {
+            background: rgba(127, 179, 255, 0.1);
+            color: #00f7ff;
+            border-color: #00f7ff;
+        }
+
+        .loading {
+            text-align: center;
+            color: #7fb3ff;
+            padding: 40px;
+        }
+
+        .error {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .sospechoso-card {
+                grid-template-columns: 1fr;
+            }
+            .info-item {
+                grid-template-columns: 1fr;
+            }
+            .acciones {
+                flex-direction: column;
+            }
+            .btn-primario, .btn-secundario {
+                width: 100%;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="../styles/sae-theme.css">
+    <script src="../styles/theme-toggle.js" defer></script>
+</head>
+<body>
+
+<div class="contexto-container">
+    <div class="header-contexto">
+        <h1 id="titulo-caso">Cargando caso</h1>
+        <div class="classified">Información clasificada - uso exclusivo</div>
+    </div>
+
+    <div id="contenido-caso">
+        <div class="loading">PROCESANDO DATOS DEL CASO...</div>
+    </div>
+
+    <div class="acciones">
+        <button class="btn-primario" id="btn-iniciar" onclick="iniciarEntrevista()" style="display:none;">
+            Iniciar entrevista
+        </button>
+        <button class="btn-secundario" onclick="volverSeleccion()">
+            ← Cambiar caso
+        </button>
+    </div>
+</div>
+
+<!-- Solo banco de casos, NO entrevistas_experto.js (ese es para la pantalla de entrevista) -->
+<script src="js/banco_de_casos.js"></script>
+
+<script>
+
+    // â”€â”€ INICIALIZACIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log(" contextos_experto.html cargado");
+
+        if (typeof BANCO_DE_CASOS === "undefined") {
+            mostrarError("âŒ BANCO_DE_CASOS no cargado. Verifica banco_de_casos.js");
+            return;
+        }
+
+        const idCaso = localStorage.getItem("casoSeleccionado");
+        if (!idCaso) {
+            mostrarError("âš ï¸ No hay caso seleccionado. Vuelve a la selecci?n.");
+            return;
+        }
+
+        const caso = BANCO_DE_CASOS[idCaso];
+        if (!caso) {
+            mostrarError(`âš ï¸ El caso "${idCaso}" no existe en el banco de casos.`);
+            return;
+        }
+
+        renderizarCaso(caso);
+    });
+
+    // â”€â”€ RENDERIZAR CONTENIDO DEL CASO â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function renderizarCaso(caso) {
+        // T?tulo en el header
+        document.getElementById("titulo-caso").textContent = caso.titulo || "CASO SIN T?TULO";
+
+        // Iniciales para el avatar
+        const iniciales = caso.nombre
+            ? caso.nombre.split(" ").map(p => p[0]).join("").substring(0, 2).toUpperCase()
+            : "??";
+
+        // Determinar si mostrar imagen o iniciales
+        const avatarHTML = caso.avatar 
+            ? `<img src="${caso.avatar}" alt="${caso.nombre}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 6px;">` 
+            : iniciales;
+
+        // Construir HTML del contenido
+        const html = `
+            <!-- Tarjeta principal del sospechoso -->
+            <div class="sospechoso-card">
+                <div class="sospechoso-foto">${avatarHTML}</div>
+                <div class="sospechoso-info">
+                    <div class="info-item">
+                        <span class="info-label">Nombre</span>
+                        <span class="info-valor">${caso.nombre || "â€”"}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Alias</span>
+                        <span class="info-valor">"${caso.alias || "â€”"}"</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Edad</span>
+                        <span class="info-valor">${caso.edad ? caso.edad + " a?os" : "â€”"}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Delito</span>
+                        <span class="info-valor">${caso.delito || "â€”"}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descripci?n / contexto del caso -->
+            <div class="seccion">
+                <h2> Descripci?n del caso</h2>
+                <p>${caso.descripcion || "Sin descripci?n disponible."}</p>
+            </div>
+
+            <!-- Perfil psicol?gico -->
+            ${caso.perfil ? `
+            <div class="seccion">
+                <h2>  Perfil del sujeto</h2>
+                <p>${caso.perfil}</p>
+                ${caso.rasgos_emocionales ? `<p style="margin-top:10px; color:#7fb3ff; font-size:13px;">
+                    <strong>Rasgos emocionales:</strong> ${caso.rasgos_emocionales}
+                </p>` : ""}
+            </div>` : ""}
+
+            <!-- Debilidad detectada -->
+            ${caso.debilidad_detectada ? `
+            <div class="seccion">
+                <h2>âš  Vulnerabilidades detectadas</h2>
+                <div class="debilidad">${caso.debilidad_detectada}</div>
+            </div>` : ""}
+
+            <!-- Grado de dificultad -->
+            ${caso.grado_dificultad ? `
+            <div class="dificultad">
+                 DIFICULTAD: ${caso.grado_dificultad}
+            </div>` : ""}
+        `;
+
+        document.getElementById("contenido-caso").innerHTML = html;
+
+        // Mostrar bot?n de iniciar
+        document.getElementById("btn-iniciar").style.display = "inline-block";
+
+        console.log("âœ… Caso renderizado:", caso.nombre);
+    }
+
+    // â”€â”€ NAVEGACIÃ“N â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function iniciarEntrevista() {
+        console.log("â–¶ï¸ Iniciando entrevista con caso:", localStorage.getItem("casoSeleccionado"));
+        window.location.href = "entrevistas_experto.html";
+    }
+
+    function volverSeleccion() {
+        if (confirm("?Deseas cambiar el caso? Perder?s cualquier progreso.")) {
+            localStorage.removeItem("casoSeleccionado");
+            localStorage.removeItem("delitoNombre");
+            window.location.href = "seleccion_delito.html";
+        }
+    }
+
+    // â”€â”€ MOSTRAR ERROR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    function mostrarError(mensaje) {
+        console.error("Error de contexto:", mensaje);
+        document.getElementById("contenido-caso").innerHTML =
+            `<div class="error">${mensaje}</div>`;
+    }
+
+</script>
+</body>
+</html>

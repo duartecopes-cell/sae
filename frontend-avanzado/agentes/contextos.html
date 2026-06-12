@@ -1,0 +1,111 @@
+﻿<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src *;">
+    <title>Contexto del Caso - Evaluación</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="../../styles/sae-theme.css">
+    <script src="../../styles/theme-toggle.js" defer></script>
+</head>
+<!-- ... (cabecera igual) ... -->
+<body class="body-contexto">
+
+<!-- En contextos.html -->
+<div class="expediente-container">
+    <h1 id="titulo-caso">Cargando reporte...</h1>
+    <div id="contenido-expediente" class="contenido-documento">
+<p id="detalle-contexto" style="white-space: pre-wrap; max-height: 70vh; overflow-y: auto;"></p>
+        <div style="background: #7e7d7b; padding: 15px; border-left: 5px solid #1a1919; margin-top: 20px;">
+            <strong>OBJETIVO DE LA VERIFICACION:</strong>
+            <p id="mision-objetivo"></p>
+        </div>
+    </div>
+
+    <!-- Contenedor del Spinner (Oculto por defecto) -->
+    <div id="loader-container" style="display: none; text-align: center; margin-top: 30px;">
+        <div class="spinner"></div>
+        <p style="color: #1e293b; font-weight: bold; margin-top: 10px;">CONECTANDO CON SALA DE ENTREVISTA...</p>
+    </div>
+    
+    <!-- Bot?n de acci?n -->
+    <button id="btn-entrar" class="btn-siguiente" onclick="iniciarCarga()" style="margin-top: 30px;">
+        ENTRAR A SALA DE ENTREVISTA
+    </button>
+</div>
+<script src="bancoDeHistorias.js"></script>
+<script src="contextos.js"></script>
+<script src="script.js"></script>
+
+<script>
+  function iniciarCarga() {
+        // 1. Ocultar contenido y bot?n
+        document.getElementById('contenido-expediente').style.display = 'none';
+        document.getElementById('btn-entrar').style.display = 'none';
+        
+        // 2. Mostrar el Spinner
+        document.getElementById('loader-container').style.display = 'block';
+        
+        // 3. Esperar 2 segundos y redireccionar a entrevistas.html
+        setTimeout(() => {
+            window.location.href = "entrevistas.html";
+        }, 2000);
+    }
+ 
+    // L?gica para cargar el contexto del caso
+    document.addEventListener("DOMContentLoaded", () => {
+        const idActivo = localStorage.getItem("casoSeleccionado");
+        
+        console.log(' Cargando contexto...');
+        console.log('ID del caso:', idActivo);
+        
+        // Verificar que existe el caso seleccionado
+        if (!idActivo) {
+            alert("Error: No hay caso seleccionado. Por favor, inicia desde el nivel.");
+            window.location.href = "../../inicio/niveles/niveles.html";
+            return;
+        }
+        
+        // OPCIÃ“N 1: Cargar desde bancoDeContextos (si existe)
+        if (typeof bancoDeContextos !== 'undefined' && bancoDeContextos[idActivo]) {
+            console.log('âœ“ Usando bancoDeContextos');
+            const datosContexto = bancoDeContextos[idActivo];
+            document.getElementById('titulo-caso').innerText = datosContexto.titulo;
+            document.getElementById('detalle-contexto').innerText = datosContexto.descripcion;
+            document.getElementById('mision-objetivo').innerText = datosContexto.objetivo;
+            return;
+        }
+        
+        // OPCIÃ“N 2: Si bancoDeContextos no existe, construir desde bancoDeHistorias
+        if (typeof bancoDeHistorias !== 'undefined' && bancoDeHistorias[idActivo]) {
+            console.log('âœ“ Construyendo contexto desde bancoDeHistorias');
+            const caso = bancoDeHistorias[idActivo];
+            
+            // Si el caso tiene contexto agregado, usarlo
+            if (caso.contexto) {
+                document.getElementById('titulo-caso').innerText = caso.contexto.titulo;
+                document.getElementById('detalle-contexto').innerText = caso.contexto.descripcion;
+                document.getElementById('mision-objetivo').innerText = caso.contexto.objetivo;
+            } else {
+                // Si no, mostrar un contexto generado autom?ticamente
+                const titulo = `CASO #${idActivo.split('_')[1]} - ${caso.alias?.toUpperCase() || 'SIN ALIAS'}`;
+                const descripcion = `FICHA INVESTIGATIVA\n\nNombre: ${caso.personaje}\nAlias: "${caso.alias}"\nDelito: ${caso.delito}\nEdad: ${caso.edad}\n\nNota: Para acceder a informaci?n detallada, contacte al departamento de inteligencia.`;
+                const objetivo = "Realizar entrevista investigativa para obtener informaci?n cr?tica.";
+                
+                document.getElementById('titulo-caso').innerText = titulo;
+                document.getElementById('detalle-contexto').innerText = descripcion;
+                document.getElementById('mision-objetivo').innerText = objetivo;
+            }
+            return;
+        }
+        
+        // Error: No se encontr? el caso
+        alert("Error: No se encontraron datos del caso.");
+        window.location.href = "../../inicio/niveles/niveles.html";
+    });
+</script>
+ 
+</body>
+</html>
+
+

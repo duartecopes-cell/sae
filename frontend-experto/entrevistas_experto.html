@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
+    <title>Entrevista â€” Simulador SAE</title>
+    <link rel="stylesheet" href="entrevistas_style.css">
+    <link rel="icon" href="data:,">
+    <style>
+      /* Estilos adicionales para nivel experto */
+      #opciones-container {
+        background: rgba(14,22,47,0.8);
+        border-top: 1px solid var(--border2);
+        padding: 0;
+        max-height: 0;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        transition: max-height 0.3s ease;
+      }
+
+      #opciones-container.visible {
+        max-height: 200px;
+        padding: 15px 24px;
+      }
+
+      #opciones-entrevista {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .btn-opcion {
+        background: rgba(14,22,47,0.9);
+        border: 1px solid rgba(127,179,255,0.2);
+        color: var(--accent);
+        padding: 12px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 14px;
+        text-align: left;
+        transition: all 0.2s;
+      }
+
+      .btn-opcion:hover:not(:disabled) {
+        background: rgba(127,179,255,0.1);
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .btn-opcion:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* ===== CONTROLES DE ENTREVISTA LIBRE ===== */
+      .input-area-experto {
+        background: rgba(14,22,47,0.9);
+        border-top: 1px solid var(--border2);
+        padding: 15px 24px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      #inputPregunta {
+        flex: 1;
+        background: rgba(30,45,95,0.6);
+        border: 1px solid rgba(127,179,255,0.3);
+        color: #e0e0e0;
+        padding: 12px 15px;
+        border-radius: 4px;
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      #inputPregunta:focus {
+        outline: none;
+        border-color: var(--accent);
+        background: rgba(30,45,95,0.8);
+      }
+
+      #inputPregunta::placeholder {
+        color: rgba(127,179,255,0.5);
+      }
+
+      .btn-send,
+      .btn-micro,
+      .btn-abandonar {
+        background: #1f3c88;
+        border: 1px solid #7fb3ff;
+        color: #7fb3ff;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-family: 'Rajdhani', sans-serif;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s;
+        white-space: nowrap;
+      }
+
+      .btn-send:hover,
+      .btn-micro:hover,
+      .btn-abandonar:hover {
+        background: #2a4fa8;
+        border-color: var(--accent);
+        color: #fff;
+      }
+
+      .btn-micro.recording {
+        background: #c41c3b;
+        border-color: #ff6b7a;
+        color: #ff6b7a;
+        animation: pulse 0.8s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+
+      .btn-abandonar {
+        background: #2a4fa8;
+      }
+
+      .alerta-hud {
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from { opacity: 0; transform: translateX(20px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      /* Indicador de conexi?n de micr?fono */
+      .mic-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #4caf82;
+        border-radius: 50%;
+        margin-left: 8px;
+      }
+
+      /* Estilos para modo autom?tico vs manual */
+      .modo-selector {
+        background: rgba(30,45,95,0.6);
+        border: 1px solid rgba(127,179,255,0.3);
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-size: 12px;
+        color: #7fb3ff;
+        cursor: pointer;
+      }
+
+      .modo-selector.active {
+        background: rgba(127,179,255,0.2);
+        border-color: #7fb3ff;
+      }
+    </style>
+    <link rel="stylesheet" href="../styles/sae-theme.css">
+    <script src="../styles/theme-toggle.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="classified-bar">âš  DOCUMENTO CLASIFICADO â€” USO EXCLUSIVO âš </div>
+  <div class="header-main">
+    <div class="header-left">
+      <div class="agency-info">
+        <div class="agency-name">SISTEMA ENTRENAMIENTO DE ENTREVISTAS</div>
+        <div class="agency-sub">MODO: EXPERTO (ENTREVISTA LIBRE)</div>
+      </div>
+    </div>
+    <div class="suspect-card">
+      <img class="suspect-photo" src="" alt="">
+      <div class="suspect-details">
+        <div class="s-name">â€”</div>
+        <div class="s-alias">â€”</div>
+        <div class="s-status">â¬€ EN PROCESO</div>
+      </div>
+      <div class="risk-badge">
+        <div class="risk-label">RIESGO</div>
+        <div class="risk-value">ALTO</div>
+        <div class="live-dot"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+  <aside class="side-panel">
+    <section class="side-section">
+      <h3> PERFIL DEL SUJETO</h3>
+      <div class="intel-item"><span class="intel-key">Nombre</span><span class="intel-val">â€”</span></div>
+      <div class="intel-item"><span class="intel-key">Edad</span><span class="intel-val">â€”</span></div>
+      <div class="intel-item"><span class="intel-key">Alias</span><span class="intel-val gold">â€”</span></div>
+      <div class="intel-item"><span class="intel-key">Delito</span><span class="intel-val red">â€”</span></div>
+    </section>
+    <section class="side-section">
+      <h3> ESTADO REAL-TIME</h3>
+      <div class="intel-item">
+        <span class="intel-key">Credibilidad</span>
+        <span class="intel-val" id="credibilidad-ui">100%</span>
+      </div>
+      <div class="intel-item">
+        <span class="intel-key">Contradicciones</span>
+        <span class="intel-val" id="contradicciones-ui">0/5</span>
+      </div>
+      <div class="intel-item">
+        <span class="intel-key">Preguntas</span>
+        <span class="intel-val" id="preguntas-ui">0</span>
+      </div>
+    </section>
+  </aside>
+
+  <div style="flex:1; display:flex; flex-direction:column; overflow:hidden;">
+    <div id="chat">
+      <div class="msg-wrap system">
+        <div class="system-msg">â€” SESIÃ“N DE ENTREVISTA INICIADA â€”</div>
+        <div class="system-msg" style="font-size: 12px; margin-top: 10px;">
+          Puedes hacer preguntas libres al sospechoso.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÃ“N DE OPCIONES SUGERIDAS (OPCIONAL) -->
+    <div id="opciones-container">
+      <div id="opciones-entrevista"></div>
+    </div>
+
+    <!-- ?REA DE ENTRADA DE TEXTO Y CONTROLES -->
+    <div class="input-area-experto">
+      <input 
+        type="text" 
+        id="inputPregunta" 
+        placeholder="Haz una pregunta al sospechoso..."
+        onkeydown="if(event.key==='Enter') procesarPreguntaLibre()"
+      >
+      <button class="btn-send" onclick="procesarPreguntaLibre()" title="Enviar pregunta">
+        ENVIAR
+      </button>
+      <button class="btn-micro" id="btnMicrofono" onclick="alternarMicrofono()" title="Activar micr?fono">
+        
+      </button>
+      <button class="btn-send" onclick="generarReporteIntermedio()" title="Ver reporte actual">
+         REPORTE
+      </button>
+      <button class="btn-abandonar" onclick="volverAlNivel()">
+        â† ABANDONAR
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/banco_de_casos.js"></script>
+<script src="js/entrevistas_experto.js"></script>
+
+</body>
+</html>

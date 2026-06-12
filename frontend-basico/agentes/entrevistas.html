@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src *;">
+    <title>Simulador Avanzado de Entrevistas</title>
+    <!-- Enlace ?nico al CSS -->
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="../../styles/sae-theme.css">
+    <script src="../../styles/theme-toggle.js" defer></script>
+</head>
+<body>
+
+    <!-- CAMBIO CLAVE: A?adimos id="entrevista-container" y la clase "view" -->
+    <!-- Sin este ID, el script.js no sabe que debe iniciar la l?gica del juego -->
+    <div id="entrevista-container" class="view">
+        
+        <div id="avatar" style="font-size: 100px;"></div>
+        <div id="timer" class="badge">Tiempo restante: 15:00</div>
+        
+        <div class="chat-container">
+            <div id="status">Esperando conexi?n...</div>
+            <div class="chat-box" id="chat"></div>
+            
+            <div class="controls">
+                <input type="text" id="inputPregunta" placeholder="Haz una pregunta..." onkeydown="if(event.key==='Enter') procesarPregunta()">
+                <button class="btn-send" onclick="procesarPregunta()">Enviar</button>
+                <button class="btn-micro" onclick="iniciarEscucha()"></button>
+                <button class="btn-rep" onclick="generarReporte()">Reporte</button>
+            </div>
+        </div>
+
+        <!-- Bot?n opcional para abortar -->
+        <button onclick="window.location.href='../../inicio/niveles/niveles.html'" style="margin-top: 15px; background: none; border: none; color: #64748b; cursor: pointer; text-decoration: underline;">
+            Abandonar entrevista
+        </button>
+    </div>
+
+    <!-- ORDEN DE SCRIPTS: Primero los datos, luego la l?gica -->
+    <script src="bancoDeHistorias.js"></script>
+    <script src="contextos.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+</html>
+

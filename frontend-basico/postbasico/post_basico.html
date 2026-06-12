@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAE - An?lisis de Misi?n</title>
+    <link rel="stylesheet" href="../../frontend-basico/agentes/style.css">
+    <link rel="stylesheet" href="post_basico.css">
+    <link rel="stylesheet" href="../../styles/sae-theme.css">
+    <script src="../../styles/theme-toggle.js" defer></script>
+</head>
+<body>
+
+<div class="debriefing-container">
+    <h1>âš  SAE POST-MISIÃ“N-B?SICO âš </h1>
+    
+    <div style="text-align: center; color: #7fb3ff; font-size: 12px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;">
+        Investigador: <span id="nombreInvestigador" style="color: #fbbf24; font-weight: bold;">--</span>
+    </div>
+    
+    <div class="estado exitosa" id="estado-mision">
+        MISIÃ“N EXITOSA
+    </div>
+
+    <div class="rango-section">
+        <div class="rango-title">Rango de Desempe?o</div>
+        <div class="rango-valor" id="rango-valor">A</div>
+        <div class="rango-descripcion" id="rango-desc">ESPECIALISTA EN ENTREVISTAS</div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Credibilidad Final</div>
+            <div class="stat-value" id="credibilidad-valor">85%</div>
+            <div class="stat-sub">Confianza del sospechoso</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Contradicciones Detectadas</div>
+            <div class="stat-value" id="contradicciones-valor">3/5</div>
+            <div class="stat-sub">Inconsistencias en relato</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Preguntas Formuladas</div>
+            <div class="stat-value" id="preguntas-valor">12</div>
+            <div class="stat-sub">Total de interrogantes</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Duraci?n Entrevista</div>
+            <div class="stat-value" id="tiempo-valor">12:45</div>
+            <div class="stat-sub">Minutos:Segundos</div>
+        </div>
+    </div>
+
+    <div class="section-titulo"> INFORMACIÃ“N DEL CASO</div>
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px;">
+        <div style="background: rgba(14, 22, 47, 0.8); padding: 15px; border-radius: 6px; border: 1px solid #243d7a;">
+            <div style="color: #7fb3ff; font-size: 11px; text-transform: uppercase; margin-bottom: 8px;">Sospechoso</div>
+            <div id="sospechoso-nombre" style="color: #fbbf24; font-size: 14px; font-weight: bold;">--</div>
+        </div>
+        <div style="background: rgba(14, 22, 47, 0.8); padding: 15px; border-radius: 6px; border: 1px solid #243d7a;">
+            <div style="color: #7fb3ff; font-size: 11px; text-transform: uppercase; margin-bottom: 8px;">Delito</div>
+            <div id="sospechoso-delito" style="color: #fbbf24; font-size: 14px; font-weight: bold;">--</div>
+        </div>
+    </div>
+
+    <div class="section-titulo"> AN?LISIS DE DESEMPEÃ‘O</div>
+    <div id="analisis-desempenio"></div>
+
+    <div class="section-titulo">âš  ERRORES DETECTADOS</div>
+    <div id="errores-container"></div>
+
+    <div class="section-titulo">âœ“ FORTALEZAS IDENTIFICADAS</div>
+    <div id="fortalezas-container"></div>
+
+    <div class="section-titulo">â†’ RECOMENDACIONES PARA MEJORAR</div>
+    <div id="sugerencias-container"></div>
+
+    <div class="buttons">
+        <button class="btn" onclick="mostrarReporte()"> VER REPORTE COMPLETO</button>
+        <button class="btn" onclick="descargarResultados()"> DESCARGAR REPORTE</button>
+        <button class="btn btn-volver" onclick="volverAlNivel()">â† VOLVER AL MENÃš</button>
+    </div>
+
+    <div class="tiempo-total">
+        Sesi?n completada en <span id="tiempo-total-display">--</span>
+    </div>
+</div>
+
+<!-- Modal para reporte -->
+<div id="modal-reporte" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto;">
+    <div style="background: #0a1428; margin: 40px auto; max-width: 800px; padding: 30px; border: 2px solid #00f7ff; border-radius: 6px;">
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button onclick="document.getElementById('modal-reporte').style.display='none'" style="background: #ff4444; border: none; color: white; padding: 8px 15px; cursor: pointer; border-radius: 4px;">âœ• CERRAR</button>
+        </div>
+        <pre id="contenido-reporte" style="color: #00f7ff; font-family: 'Courier New', monospace; font-size: 11px; line-height: 1.4; white-space: pre-wrap; word-wrap: break-word;"></pre>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="post_basico_logica.js"></script>
+
+</body>
+</html>

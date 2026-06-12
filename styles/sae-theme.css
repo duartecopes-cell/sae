@@ -1,0 +1,729 @@
+:root {
+    --sae-mint-25: #fbfefc;
+    --sae-mint-50: #f5fbf7;
+    --sae-mint-100: #eaf7ee;
+    --sae-mint-200: #d8f0e0;
+    --sae-mint-300: #bfe4cc;
+    --sae-mint-500: #7cc894;
+    --sae-forest-700: #23633b;
+    --sae-forest-800: #143f27;
+    --sae-forest-900: #0d2d1d;
+    --sae-ink: #050705;
+    --sae-muted: #111815;
+    --sae-line: #dcebe2;
+    --sae-white: #ffffff;
+    --sae-gold: #d8aa35;
+    --sae-danger: #a8553a;
+    --sae-shadow: 0 18px 45px rgba(20, 63, 39, 0.12);
+    --sae-soft-shadow: 0 12px 28px rgba(20, 63, 39, 0.08);
+}
+
+* {
+    letter-spacing: 0 !important;
+}
+
+body {
+    background:
+        radial-gradient(circle at top right, rgba(216, 240, 224, 0.7), transparent 34%),
+        linear-gradient(135deg, var(--sae-white), var(--sae-mint-50)) !important;
+    color: var(--sae-ink) !important;
+    font-family: "Segoe UI", Inter, Arial, sans-serif !important;
+}
+
+.bg-particles,
+.glow-ring {
+    opacity: 0.18 !important;
+}
+
+.particle {
+    background: rgba(35, 99, 59, 0.22) !important;
+}
+
+.login-wrapper {
+    max-width: 560px !important;
+}
+
+.login-card,
+.view,
+.expediente-container,
+.contexto-container,
+.debriefing-container {
+    animation: none !important;
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-shadow) !important;
+}
+
+.login-card {
+    backdrop-filter: blur(18px) !important;
+    padding: clamp(28px, 5vw, 46px) !important;
+}
+
+.login-card *,
+.view *,
+.expediente-container *,
+.contexto-container *,
+.debriefing-container * {
+    opacity: 1 !important;
+}
+
+.logo-badge {
+    width: 68px !important;
+    height: 68px !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, var(--sae-forest-700), var(--sae-mint-500)) !important;
+    box-shadow: 0 14px 28px rgba(35, 99, 59, 0.22) !important;
+    animation: none !important;
+}
+
+.header-section h1,
+.expediente-container h1,
+.contexto-container h1,
+.debriefing-container h1,
+.header-contexto h1,
+.rango-title,
+.section-titulo {
+    color: var(--sae-forest-800) !important;
+    text-shadow: none !important;
+}
+
+.header-section h1 {
+    -webkit-text-fill-color: var(--sae-forest-800) !important;
+    background: none !important;
+}
+
+.subtitle,
+.badge-advanced,
+.security-alert,
+.form-group label,
+.footer,
+.footer a {
+    color: var(--sae-forest-800) !important;
+}
+
+.badge-advanced,
+.security-alert,
+.instruccion,
+.classified,
+.status-pill {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 999px !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+.security-alert,
+.instruccion {
+    display: block !important;
+    border-radius: 8px !important;
+    border-left: 4px solid var(--sae-forest-700) !important;
+    padding: 14px 16px !important;
+}
+
+.divider {
+    background: linear-gradient(90deg, transparent, var(--sae-mint-500), transparent) !important;
+}
+
+.form-group input,
+.form-group select,
+#inputPregunta,
+.modo-selector {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: var(--sae-mint-25) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: none !important;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+#inputPregunta:focus {
+    border-color: var(--sae-mint-500) !important;
+    background: var(--sae-white) !important;
+    box-shadow: 0 0 0 4px rgba(124, 200, 148, 0.16) !important;
+}
+
+.form-group input::placeholder,
+#inputPregunta::placeholder {
+    color: #8a9b91 !important;
+}
+
+.form-group select option {
+    background: var(--sae-white) !important;
+    color: var(--sae-ink) !important;
+}
+
+.btn-primary,
+.btn-send,
+.btn-siguiente,
+.btn-primario,
+.btn-opcion,
+.btn,
+.btn-dl,
+.btn-micro,
+.btn-rep {
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--sae-forest-800) !important;
+    color: var(--sae-white) !important;
+    box-shadow: 0 14px 28px rgba(20, 63, 39, 0.18) !important;
+}
+
+.btn-secondary,
+.btn-secundario,
+.btn-volver,
+.btn-abandonar {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 999px !important;
+    background: var(--sae-white) !important;
+    color: var(--sae-forest-800) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+}
+
+.btn-primary:hover,
+.btn-send:hover,
+.btn-siguiente:hover,
+.btn-primario:hover,
+.btn-opcion:hover:not(:disabled),
+.btn:hover,
+.btn-dl:hover,
+.btn-micro:hover,
+.btn-rep:hover,
+.btn-secondary:hover,
+.btn-secundario:hover,
+.btn-volver:hover,
+.btn-abandonar:hover {
+    transform: translateY(-2px) !important;
+    border-color: var(--sae-mint-300) !important;
+    box-shadow: var(--sae-shadow) !important;
+}
+
+.message.error,
+.error,
+.debilidad {
+    border-color: #e4b4a2 !important;
+    background: #fbf1ec !important;
+    color: var(--sae-danger) !important;
+}
+
+.message.success,
+.estado.exitosa,
+.dificultad {
+    border-color: var(--sae-mint-300) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+.message.warning {
+    border-color: #ead7a1 !important;
+    background: #fff8e3 !important;
+    color: #8a6a10 !important;
+}
+
+.contenido-documento,
+.chat-container,
+.chat-box,
+.sospechoso-card,
+.seccion,
+.stat-card,
+.rango-section,
+.analisis-card,
+.error-item,
+.fortaleza-item,
+.sugerencia-item {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: var(--sae-white) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+}
+
+.contenido-documento,
+.seccion {
+    border-left: 4px solid var(--sae-forest-700) !important;
+}
+
+#detalle-contexto,
+.seccion p,
+.rango-descripcion,
+.stat-sub,
+.info-valor,
+.intel-val,
+.system-msg {
+    color: var(--sae-muted) !important;
+}
+
+#mision-objetivo,
+.info-label,
+.stat-label,
+.intel-key,
+.ev-label,
+.risk-label {
+    color: var(--sae-forest-700) !important;
+}
+
+.badge,
+#timer {
+    border-radius: 999px !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+#status {
+    color: var(--sae-forest-700) !important;
+}
+
+.chat-box,
+#chat {
+    background: var(--sae-mint-25) !important;
+    border-color: var(--sae-line) !important;
+}
+
+.msg {
+    border-radius: 8px !important;
+    background: var(--sae-white) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: 0 8px 20px rgba(20, 63, 39, 0.06) !important;
+}
+
+.msg.sistema {
+    border-left: 4px solid var(--sae-gold) !important;
+    color: #7a5a08 !important;
+}
+
+.msg.user {
+    border-left: 4px solid var(--sae-forest-700) !important;
+    color: var(--sae-forest-800) !important;
+    background: var(--sae-mint-100) !important;
+}
+
+.msg.npc {
+    border-left: 4px solid var(--sae-mint-500) !important;
+    color: var(--sae-ink) !important;
+}
+
+.controls,
+.action-buttons,
+.acciones,
+.buttons,
+.input-area-experto {
+    gap: 12px !important;
+}
+
+header,
+.classified-bar,
+.header-main,
+.evidence-strip,
+.side-panel,
+#opciones-container,
+.input-area-experto {
+    border-color: var(--sae-line) !important;
+    background: rgba(255, 255, 255, 0.94) !important;
+    color: var(--sae-ink) !important;
+}
+
+.classified-bar {
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+.agency-name,
+.agency-sub,
+.s-name,
+.s-alias,
+.s-status,
+.risk-value,
+.side-section h3,
+.ev-tag,
+.orientation-item {
+    color: var(--sae-forest-800) !important;
+}
+
+.suspect-card,
+.intel-item,
+.ev-tag,
+.orientation-item,
+.delito-card {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: var(--sae-mint-25) !important;
+}
+
+.suspect-photo,
+.sospechoso-foto,
+.prop-thumb {
+    border-color: var(--sae-mint-300) !important;
+    border-radius: 8px !important;
+}
+
+.live-dot {
+    background: var(--sae-mint-500) !important;
+}
+
+.msg-wrap {
+    max-width: 760px !important;
+}
+
+.msg-avatar {
+    border-radius: 8px !important;
+}
+
+.detective .msg-avatar,
+.suspect .msg-avatar {
+    border-color: var(--sae-line) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+.msg-bubble,
+.bubble,
+.msg-content {
+    border-radius: 8px !important;
+    background: var(--sae-white) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: 0 8px 20px rgba(20, 63, 39, 0.06) !important;
+}
+
+.body-seleccion,
+.body-contexto {
+    align-items: flex-start !important;
+}
+
+.delitos-grid {
+    gap: 14px !important;
+}
+
+.delito-card h3 {
+    color: var(--sae-forest-800) !important;
+}
+
+.modal,
+#modal-reporte > div {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: var(--sae-white) !important;
+    color: var(--sae-ink) !important;
+}
+
+pre,
+#contenido-reporte {
+    color: var(--sae-forest-800) !important;
+}
+
+@media (max-width: 768px) {
+    .login-card,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container {
+        padding: 22px !important;
+    }
+
+    .action-buttons,
+    .acciones,
+    .buttons,
+    .input-area-experto {
+        flex-direction: column !important;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-send,
+    .btn-micro,
+    .btn-rep,
+    .btn-abandonar,
+    .btn {
+        width: 100% !important;
+    }
+}
+
+:root[data-theme="dark"] {
+    --sae-mint-25: #111f18;
+    --sae-mint-50: #0b1710;
+    --sae-mint-100: #173522;
+    --sae-mint-200: #234a32;
+    --sae-mint-300: #6edb97;
+    --sae-mint-500: #9af0b5;
+    --sae-forest-700: #9af0b5;
+    --sae-forest-800: #c8f8d6;
+    --sae-forest-900: #effff3;
+    --sae-ink: #f7fff9;
+    --sae-muted: #d7e8dc;
+    --sae-line: #294737;
+    --sae-white: #101c15;
+    --sae-gold: #f0cf69;
+    --sae-danger: #ffb49f;
+    --sae-shadow: 0 20px 52px rgba(0, 0, 0, 0.45);
+    --sae-soft-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid var(--sae-line);
+    border-radius: 999px;
+    background: var(--sae-white);
+    color: var(--sae-ink);
+    cursor: pointer;
+    font-family: "Segoe UI", Inter, Arial, sans-serif;
+    font-size: 0.86rem;
+    font-weight: 850;
+    gap: 8px;
+    padding: 0 14px;
+    box-shadow: var(--sae-soft-shadow);
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease, color 180ms ease;
+    z-index: 9999;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    border-color: var(--sae-mint-300);
+    background: var(--sae-mint-100);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.theme-toggle--floating {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+}
+
+.theme-toggle--inline {
+    flex: 0 0 auto;
+}
+
+.theme-toggle__icon {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-radius: 999px;
+}
+
+.theme-toggle__icon::after {
+    content: "";
+    position: absolute;
+    right: -4px;
+    bottom: -4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--sae-mint-500);
+    box-shadow: 0 0 0 2px var(--sae-white);
+}
+
+.theme-toggle[data-theme-state="dark"] {
+    background: var(--sae-mint-500);
+    color: #06120b;
+}
+
+:root[data-theme="dark"] body {
+    background:
+        radial-gradient(circle at top right, rgba(110, 219, 151, 0.2), transparent 34%),
+        linear-gradient(135deg, #07110d, #0b1710) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .login-card,
+:root[data-theme="dark"] .view,
+:root[data-theme="dark"] .expediente-container,
+:root[data-theme="dark"] .contexto-container,
+:root[data-theme="dark"] .debriefing-container,
+:root[data-theme="dark"] .contenido-documento,
+:root[data-theme="dark"] .chat-container,
+:root[data-theme="dark"] .chat-box,
+:root[data-theme="dark"] .sospechoso-card,
+:root[data-theme="dark"] .seccion,
+:root[data-theme="dark"] .stat-card,
+:root[data-theme="dark"] .rango-section,
+:root[data-theme="dark"] .analisis-card,
+:root[data-theme="dark"] .error-item,
+:root[data-theme="dark"] .fortaleza-item,
+:root[data-theme="dark"] .sugerencia-item,
+:root[data-theme="dark"] .suspect-card,
+:root[data-theme="dark"] .intel-item,
+:root[data-theme="dark"] .ev-tag,
+:root[data-theme="dark"] .orientation-item,
+:root[data-theme="dark"] .delito-card,
+:root[data-theme="dark"] .modal,
+:root[data-theme="dark"] #modal-reporte > div {
+    border-color: var(--sae-line) !important;
+    background: rgba(16, 28, 21, 0.96) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+}
+
+:root[data-theme="dark"] header,
+:root[data-theme="dark"] .classified-bar,
+:root[data-theme="dark"] .header-main,
+:root[data-theme="dark"] .evidence-strip,
+:root[data-theme="dark"] .side-panel,
+:root[data-theme="dark"] #opciones-container,
+:root[data-theme="dark"] .input-area-experto {
+    border-color: var(--sae-line) !important;
+    background: rgba(10, 23, 16, 0.96) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .classified-bar,
+:root[data-theme="dark"] .badge-advanced,
+:root[data-theme="dark"] .security-alert,
+:root[data-theme="dark"] .instruccion,
+:root[data-theme="dark"] .classified,
+:root[data-theme="dark"] .status-pill,
+:root[data-theme="dark"] .badge,
+:root[data-theme="dark"] #timer {
+    border-color: var(--sae-line) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .form-group input,
+:root[data-theme="dark"] .form-group select,
+:root[data-theme="dark"] #inputPregunta,
+:root[data-theme="dark"] .modo-selector {
+    border-color: var(--sae-line) !important;
+    background: #0b1710 !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .form-group input:focus,
+:root[data-theme="dark"] .form-group select:focus,
+:root[data-theme="dark"] #inputPregunta:focus {
+    border-color: var(--sae-mint-500) !important;
+    background: #101c15 !important;
+    box-shadow: 0 0 0 4px rgba(154, 240, 181, 0.16) !important;
+}
+
+:root[data-theme="dark"] .form-group input::placeholder,
+:root[data-theme="dark"] #inputPregunta::placeholder {
+    color: #adc3b4 !important;
+}
+
+:root[data-theme="dark"] .form-group select option {
+    background: #101c15 !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .btn-primary,
+:root[data-theme="dark"] .btn-send,
+:root[data-theme="dark"] .btn-siguiente,
+:root[data-theme="dark"] .btn-primario,
+:root[data-theme="dark"] .btn-opcion,
+:root[data-theme="dark"] .btn,
+:root[data-theme="dark"] .btn-dl,
+:root[data-theme="dark"] .btn-micro,
+:root[data-theme="dark"] .btn-rep {
+    background: var(--sae-mint-500) !important;
+    color: #06120b !important;
+}
+
+:root[data-theme="dark"] .btn-secondary,
+:root[data-theme="dark"] .btn-secundario,
+:root[data-theme="dark"] .btn-volver,
+:root[data-theme="dark"] .btn-abandonar {
+    border-color: var(--sae-line) !important;
+    background: #0b1710 !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .header-section h1,
+:root[data-theme="dark"] .expediente-container h1,
+:root[data-theme="dark"] .contexto-container h1,
+:root[data-theme="dark"] .debriefing-container h1,
+:root[data-theme="dark"] .header-contexto h1,
+:root[data-theme="dark"] .rango-title,
+:root[data-theme="dark"] .section-titulo,
+:root[data-theme="dark"] .agency-name,
+:root[data-theme="dark"] .agency-sub,
+:root[data-theme="dark"] .s-name,
+:root[data-theme="dark"] .s-alias,
+:root[data-theme="dark"] .s-status,
+:root[data-theme="dark"] .risk-value,
+:root[data-theme="dark"] .side-section h3,
+:root[data-theme="dark"] .delito-card h3,
+:root[data-theme="dark"] pre,
+:root[data-theme="dark"] #contenido-reporte {
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .subtitle,
+:root[data-theme="dark"] .form-group label,
+:root[data-theme="dark"] .footer,
+:root[data-theme="dark"] .footer a,
+:root[data-theme="dark"] #detalle-contexto,
+:root[data-theme="dark"] .seccion p,
+:root[data-theme="dark"] .rango-descripcion,
+:root[data-theme="dark"] .stat-sub,
+:root[data-theme="dark"] .info-valor,
+:root[data-theme="dark"] .intel-val,
+:root[data-theme="dark"] .system-msg {
+    color: var(--sae-muted) !important;
+}
+
+:root[data-theme="dark"] #mision-objetivo,
+:root[data-theme="dark"] .info-label,
+:root[data-theme="dark"] .stat-label,
+:root[data-theme="dark"] .intel-key,
+:root[data-theme="dark"] .ev-label,
+:root[data-theme="dark"] .risk-label {
+    color: var(--sae-mint-500) !important;
+}
+
+:root[data-theme="dark"] .msg,
+:root[data-theme="dark"] .msg-bubble,
+:root[data-theme="dark"] .bubble,
+:root[data-theme="dark"] .msg-content {
+    background: #14251a !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .msg.user,
+:root[data-theme="dark"] .detective .msg-avatar,
+:root[data-theme="dark"] .suspect .msg-avatar {
+    border-color: var(--sae-mint-300) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .message.error,
+:root[data-theme="dark"] .error,
+:root[data-theme="dark"] .debilidad {
+    border-color: #85503f !important;
+    background: #2a1712 !important;
+    color: var(--sae-danger) !important;
+}
+
+:root[data-theme="dark"] .message.success,
+:root[data-theme="dark"] .estado.exitosa,
+:root[data-theme="dark"] .dificultad,
+:root[data-theme="dark"] .message.warning {
+    border-color: var(--sae-line) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root[data-theme="dark"] .debriefing-container [style*="background: rgba(14, 22, 47"],
+:root[data-theme="dark"] .debriefing-container [style*="background:#0a1428"],
+:root[data-theme="dark"] .debriefing-container [style*="background: #0a1428"] {
+    background: #101c15 !important;
+    border-color: var(--sae-line) !important;
+}
+
+@media (max-width: 768px) {
+    .theme-toggle--floating {
+        top: 12px;
+        right: 12px;
+        min-width: 44px;
+        padding: 0 12px;
+    }
+
+    .theme-toggle--floating .theme-toggle__text {
+        display: none;
+    }
+}
