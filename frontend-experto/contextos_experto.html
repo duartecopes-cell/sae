@@ -312,7 +312,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Edad</span>
-                        <span class="info-valor">${caso.edad ? caso.edad + " a?os" : "â€”"}</span>
+                        <span class="info-valor">${caso.edad ? caso.edad + " años" : "â€”"}</span>
                     </div>
                     <div class="info-item">
                         <span class="info-label">Delito</span>
@@ -321,10 +321,10 @@
                 </div>
             </div>
 
-            <!-- Descripci?n / contexto del caso -->
+            <!-- Descripcion / contexto del caso -->
             <div class="seccion">
-                <h2> Descripci?n del caso</h2>
-                <p>${caso.descripcion || "Sin descripci?n disponible."}</p>
+                <h2> Descripcion del caso</h2>
+                <p>${caso.descripcion || "Sin descripcion disponible."}</p>
             </div>
 
             <!-- Perfil psicol?gico -->
@@ -340,7 +340,7 @@
             <!-- Debilidad detectada -->
             ${caso.debilidad_detectada ? `
             <div class="seccion">
-                <h2>âš  Vulnerabilidades detectadas</h2>
+                <h2>  Vulnerabilidades detectadas</h2>
                 <div class="debilidad">${caso.debilidad_detectada}</div>
             </div>` : ""}
 

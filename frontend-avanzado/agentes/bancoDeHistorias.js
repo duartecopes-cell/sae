@@ -124,7 +124,7 @@ const bancoDeHistorias = {
             { claves: ["buenos", "dias", "tardes", "noches", "hola", "buenos dias", "como vas", "¿Qué tal?"], respuesta: "Cordial saludo. Espero que esto sea rápido, tengo una junta directiva en una hora." },
             { claves: ["nombre", "nombres", "apellidos", "quien eres", "como te llamas"], respuesta: "Mi nombre es Carlos Eduardo Restrepo Holguín. Soy un empresario reconocido en el sector de la construcción." },
             { claves: ["alias", "apodo", "chapa", "arquitecto", "te llaman"], respuesta: "Algunas personas me llaman 'El Arquitecto', supongo que por mi trabajo en construcción y diseño de infraestructuras." },
-            { claves: ["identificacion", "identificación", "cedula", "cc", "documento", "tu documento"], respuesta: "Mi identificación es la Cédula de Ciudadanía No. 79.442.108 expedida en Bogotá. Estoy completamente registrado." },
+            { claves: ["identificacion", "identificación", "cedula", "documento", "tu documento"], respuesta: "Mi identificación es la Cédula de Ciudadanía No. 79.442.108 expedida en Bogotá. Estoy completamente registrado." },
             //Sentimientos
             { claves: ["como estas", "como te sientes", "como te ido"], respuesta: "En realidad muy bien." },
             { claves: ["bienvenido", "bienvenido"], respuesta: "gracias por su hospitalidad" },
@@ -264,7 +264,7 @@ const bancoDeHistorias = {
             { claves: ["buenos", "dias", "tardes", "noches", "hola", "días"], respuesta: "Buenas, ¿en qué puedo ayudarle? Espero aclarar cualquier malentendido." },
             { claves: ["nombre", "nombres y apellidos", "quien eres", "como te llamas"], respuesta: "Mi nombre es Ricardo Andrés Villalobos Peña, soy  comerciante en el sector de San Victorino desde hace más de 15 años." },
             { claves: ["alias", "apodo", "don ricardo", "te llaman"], respuesta: "En el sector comercial algunos me dicen Don Ricardo, es por respeto y antigüedad en el negocio." },
-            { claves: ["identificacion", "cedula", "documento", "identificación", "cédula", "cc", "CC"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 10.294.553 de Bogotá." },
+            { claves: ["identificacion", "cedula", "documento", "identificación", "cédula"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 10.294.553 de Bogotá." },
 
 
             { claves: ["como estas", "como te sientes", "como te ido"], respuesta: "En realidad muy bien." },
@@ -503,7 +503,7 @@ const bancoDeHistorias = {
             { claves: ["buenos", "dias", "días", "tardes", "hola"], respuesta: "Buenas, ¿qué necesita saber? Estoy dispuesto a aclarar cualquier duda." },
             { claves: ["nombre", "quien eres"], respuesta: "Mi nombre es Julian Alberto Casallas Torres." },
             { claves: ["alias", "apodo", "ingeniero", "te llaman"], respuesta: "Algunos conocidos me llaman 'El Ingeniero' por mi experiencia en tecnología e informática." },
-            { claves: ["identificacion", "identificación", "cedula", "cédula", "cc", "CC"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 80.123.456 de Bogotá." },
+            { claves: ["identificacion", "identificación", "cedula", "cédula"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 80.123.456 de Bogotá." },
 
             { claves: ["como estas", "como te sientes", "como te ido"], respuesta: "En realidad muy bien." },
             { claves: ["bienvenido", "bienvenido"], respuesta: "gracias por su hospitalidad" },
@@ -636,7 +636,7 @@ const bancoDeHistorias = {
 
             { claves: ["buenos", "dias", "hola", "días", "tarde", "noches", "buenas tardes", "buenas noches","buenos días"], respuesta: "Buenas, aunque no entiendo bien el motivo de esta entrevista." },
             { claves: ["nombre", "nombres", "nombres y apellidos"], respuesta: "Me llamo Sandra Milena Rodríguez Gómez." },
-            { claves: ["identifación", "identifacion", "cédula", "cedula", "CC", "cc"], respuesta: "Mi identificación es 1015456789 de Manizales." },
+            { claves: ["identifación", "identifacion", "cédula", "cedula"], respuesta: "Mi identificación es 1015456789 de Manizales." },
             { claves: ["profesion", "profesión", "contadora", "contador"], respuesta: "Soy Contadora Pública certificada con más de 15 años de experiencia en contabilidad fiscal." },
             { claves: ["registro", "profesional"], respuesta: "Mi registro profesional ante el Consejo Profesional Nacional de Contaduría Pública es el No. 156.432." },
 
@@ -1033,7 +1033,7 @@ const bancoDeHistorias = {
     { "claves": ["beneficios quieres", "que beneficios", "que tipo de beneficio"], "respuesta": "quiero plata" },
     { "claves": ["buenn trabajo", "que tal su trabajo ", " como trabaja "], "respuesta": "en mi trabajo soy responsable en el hacer las cosas" },
     { "claves": ["nombre", "nombres", "apellidos", "quien eres"], "respuesta": "Mi nombre es Marlín Eduardo Gutiérrez Sánchez." },
-    { "claves": ["identificacion", "identificación", "cedula", "cédula", "cc"], "respuesta": "Mi cédula es 1.000.587.963 expedida en Pereira." },
+    { "claves": ["identificacion", "identificación", "cedula", "cédula"], "respuesta": "Mi cédula es 1.000.587.963 expedida en Pereira." },
     { "claves": ["profesion", "profesión", "quimico", "químico", "oficio"], "respuesta": "Soy Químico Industrial, egresado de la Universidad Nacional de Colombia." },
     { "claves": ["empresa", "laboratorio", "negocio"], "respuesta": "Dirijo un laboratorio químico dedicado a la síntesis de compuestos industriales de uso legal." },
     { "claves": ["productos", "quimicos", "químicos", "produce"], "respuesta": "Producimos solventes, ácidos y bases utilizadas en la industria farmacéutica y manufacturera." },
@@ -1178,7 +1178,7 @@ const bancoDeHistorias = {
             },
 
             {
-                claves: ["identificacion", "identificación", "cedula", "cédula", "cc"],
+                claves: ["identificacion", "identificación", "cedula", "cédula"],
                 respuesta: "Mi cédula es 1.000.587.963 expedida en Pereira."
             },
 
@@ -1339,7 +1339,7 @@ const bancoDeHistorias = {
             },
 
             {
-                claves: ["identificacion", "identificación", "cedula", "cédula", "cc"],
+                claves: ["identificacion", "identificación", "cedula", "cédula"],
                 respuesta: "Mi cédula es 79.556.234 expedida en Bogotá."
             },
 
@@ -1678,7 +1678,7 @@ const bancoDeHistorias = {
             },
 
             {
-                claves: ["identificacion", "identificación", "cedula", "cédula", "cc"],
+                claves: ["identificacion", "identificación", "cedula", "cédula"],
                 respuesta: "Mi cédula es 1.054.852.654 expedida en Fusagasugá."
             },
 
@@ -1845,7 +1845,7 @@ const bancoDeHistorias = {
             },
 
             {
-                claves: ["identificacion", "identificación", "cedula", "cédula", "cc"],
+                claves: ["identificacion", "identificación", "cedula", "cédula"],
                 respuesta: "Mi cédula es 1.085.789.654 expedida en Armenia, Quindío."
             },
 
@@ -2473,217 +2473,3 @@ const bancoDeHistorias = {
         desconocido: "No me confunda con esos datos legales fríos... yo solo soy la empleada ingenua que digitaba los montos."
     }
 };
-
-// =====================================================
-// AMPLIACION DE ENTRENAMIENTO CONVERSACIONAL - NIVEL AVANZADO
-// Casos con mayor complejidad, actores, riesgos y seguimientos.
-// =====================================================
-(function ampliarEntrenamientoAvanzado() {
-    if (typeof bancoDeHistorias === "undefined") return;
-
-    function respuestasEntrenamientoAvanzado(caso) {
-        const delito = caso.delito || "situacion compleja";
-        const nombre = caso.personaje || "la persona entrevistada";
-
-        return [
-            {
-                claves: ["respuesta mas formal", "como responder formal", "respuesta profesional", "decirlo mejor"],
-                respuesta: `Una respuesta mas formal debe iniciar con el hecho verificable, continuar con la fuente que lo respalda y cerrar con el limite de informacion disponible. En este caso, evita concluir responsabilidad sobre ${nombre} sin contrastar el contexto de ${delito}.`
-            },
-            {
-                claves: ["detalles adicionales", "si preguntan por detalles", "mas informacion", "pregunta derivada"],
-                respuesta: "Si solicitan detalles adicionales, responde solo con datos del caso: actores, cronologia, documentos, riesgos y vacios. Si el expediente no tiene el dato, indica que debe verificarse antes de afirmarlo."
-            },
-            {
-                claves: ["evitar respuesta incorrecta", "que no debo decir", "errores al responder", "no inventar"],
-                respuesta: "Evita tres errores: acusar sin soporte, mezclar hechos con opiniones y completar vacios con suposiciones. En nivel avanzado se espera precision, trazabilidad y prudencia tecnica."
-            },
-            {
-                claves: ["persona insiste", "si insiste", "presion", "repregunta dificil"],
-                respuesta: "Si la persona insiste, mantente en el marco del expediente: reconoce la inquietud, repite el dato verificable y explica que cualquier conclusion exige evidencia adicional."
-            },
-            {
-                claves: ["justificar informacion", "como justifico", "soporte", "evidencia"],
-                respuesta: "Justifica la informacion vinculando cada afirmacion con registros, documentos, testigos, trazabilidad digital o cronologia. No basta decir que algo parece sospechoso; debes explicar por que es relevante."
-            }
-        ];
-    }
-
-    Object.values(bancoDeHistorias).forEach((caso) => {
-        caso.contextoAvanzado = caso.contextoAvanzado || `Caso avanzado para entrenar preguntas tecnicas sobre ${caso.delito || "hechos complejos"}, actores relacionados, riesgos, vacios e hipotesis verificables.`;
-        caso.actoresInvolucrados = caso.actoresInvolucrados || [
-            caso.personaje || "persona entrevistada",
-            "posibles intermediarios",
-            "responsables documentales",
-            "fuentes de verificacion"
-        ];
-        caso.riesgosOConfusiones = caso.riesgosOConfusiones || [
-            "Confundir indicios con pruebas concluyentes.",
-            "Afirmar responsabilidad sin validar soportes.",
-            "Ignorar preguntas de seguimiento sobre contexto previo.",
-            "Perder coherencia en conversaciones largas."
-        ];
-        caso.preguntasDificiles = caso.preguntasDificiles || [
-            "Que evidencia concreta respalda esa afirmacion?",
-            "Que dato aun no esta probado?",
-            "Que respuesta seria mas prudente si falta informacion?",
-            "Como explicaria esta situacion ante una autoridad?"
-        ];
-        caso.criteriosRespuesta = caso.criteriosRespuesta || [
-            "claridad",
-            "coherencia",
-            "uso de evidencia",
-            "limites de informacion",
-            "lenguaje profesional"
-        ];
-
-        const clavesExistentes = new Set((caso.respuestas || []).flatMap((item) => item.claves || []));
-        respuestasEntrenamientoAvanzado(caso).forEach((item) => {
-            if (!item.claves.some((clave) => clavesExistentes.has(clave))) {
-                caso.respuestas.push(item);
-            }
-        });
-    });
-
-    const nuevosCasosAvanzados = {
-        "caso_013": {
-            id: "caso_013",
-            titulo: "CASO #013 - CONTRATACION DE EMERGENCIA",
-            personaje: "Mauricio Andres Cardenas Rojas",
-            alias: "El Coordinador",
-            delito: "Irregularidades en contratacion publica",
-            edad: 46,
-            descripcion: "Caso avanzado sobre contratos de emergencia, soportes incompletos, proveedores vinculados y riesgo de sobrecostos.",
-            contextoAvanzado: "Mauricio coordino compras urgentes para una entidad municipal. El expediente muestra adjudicaciones repetidas a un proveedor sin experiencia y facturas con valores superiores al promedio regional.",
-            actoresInvolucrados: ["Mauricio Cardenas", "Comite de compras", "Proveedor Medisalud Express", "Supervisor contractual", "Tesoreria municipal"],
-            situacionPrincipal: "Determinar si la urgencia fue usada para evadir controles ordinarios de seleccion y justificar sobrecostos.",
-            riesgosOConfusiones: [
-                "Confundir necesidad real de compra con legalidad automatica del contrato.",
-                "Ignorar que una emergencia tambien exige soportes minimos.",
-                "Atribuir dolo sin verificar comunicaciones y aprobaciones."
-            ],
-            intro: "Las compras se hicieron por urgencia. Si esperabamos el tramite normal, el servicio se quedaba sin insumos.",
-            preguntasFrecuentes: [
-                "Por que se eligio ese proveedor?",
-                "Que soportes justifican la urgencia?",
-                "Quien aprobo los precios?",
-                "Que documentos faltan?"
-            ],
-            preguntasDificiles: [
-                "Por que el proveedor aparece creado pocos dias antes?",
-                "Por que las facturas superan el promedio regional?",
-                "Que relacion tenia usted con el representante legal?"
-            ],
-            palabrasClaveEntrenamiento: ["contrato", "urgencia", "proveedor", "sobrecosto", "factura", "supervisor"],
-            respuestas: [
-                { claves: ["hola", "buenos", "buenas"], respuesta: "Buenas. Puedo explicar el proceso de compras de emergencia y los documentos que se tuvieron en cuenta." },
-                { claves: ["nombre", "quien eres"], respuesta: "Soy Mauricio Andres Cardenas Rojas, coordinador administrativo durante el periodo revisado." },
-                { claves: ["urgencia", "emergencia", "compra urgente"], respuesta: "La urgencia existia porque el servicio requeria insumos inmediatos. Eso no elimina los controles, pero si cambia los tiempos de decision." },
-                { claves: ["proveedor", "medisalud", "seleccion"], respuesta: "Medisalud Express fue seleccionado porque afirmo tener disponibilidad inmediata. Reconozco que su historial comercial debio revisarse con mayor detalle." },
-                { claves: ["sobrecosto", "precio", "valor", "facturas"], respuesta: "Los precios fueron superiores al promedio, segun se dijo, por disponibilidad inmediata y transporte. Esa justificacion debe compararse con cotizaciones reales." },
-                { claves: ["aprobacion", "quien aprobo", "firma"], respuesta: "La aprobacion paso por el comite de compras y luego por supervision contractual. Mi rol fue coordinar la informacion." },
-                { claves: ["relacion", "conocia", "representante legal"], respuesta: "Conocia al representante legal por reuniones de proveedores, pero niego una relacion personal o beneficio directo." },
-                { claves: ["documentos faltan", "soportes", "expediente"], respuesta: "Faltan cotizaciones comparables, actas completas de necesidad y evidencia clara de verificacion de experiencia del proveedor." },
-                { claves: ["decision", "por que decidio", "justificacion"], respuesta: "La decision se justifico en continuidad del servicio, pero una respuesta tecnica debe reconocer que la urgencia no autoriza omitir trazabilidad." },
-                { claves: ["respuesta formal", "como responder"], respuesta: "Una respuesta formal seria: la urgencia explica la rapidez, pero cada compra debe sostenerse en necesidad, precio razonable, proveedor idoneo y aprobacion documentada." },
-                { claves: ["que no inventar", "errores"], respuesta: "No debe inventarse que hubo soborno si no hay prueba. Lo correcto es hablar de alertas: proveedor reciente, precios altos y soportes incompletos." },
-                { claves: ["seguimiento", "si insiste"], respuesta: "Si insisten, se debe remitir al expediente: actas, cotizaciones, trazabilidad de firmas y comunicaciones previas a la adjudicacion." }
-            ],
-            desconocido: "Ese dato no esta en mi version. Habria que verificarlo en actas, cotizaciones o comunicaciones del comite."
-        },
-        "caso_014": {
-            id: "caso_014",
-            titulo: "CASO #014 - FILTRACION ACADEMICA",
-            personaje: "Natalia Perez Salazar",
-            alias: "La Analista",
-            delito: "Acceso no autorizado a datos personales",
-            edad: 37,
-            descripcion: "Caso avanzado sobre una filtracion de datos en una institucion educativa con accesos internos y uso de credenciales compartidas.",
-            contextoAvanzado: "Natalia administraba reportes academicos. Un archivo con datos de estudiantes circulo fuera de la institucion despues de accesos inusuales desde una cuenta con privilegios.",
-            actoresInvolucrados: ["Natalia Perez", "Coordinacion academica", "Equipo TI", "Proveedor de plataforma", "Estudiantes afectados"],
-            situacionPrincipal: "Distinguir error operativo, negligencia en credenciales y posible extraccion intencional de informacion.",
-            riesgosOConfusiones: [
-                "Confundir acceso autorizado con uso autorizado.",
-                "Ignorar trazas tecnicas por enfocarse solo en declaraciones.",
-                "Divulgar datos personales durante la entrevista."
-            ],
-            intro: "Yo generaba reportes academicos, pero varias personas usaban las mismas credenciales por fallas del sistema.",
-            preguntasFrecuentes: [
-                "Quien tenia acceso a la cuenta?",
-                "Que datos fueron filtrados?",
-                "Por que se compartian credenciales?",
-                "Que hizo la institucion al detectarlo?"
-            ],
-            preguntasDificiles: [
-                "Por que el acceso ocurrio fuera de horario?",
-                "Por que el archivo fue descargado antes de circular?",
-                "Quien tenia interes en esa informacion?"
-            ],
-            palabrasClaveEntrenamiento: ["datos", "credenciales", "estudiantes", "archivo", "descarga", "plataforma"],
-            respuestas: [
-                { claves: ["hola", "buenos", "buenas"], respuesta: "Buenas. Entiendo la gravedad de una filtracion de datos y puedo explicar mi rol." },
-                { claves: ["nombre", "quien eres"], respuesta: "Soy Natalia Perez Salazar, analista de reportes academicos." },
-                { claves: ["datos", "informacion", "archivo filtrado"], respuesta: "El archivo contenia datos academicos y de contacto de estudiantes. Por proteccion de datos no deberian divulgarse detalles innecesarios." },
-                { claves: ["credenciales", "clave", "usuario compartido"], respuesta: "La cuenta era usada por varias personas del area, una practica incorrecta que dificulta atribuir una accion a un usuario especifico." },
-                { claves: ["fuera de horario", "noche", "acceso inusual"], respuesta: "El acceso fuera de horario es una alerta tecnica. Debe cruzarse con registros de red, equipo usado y ubicacion aproximada." },
-                { claves: ["descarga", "exportacion", "reporte"], respuesta: "Los reportes se descargaban para cierres academicos, pero una descarga previa a la filtracion debe justificarse documentalmente." },
-                { claves: ["responsable", "fuiste tu", "culpa"], respuesta: "No puedo aceptar una responsabilidad que no esta probada. Si hubo uso indebido de la cuenta, debe determinarse con trazas tecnicas." },
-                { claves: ["medidas", "que hicieron", "mitigacion"], respuesta: "Se debieron cambiar claves, bloquear accesos compartidos, notificar internamente y activar un protocolo de proteccion de datos." },
-                { claves: ["respuesta formal", "como responder"], respuesta: "Una respuesta formal debe reconocer el riesgo, explicar el alcance conocido, indicar medidas tomadas y evitar revelar datos personales durante la entrevista." },
-                { claves: ["que no inventar", "evitar"], respuesta: "No se debe inventar el autor de la filtracion. Tampoco se deben mencionar datos de estudiantes si no son necesarios para la pregunta." },
-                { claves: ["seguimiento", "mas detalles"], respuesta: "Para preguntas de seguimiento, responda con categorias: tipo de dato, acceso, hora, trazabilidad y medidas. Evite nombres de estudiantes." }
-            ],
-            desconocido: "No tengo ese dato tecnico. Debe verificarse con logs, equipo de TI y protocolo de proteccion de datos."
-        },
-        "caso_015": {
-            id: "caso_015",
-            titulo: "CASO #015 - TRANSACCIONES FRACCIONADAS",
-            personaje: "Esteban Ruiz Calderon",
-            alias: "El Consultor",
-            delito: "Operacion financiera sospechosa",
-            edad: 42,
-            descripcion: "Caso avanzado sobre movimientos fraccionados, consultorias sin entregables claros y posible ocultamiento de beneficiarios.",
-            contextoAvanzado: "Esteban presto servicios de consultoria a varias empresas pequenas. Se detectaron pagos fraccionados por montos similares, retiros rapidos y contratos con entregables genericos.",
-            actoresInvolucrados: ["Esteban Ruiz", "Empresas contratantes", "Contador externo", "Entidad financiera", "Beneficiarios finales por verificar"],
-            situacionPrincipal: "Determinar si los pagos corresponden a servicios reales o a una estructura para ocultar origen y destino de fondos.",
-            riesgosOConfusiones: [
-                "Confundir fraccionamiento con delito automatico.",
-                "No solicitar entregables verificables.",
-                "Omitir beneficiarios finales y trazabilidad bancaria."
-            ],
-            intro: "Soy consultor. Mis clientes pagan por fases y por eso los valores pueden parecer repetidos.",
-            preguntasFrecuentes: [
-                "Que servicio presto?",
-                "Por que los pagos eran similares?",
-                "Que entregables existen?",
-                "Quien recibia finalmente el dinero?"
-            ],
-            preguntasDificiles: [
-                "Por que retiraba el dinero tan rapido?",
-                "Por que los contratos tienen textos identicos?",
-                "Quien definia los montos?"
-            ],
-            palabrasClaveEntrenamiento: ["fraccionamiento", "consultoria", "pagos", "retiros", "contratos", "beneficiarios"],
-            respuestas: [
-                { claves: ["hola", "buenos", "buenas"], respuesta: "Buenas. Puedo explicar la naturaleza de mis servicios de consultoria." },
-                { claves: ["nombre", "quien eres"], respuesta: "Soy Esteban Ruiz Calderon, consultor administrativo y financiero independiente." },
-                { claves: ["servicio", "consultoria", "que hacia"], respuesta: "Prestaba asesorias de organizacion administrativa, revision de procesos y acompanamiento a pequenas empresas." },
-                { claves: ["pagos similares", "fraccionados", "montos"], respuesta: "Los pagos eran por fases del servicio. Aun asi, si los valores son repetidos, deben compararse con contratos y entregables." },
-                { claves: ["entregables", "informes", "soportes"], respuesta: "Debian existir informes, matrices de seguimiento o actas de reunion. Si no aparecen, la justificacion del servicio queda debil." },
-                { claves: ["retiros", "efectivo", "rapido"], respuesta: "Retiraba dinero para gastos operativos, aunque reconozco que hacerlo de forma rapida puede generar una alerta financiera." },
-                { claves: ["beneficiario", "destino final", "quien recibia"], respuesta: "El destino final declarado era mi actividad profesional. Si hubo terceros, deben aparecer soportados por contratos o comprobantes." },
-                { claves: ["contratos identicos", "plantillas", "textos iguales"], respuesta: "Usaba una plantilla de contrato. Eso no prueba irregularidad por si solo, pero exige revisar si cada servicio realmente se ejecuto." },
-                { claves: ["respuesta formal", "como responder"], respuesta: "Una respuesta formal debe diferenciar alerta financiera de conclusion penal: pagos fraccionados, contratos repetidos y retiros rapidos son indicios que requieren trazabilidad." },
-                { claves: ["que no inventar", "errores"], respuesta: "No se debe afirmar lavado sin demostrar origen ilicito, ocultamiento o beneficiario real. Debe hablarse de operacion sospechosa y datos pendientes." },
-                { claves: ["seguimiento", "si insiste"], respuesta: "Si preguntan mas, pida verificar contrato, entregable, factura, cuenta de origen, retiro y destino posterior del dinero." }
-            ],
-            desconocido: "No puedo responder eso sin revisar contratos, informes y movimientos bancarios asociados."
-        }
-    };
-
-    Object.entries(nuevosCasosAvanzados).forEach(([id, caso]) => {
-        if (!bancoDeHistorias[id]) {
-            bancoDeHistorias[id] = caso;
-        }
-    });
-})();

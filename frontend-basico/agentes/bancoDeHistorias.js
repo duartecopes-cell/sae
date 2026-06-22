@@ -22,7 +22,7 @@ const bancoDeHistorias = {
 
             { claves: ["alias", "apodo", "chapa", "arquitecto", "Arquitecto", "te llaman"], respuesta: "Algunas personas me llaman 'El Arquitecto', supongo que por mi trabajo en construcción y diseño de infraestructuras." },
 
-            { claves: ["identificacion", "identificación", "cedula", "cc", "documento", "tu documento"], respuesta: "Mi identificación es la Cédula de Ciudadanía No. 79.442.108 expedida en Bogotá, estoy completamente registrado." },
+            { claves: ["identificacion", "identificación", "cedula", "documento", "tu documento"], respuesta: "Mi identificación es la Cédula de Ciudadanía No. 79.442.108 expedida en Bogotá, estoy completamente registrado." },
 
             { claves: ["telefono", "celular", "numero", "whatsapp", "número", "comunicacion", "contacto"],
             respuesta: "Uso principalmente una línea corporativa para todos mis negocios, es 3508154578." },
@@ -243,7 +243,7 @@ const bancoDeHistorias = {
 
             { claves: ["alias", "apodo", "don ricardo", "llaman"], respuesta: "En el sector comercial algunos me dicen Don Ricardo, es por respeto y antigüedad en el negocio." },
 
-            { claves: ["identificacion", "cedula", "documento", "identificación", "cédula", "cc", "CC"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 10.294.553 de Bogotá." },
+            { claves: ["identificacion", "cedula", "documento", "identificación", "cédula"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 10.294.553 de Bogotá." },
             
             { claves: ["trabajo", "dedica", "empresa", "logistica", "negocio"], respuesta: "Trabajo con una empresa llamada Logística y Suministros Integrales del Caribe S.A.S., dedicada al transporte y manejo de mercancía, insumos como polímeros de plástico." },
 
@@ -410,7 +410,7 @@ const bancoDeHistorias = {
 
             { claves: ["alias", "apodo", "ingeniero", "te llaman", "Ingeniero"], respuesta: "Algunos conocidos me llaman 'El Ingeniero' por mi experiencia en tecnología e informática, soy un experto en redes y programación." },
 
-            { claves: ["identificacion", "identificación", "cedula", "cédula", "cc", "CC"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 80.123.456 de Armenia Quíndio, la capital del cafe colombiano." },
+            { claves: ["identificacion", "identificación", "cedula", "cédula"], respuesta: "Mi documento es la Cédula de Ciudadanía No. 80.123.456 de Armenia Quíndio, la capital del cafe colombiano." },
 
             { claves: ["bases de datos", "bases de datos"], respuesta: "Si calro es un sistema que permite almacenar, organizar y gestionar información de forma estructurada para que pueda ser consultada, modificada y recuperada fácilmente cuando se necesite, la verdad no me gusta trabajar con datos." },
             
@@ -576,7 +576,7 @@ const bancoDeHistorias = {
 
             { claves: ["nombre", "nombres", "nombres y apellidos", "apellidos"], respuesta: "Me llamo Sandra Milena Rodríguez Gómez." },
 
-            { claves: ["identifación", "identifacion", "cédula", "cedula", "CC", "cc"], respuesta: "Mi identificación es 1015456789 de Manizales." },
+            { claves: ["identifación", "identifacion", "cédula", "cedula"], respuesta: "Mi identificación es 1015456789 de Manizales." },
 
             { claves: ["profesion", "profesión", "contadora", "contador", "Profesión", "oficio"], respuesta: "Soy Contadora Pública certificada con más de 15 años de experiencia en contabilidad fiscal." },
 
@@ -796,7 +796,7 @@ const bancoDeHistorias = {
             { "claves": ["nombre", "nombres", "apellidos", "quien eres"], 
               respuesta: "Mi nombre es Marlín Eduardo Gutiérrez Sánchez." },
 
-            { "claves": ["identificacion", "identificación", "cedula", "cédula", "cc"], 
+            { "claves": ["identificacion", "identificación", "cedula", "cédula"], 
               "respuesta": "Confirmo que mi documento de identidad es la cédula número 1.000.587.963 expedida en Pereira, bajo la cual firmé y asumí la responsabilidad legal de los informes técnicos y registros operativos." },
 
             { "claves": ["profesion", "profesión", "quimico", "químico", "oficio", "labora"], 
@@ -975,7 +975,7 @@ const bancoDeHistorias = {
             { claves: ["nombre", "Nombres", "nombres y apellidos", "quien eres"], 
              respuesta: "Soy el Teniente Jorge Alberto Barón Pineda,  Todo está en mi expediente corporativo." },
 
-            { claves: ["identificacion", "identificación", "cedula", "cédula", "cc"], 
+            { claves: ["identificacion", "identificación", "cedula", "cédula"], 
             respuesta: "Mi cédula es la número 1.025.556.234, expedida en Caquetá." },
 
             { claves: ["grado", "rango", "antigüedad", "anos de servicio"], 
@@ -1321,7 +1321,7 @@ const bancoDeHistorias = {
             { claves: ["nombre","nombres y apellidos", "nombres", "quien eres"], 
               respuesta: "Roberto Javier Díaz Herrera, Sargento Primero retirado de la Policía Nacional." },
 
-            { claves: ["identificacion", "identificación", "cedula", "cédula", "cc"], 
+            { claves: ["identificacion", "identificación", "cedula", "cédula"], 
               respuesta: "Mi cédula es la número 1.054.852.654, expedida en Fusagasugá." },
 
             { claves: ["grado", "rango", "anos de servicio", "antigüedad"], 
@@ -1498,12 +1498,12 @@ const bancoDeHistorias = {
             // FASE 1: DEFENSA LEGALISTA Y ESQUIVA
             // ==========================================
             { claves: ["hola", "Hola", "buenos", "dias", "días", "tardes", "noches"], 
-            respuesta: "Buenas. Me sorprende estar en esta situación, pero estoy dispuesto a aclarar cualquier duda técnica o contable que requiera su investigación." },
+            respuesta: "Buenas, me sorprende estar en esta situación, pero estoy dispuesto a aclarar cualquier duda técnica o contable que requiera su investigación." },
 
             { claves: ["nombre", "nombres", "apellidos", "quien eres"], 
             respuesta: "Mi nombre completo es Fabio Ernesto Montoya Londoño, ciudadano y profesional respetable." },
 
-            { claves: ["identificacion", "identificación", "cedula", "cédula", "cc"], 
+            { claves: ["identificacion", "identificación", "cedula", "cédula"], 
             respuesta: "Mi cédula es la número 1.085.789.654, expedida en Armenia, Quindío." },
 
             { claves: ["profesion", "profesión", "contador", "oficio", "tarjeta profesional"], 
@@ -1639,13 +1639,13 @@ const bancoDeHistorias = {
             // ==========================================
             // FASE 1: RESISTENCIA OPERATIVA E IDENTIDAD
             // ==========================================
-            { claves: ["hola", "buenos", "dias", "oficial", "tardes", "noches"], 
-              respuesta: "Buenas, oficial. Estoy dispuesto a colaborar con cualquier requerimiento, pero exijo que se respete mi debido proceso." },
+            { claves: ["hola", "buenos", "dias", "buenas", "tardes", "noches", "Hola"], 
+              respuesta: "Buenas, estoy dispuesto a colaborar con cualquier requerimiento, pero exijo que se respete mi debido proceso." },
 
             { claves: ["nombre", "quien eres", "nombres y apellidos"], 
               respuesta: "Mi nombre es Andrés Felipe Tunjano Ruíz, patrullero de la Policía Nacional." },
 
-            { claves: ["cedula", "cédula", "identificacion", "identificación", "cc"], 
+            { claves: ["cedula", "cédula", "identificacion", "identificación"], 
               respuesta: "Mi cédula es la número 1.022.334.881, expedida en la ciudad de Bogotá." },
 
             { claves: ["grado", "cargo", "patrullero", "rango", "anos de servicio"], 
@@ -1654,8 +1654,8 @@ const bancoDeHistorias = {
             { claves: ["placa policial", "placa"], 
               respuesta: "Mi placa institucional es la número 155.402 y está plenamente activa." },
 
-            { claves: ["funciones", "trabajo", "que haces", "patrullaje"], 
-              respuesta: "Hago cuadrante básico: patrullaje preventivo, registro a personas, verificación de antecedentes automotores y atención de llamadas de la comunidad." },
+            { claves: ["funciones", "trabajo", "qué hace", "patrullaje", "dedica"], 
+              respuesta: "Soy de la zona segura: patrullaje preventivo, registro a personas, verificación de antecedentes, automotores y atención de los motivos de policía y llamadas de la comunidad." },
 
             { claves: ["hurto", "delito", "robo", "red del occidente", "criminal"], 
               respuesta: "Rechazo completamente esa acusación. Mi trabajo diario en Engativá es precisamente combatir el hurto de vehículos, no aliarme con ladrones." },
@@ -1665,58 +1665,67 @@ const bancoDeHistorias = {
             // ==========================================
             { claves: ["instagram", "redes", "perfil", "motors", "carreras ilegal", "piques"], 
               respuesta: "La cuenta @andres_t_ruiz_motors es mi perfil personal de vehículos. Modificar carros y asistir a piques es un hobby de fin de semana, no un delito. Compro los repuestos con préstamos." },
+
             { claves: ["moto", "motocicleta", "vehiculo oficial"], 
               respuesta: "Conduzco la motocicleta institucional asignada por la Estación para cubrir las rutas de mi cuadrante." },
+
             { claves: ["gps", "rastreo", "ubicacion", "desactivacion", "apagar"], 
               respuesta: "El GPS de las motos oficiales falla todo el tiempo por la señal en zonas cerradas del occidente. Yo jamás apago el radio de la institución adrede." },
+
             { claves: ["alamos", "las ferias", "taller", "bodega", "enfriadero"], 
               respuesta: "Álamos y Las Ferias son sectores industriales pesados de mi jurisdicción. Conozco las calles por los recorridos de rutina, no porque tenga negocios oscuros allí." },
+
             { claves: ["c4", "camara", "video", "registro", "inmovilizacion", "omitir"], 
               respuesta: "En el sistema C4 entran cientos de reportes automáticos de placas. Si pasé al lado de un vehículo reportado y no lo inmovilicé, fue porque estaba atendiendo otra riña o una emergencia prioritaria." },
+
             { claves: ["mecanico", "charly", "carlos julio pineda"], 
               respuesta: "Sé quién es Carlos Julio Pineda porque maneja talleres mecánicos en la zona, pero solo he hablado con él por temas estrictamente laborales de revisión de autos sospechosos." },
+
             { claves: ["madre", "familia", "consignaciones", "cuentas"], 
               respuesta: "El dinero en la cuenta de mi madre, Martha Lucía Ruíz, corresponde a unos ahorros familiares y la venta de un lote familiar en Boyacá. Ella no tiene nada que ver con la Policía." },
 
             // ==========================================
             // FASE 3: EL QUIEBRE (Resolución de Vacíos Investigativos)
             // ==========================================
-            { claves: ["sabemos", "pruebas", "confiese", "evidencia", "carcel", "fiscalia", "destitucion"], 
-              respuesta: "Mire, jefe... no me hunda solo. Yo soy un patrullero, gano una miseria y la calle está dura. Si me procesan y me mandan a un patio común con los mismos delincuentes que he capturado, me matan. Si me dan un acuerdo con la Fiscalía, les destapo cómo opera la red del occidente." },
+            { claves: ["sabemos", "pruebas", "confiese", "evidencia", "fiscalía", "destitucion"], 
+              respuesta: "Mire, jefe... no me hunda solo. Yo soy un patrullero, gano una miseria y la calle está dura. Si me procesan y me mandan a un patio común con los mismos delincuentes que he capturado, me matan, si me dan un acuerdo con la Fiscalía, les destapo cómo opera la red del occidente." },
+
+            { claves: ["red del occidente", "occidente", "cabecillas", "quienes participan", "nombres", "responsables"],
+            respuesta: "Está bien, voy a hablar. Los que coordinaban la red eran Carlos Mendoza, alias 'El Flaco', Javier Ríos, conocido como 'JR', y Andrés Salazar, a quien todos llamaban 'El Mono', Ellos distribuían las tareas, definían los movimientos y mantenían contacto con los demás integrantes. Yo solo recibía instrucciones y cumplía órdenes." },
 
             // 1. Vacío Investigativo: Ubicación exacta de la bodega principal ("bodega nodriza")
             { claves: ["bodega principal", "bodega nodriza", "donde desguasan", "ubicacion exacta", "donde guardan"], 
-              respuesta: "(Baja la cabeza, asustado) Está bien... La 'bodega nodriza' donde metemos los carros de alta gama robados para desguazarlos por completo queda en la Localidad de Fontibón, exactamente en la Carrera 106 con Calle 17, detrás de la zona de contenedores. Allí tienen las herramientas industriales para picar un chasis en dos horas." },
+              respuesta: "Está bien... La 'bodega nodriza' donde metemos los carros de alta gama robados para desguazarlos por completo queda en la Localidad de Fontibón, exactamente en la Carrera 106 con Calle 17, detrás de la zona de contenedores. Allí tienen las herramientas industriales para picar un chasis en dos horas." },
 
             // 2. Vacío Investigativo: Identidad de la red encargada de documentación falsa
             { claves: ["documentacion falsa", "licencias", "tarjetas de propiedad", "quien falsifica", "papeles"], 
-              respuesta: "Los papeles falsos, los gemeleos de placas y las tarjetas de propiedad clonadas los maneja un tipo apodado 'El Escribano'. Su nombre real es Wilson Eduardo Garzón. Él trabaja en un local de fotocopias y trámites vehiculares frente al SIM de la Calle 13; tiene acceso a los sistemas de tránsito." },
+              respuesta: "Los papeles falsos, los gemeleos de placas y las tarjetas de propiedad clonadas los maneja un tipo apodado 'El Escribano', su nombre real es Wilson Eduardo Garzón, él trabaja en un local de fotocopias y trámites vehiculares frente al SIM de la Calle 13; tiene acceso a los sistemas de tránsito." },
 
             // 3. Vacío Investigativo: Talleres legales utilizados para blanquear autopartes
             { claves: ["talleres legales", "blanquear", "autopartes", "donde venden", "repuestos"], 
-              respuesta: "Las autopartes robadas de media gama no se venden en la calle. Las blanqueamos a través de dos talleres legales en el sector del Siete de Agosto: 'Frenos y Motores del Occidente' y 'Autopartes El Progreso'. Los dueños compran el inventario legal golpeado y meten nuestras piezas robadas como si fueran repuestos originales de salvamento." },
+              respuesta: "Las autopartes robadas de media gama no se venden en la calle. Las blanqueamos a través de dos talleres legales en el sector del Siete de Agosto: 'Frenos y Motores del Occidente' y 'Autopartes El Progreso', los dueños compran el inventario legal golpeado y meten nuestras piezas robadas como si fueran repuestos originales de salvamento." },
 
             // 4. Vacío Investigativo: Ruta completa de comercialización de vehículos hacia otras regiones
-            { claves: ["ruta", "comercializacion", "boyaca", "donde los llevan", "carretera"], 
-              respuesta: "Los carros que no se pican se van enteros para el departamento de Boyacá. La ruta es sacarlos por la Autopista Norte a las 3:00 a.m., aprovechando que mis compañeros de carreteras reciben su parte. Llegan a bodegas rurales en Tunja y Duitama, donde los venden con los papeles que hace 'El Escribano' a compradores de buena fe en el campo." },
+            { claves: ["ruta", "comercializacion", "boyaca", "Boyacá", "donde los llevan", "carretera"], 
+              respuesta: "Los carros que no se pican se van enteros para el departamento de Boyacá. La ruta es sacarlos por la Autopista Norte a las 3:00 a.m., aprovechando que mis compañeros de carreteras reciben su parte, llegan a bodegas rurales en Tunja y Duitama, donde los venden con los papeles que hace 'El Escribano' a compradores de buena fe en el campo." },
 
             // RAPPORT Y CONVERSACIÓN INFORMAL
             { claves: ["como esta", "cómo está", "como se encuentra", "como anda"],
-            respuesta: "Aquí estoy, cumpliendo con este procedimiento. No es una situación agradable, pero sigo colaborando con la institución." },
+            respuesta: "Aquí estoy, cumpliendo con este procedimiento, no es una situación agradable, pero sigo colaborando con la institución." },
 
             { claves: ["aquí", "cuenteme"], respuesta: "La verdad no tengo ni idea, cuenteme usted por que me tiene aca." },
 
             { claves: ["como le va", "qué tal", "que tal", "todo bien"],
-            respuesta: "Me va bien dentro de lo posible. El trabajo en la calle nunca es fácil, pero uno aprende a lidiar con la presión." },
+            respuesta: "Me va bien dentro de lo posible, el trabajo en la calle nunca es fácil, pero uno aprende a lidiar con la presión." },
 
             { claves: ["que mas", "qué más", "que cuenta", "qué cuenta"],
-            respuesta: "Nada fuera de lo normal. Turnos largos, procedimientos y llamadas de la comunidad todos los días." },
+            respuesta: "Nada fuera de lo normal, turnos largos, procedimientos y llamadas de la comunidad todos los días." },
 
             { claves: ["que hace", "qué hace", "a que se dedica", "qué se dedica"],
-            respuesta: "Soy patrullero activo de la Policía Nacional. Mi trabajo consiste en patrullar, atender requerimientos ciudadanos y apoyar procedimientos policiales." },
+            respuesta: "Soy patrullero activo de la Policía Nacional, mi trabajo consiste en patrullar, atender requerimientos ciudadanos y apoyar procedimientos policiales." },
 
             { claves: ["como ha estado", "cómo ha estado", "como le ha ido"],
-            respuesta: "He estado trabajando bastante. En Engativá siempre hay algo que atender durante el servicio." },
+            respuesta: "He estado trabajando bastante, en Engativá siempre hay algo que atender durante el servicio." },
 
             { claves: ["mucho trabajo", "ocupado", "trabajando mucho"],
             respuesta: "Sí, bastante. Hay días donde prácticamente no alcanza el tiempo para atender todas las novedades que se presentan." },
@@ -1724,10 +1733,10 @@ const bancoDeHistorias = {
             { claves: ["de donde es", "dónde nació", "lugar de nacimiento", "origen"],
             respuesta: "Soy bogotano. He vivido la mayor parte de mi vida en la capital." },
 
-            { claves: ["donde vive", "vive donde", "residencia", "domicilio"],
+            { claves: ["dónde vive", "vive donde", "residencia", "domicilio"],
             respuesta: "Prefiero mantener reservada esa información por temas de seguridad personal y familiar." },
 
-            { claves: ["estado civil", "casado", "soltero"],
+            { claves: ["estado civil", "casado", "soltero", "familia"],
             respuesta: "Mi situación familiar no tiene relación con esta investigación y prefiero mantenerla en privado." },
 
             { claves: ["familia", "hijos", "esposa"],
@@ -1784,25 +1793,36 @@ const bancoDeHistorias = {
             // FASE 1: RESISTENCIA OPERATIVA Y PERFIL TÁCTICO
             // ==========================================
             { claves: ["hola", "buenos", "dias", "oficial", "tardes", "noches"], 
-            respuesta: "Buenas. Estoy dispuesto a colaborar, pero exijo la presencia de mi abogado de la defensa institucional si esto va a pasar de una entrevista de rutina." },
+            respuesta: "Buenas, estoy dispuesto a colaborar, pero exijo la presencia de mi abogado de la defensa institucional si esto va a pasar de una entrevista de rutina." },
 
-            { claves: ["nombre", "quien eres", "nombres y apellidos"], 
+            { claves: ["nombre", "quien eres", "nombres y apellidos", "llama"], 
             respuesta: "Subintendente Diego Armando Salcedo Mora." },
 
-            { claves: ["cedula", "cédula", "identificacion", "identificación", "cc"], 
+            { claves: ["cedula", "cédula", "identificacion", "identificación"], 
               respuesta: "Mi cédula es la número 80.221.774 de Bogotá." },
 
             { claves: ["grado", "cargo", "subintendente", "rango", "anos de servicio", "antigüedad"], 
-              respuesta: "Soy Subintendente de la Policía Nacional. Llevo más de 15 años en la institución, la mayor parte del tiempo persiguiendo la delincuencia en el sur de la ciudad." },
+              respuesta: "Soy Subintendente de la Policía Nacional, llevo más de 15 años en la institución, la mayor parte del tiempo persiguiendo la delincuencia en el sur de la ciudad." },
+                        
+            { claves: ["cuadrante", "zona segura", "jurisdicción"], 
+              respuesta: "Mi jurisdicción corresponde a la zona segura del CAI Candelaria y principalmente salgo con grupo de reacción que cubre toda la localidad de Ciudad Bolívar, es un grupo de 8 uniformados y yo soy el líder, la verdad, si necesitan los nombres de todos, tocaría revisar la minuta de vigilancia." },
+
+            { claves: ["compañero", "compañero de patrulla"], 
+              respuesta: "Mi compañero es el patrullero Salmanca Giraldo Edwin Andres, es muy juicios pero lo unico es que casi no habla durante el servicio, manifiesta que le gusta ser reservado con su vida personal." },
+
+            { claves: ["orden", "le ordenó", "la orden", "lo mandó"],
+              respuesta: "Nadie me dio una orden especial esa noche. Yo estaba de turno con el grupo de reacción de Ciudad Bolívar atendiendo varios llamados por riñas y alteraciones del orden público, recuerdo que recibimos el reporte de un problema en el establecimiento 'La Estrella' y acudimos al lugar para controlar la situación, después se realizó el traslado de algunas personas para verificación de antecedentes y restablecimiento del orden, mi responsabilidad era coordinar al personal y supervisar los procedimientos, nada fuera de lo habitual, si necesitan detalles exactos de quiénes estaban asignados o las novedades registradas, eso debería constar en la minuta y los reportes del turno." },
 
             { claves: ["placa", "placa policial"], 
               respuesta: "Mi placa institucional es la número 055.812 y está completamente activa." },
 
-            { claves: ["funciones", "trabajo", "que haces"], 
-              respuesta: "Soy comandante de patrulla de reacción en Ciudad Bolívar. Mi trabajo es mantener el orden en zonas críticas de microtráfico y delitos de alto impacto." },
+            { claves: ["funciones", "trabajo", "que haces", "se dedica", "cargo"], 
+              respuesta: "Soy comandante de patrulla de reacción en Ciudad Bolívar, mi trabajo es mantener el orden en zonas críticas de microtráfico y delitos de alto impacto." },
+            
+            { claves: ["meissen", "parqueadero de meissen", "vehículo hallado", "vehiculo hallado", "automotor", "carro sospechoso", "transferencia de arma", "arma transferida", "apoyo a la patrulla", "quién conducía", "quien conducia"], respuesta: "He escuchado mencionar ese vehículo durante la investigación, pero en ese momento no le di ninguna relevancia, esa noche estábamos atendiendo varios procedimientos y había muchos vehículos entrando y saliendo del sector, no recuerdo quién lo conducía ni quiénes eran sus ocupantes, si realmente estuvo relacionado con los hechos, esa información debería estar en manos de los investigadores y no en mis reportes operativos."
+},
 
-            { claves: ["homicidio", "asesinato", "muerte", "crimen", "ejecucion"], 
-              respuesta: "Rechazo categóricamente cualquier vinculación con ese homicidio. Una acusación de ese calibre contra un suboficial con mi hoja de vida es una total infamia." },
+            { claves: ["homicidio", "asesinato", "muerte", "crimen", "ejecucion", "caso"], respuesta: "Rechazo categóricamente cualquier vinculación con ese homicidio, una acusación de ese calibre contra un suboficial con mi hoja de vida es una total infamia." },
 
             // ==========================================
             // FASE 2: LA FISURA (Justificaciones y contradicciones de la patrulla)
@@ -1816,38 +1836,36 @@ const bancoDeHistorias = {
             { claves: ["patrulla", "vehiculo", "camioneta", "hilux", "fuera de jurisdiccion", "variante"], 
               respuesta: "La patrulla Toyota Hilux estuvo en movimiento toda la noche. Si salimos de la jurisdicción hacia la variante a los Llanos Orientales, fue persiguiendo a unos sospechosos en moto que evadieron un retén." },
 
-            { claves: ["bitacora", "registros de turno", "alteraciones", "enmendaduras", "borrones"], 
+            { claves: ["bitácora", "registros de turno", "alteraciones", "enmendaduras", "borrones"], 
               respuesta: "Los libros de población y las bitácoras los llenamos en la madrugada, cansados después de turnos de 14 horas. Cualquier tachón o enmendadura es un simple error humano de digitación manual." },
 
-            { claves: ["arma", "pistola", "sig sauer", "serial", "dotacion"], 
-              respuesta: "Mi arma de dotación oficial es una pistola SIG Sauer P226. Está asignada legalmente y jamás ha sido disparada por fuera de los protocolos de defensa propia." },
+            { claves: ["arma", "pistola", "sig sauer", "serial", "dotacion", "arma de dotación"], respuesta: "Mi arma de dotación oficial es una pistola SIG Sauer P226. Está asignada legalmente y jamás ha sido disparada por fuera de los protocolos de defensa propia." },
 
             { claves: ["instagram", "redes", "tactical", "perfil", "mano propia"], 
               respuesta: "La cuenta @diego_salcedo_tactical es un espacio de entrenamiento táctico privado. Los mensajes sobre limpiar las calles son filosofía penal de libre expresión, no decretos de muerte." },
 
             { claves: ["telefono", "llamada", "celular", "duracion"], 
-              respuesta: "Tengo interceptaciones y llamadas con informantes de la zona todo el tiempo. Para combatir el crimen en Ciudad Bolívar se necesita información de fuentes oscuras." },
+              respuesta: "Tengo interceptaciones y llamadas con informantes de la zona todo el tiempo, pSara combatir el crimen en Ciudad Bolívar se necesita información de fuentes oscuras." },
 
             // ==========================================
             // FASE 3: EL QUIEBRE (Resolución de Vacíos Investigativos)
             // ==========================================
-            { claves: ["sabemos", "pruebas", "confiese", "evidencia", "balistica", "forense", "proyectil"], 
-              respuesta: "Jefe... deje de mirarme como a un monstruo, en Ciudad Bolívar el sistema penal no sirve; uno captura al mismo delincuente cinco veces y al otro día está libre robando. Yo solo cumplo con lo que la ciudadanía exige en silencio. Pero si me van a tirar a los lobos, no me voy a hundir solo. Prefiero hablar antes de que el laboratorio entregue el cotejo de balística." },
+            { claves: ["sabemos", "pruebas", "confiese", "evidencia", "balística", "forense", "proyectil"], 
+              respuesta: "Jefe... deje de mirarme como a un monstruo, en Ciudad Bolívar el sistema penal no sirve; uno captura al mismo delincuente cinco veces y al otro día está libre robando, yo solo cumplo con lo que la ciudadanía exige en silencio, pero si me van a tirar a los lobos, no me voy a hundir solo, prefiero hablar antes de que el laboratorio entregue el cotejo de balística." },
 
             // 1. Vacío Investigativo: Resultados de la balística y punto exacto de la ejecución
-            { claves: ["balistica", "disparo", "municion", "punto exacto", "donde le disparo", "ejecucion"], 
+            { claves: ["balistica", "disparo", "munición", "punto exacto", "donde le disparo", "ejecucion"], 
               respuesta: "(Aprieta los puños, frío) El examen de balística va a dar positivo... fue mi SIG Sauer. Al muchacho no lo matamos en la patrulla. Lo llevamos hasta el kilómetro 4 de la variante desolada hacia los Llanos Orientales. Lo bajamos del carro y en la zona boscosa le propiné dos impactos a corta distancia. La orden ya estaba dada." },
 
             // 2. Vacío Investigativo: Identidad del segundo ocupante (Compañero desaparecido)
             { claves: ["compañero", "segundo ocupante", "colega", "patrullero", "quien iba", "trasladado"], 
               respuesta: "Esa noche yo no iba solo en la Hilux. El segundo ocupante era el Patrullero Byron Castro; él manejaba el vehículo. Al día siguiente, la red movió influencias con mandos superiores para trasladarlo de urgencia en menos de 24 horas a una subestación rural en el Guaviare, para sacarlo del radar de la Fiscalía." },
 
-            { claves: ["carnicero", "nelson", "duarte", "meissen", "carro abandonado", "limpieza"], 
-              respuesta: "Nelson Fabio Duarte, alias 'El Carnicero', maneja las plazas de microtráfico del sur. Él nos pagaba una nómina mensual por hacer limpieza social de los jíbaros y ladrones que le dañaban el negocio. El carro que hallaron abandonado en el parqueadero de Meissen, un Chevrolet gris, era el vehículo de apoyo de la banda de 'El Carnicero'. En ese carro nos enviaron el arma limpia para el cambio, pero no alcanzamos a moverla." },
-
             // 4. Vacío Investigativo: Grabaciones de cámaras y rutas alternas de traslado
             { claves: ["grabaciones", "camaras", "rutas alternas", "videos", "ruta completa"], 
               respuesta: "Para no quedar registrados en las cámaras del C4 de la Boyacá, desviamos la patrulla por las trochas del sector de Mochuelo Alto y salimos por la parte de atrás de Usme hacia la variante. Mi compañero Byron llamó a un contacto del centro de monitoreo local para que borrara los discos duros de las dos cámaras de la ruta alterna esa misma madrugada." },
+
+              { claves: ["el carnicero", "carnicero", "duarte", "nelson", "llamada después", "llamada posterior", "comunicación posterior", "contacto posterior", "habló con el carnicero", "porque llamó", "por qué llamó", "quien es el carnicero" ], respuesta: "No niego que exista ese registro telefónico. En Ciudad Bolívar uno termina hablando con mucha gente para obtener información y anticipar problemas de seguridad. Nelson Duarte era un nombre conocido en el sector y ocasionalmente aparecía mencionado en distintas investigaciones. Lo que no recuerdo con exactitud es el contenido de esa conversación. Han pasado meses y fueron apenas unos minutos dentro de una jornada complicada. Si los investigadores tienen el registro completo, deberían revisarlo en lugar de sacar conclusiones por la hora en que ocurrió." },
 
 
               // RAPPORT Y CONVERSACIÓN INFORMAL
@@ -1952,7 +1970,7 @@ const bancoDeHistorias = {
             { claves: ["nombre", "quien eres", "nombres y apellidos"], 
             respuesta: "Mi nombre completo es Luisa Fernanda García López." },
 
-            { claves: ["cedula", "cédula", "identificacion", "identificación", "cc"], 
+            { claves: ["cedula", "cédula", "identificacion", "identificación"], 
             respuesta: "Mi cédula de ciudadanía es la número 1.023.745.895 de Cartagena." },
 
             { claves: ["profesion", "cargo", "que haces", "administradora", "tesorera"], 
@@ -2113,203 +2131,3 @@ const bancoDeHistorias = {
         desconocido: "No comprendo su línea de argumentación, si tiene un soporte contable que deba aclarar, muéstremelo."
     }
     };
-
-// =====================================================
-// AMPLIACION DE ENTRENAMIENTO CONVERSACIONAL - NIVEL BASICO
-// Mantiene la estructura original y agrega contenido simple.
-// =====================================================
-(function ampliarEntrenamientoBasico() {
-    if (typeof bancoDeHistorias === "undefined") return;
-
-    function respuestasGeneralesBasicas(caso) {
-        const titulo = caso.titulo || `Caso ${caso.id}`;
-        const delito = caso.delito || "situacion investigada";
-        const alias = caso.alias || "sin alias";
-
-        return [
-            {
-                claves: ["de que trata", "explicame el caso", "idea principal", "situacion principal", "resumen del caso"],
-                respuesta: `Este caso trata sobre ${delito}. La idea principal es verificar la version de ${caso.personaje}, conocido como "${alias}", contrastando su relato con el contexto disponible y sin inventar informacion fuera del expediente.`
-            },
-            {
-                claves: ["como explico", "explicarlo sencillo", "forma sencilla", "explicacion simple"],
-                respuesta: `Una forma sencilla de explicarlo es: ${caso.personaje} aparece relacionado con una situacion sospechosa de ${delito}; la entrevista busca confirmar datos basicos, detectar contradicciones y aclarar hechos puntuales.`
-            },
-            {
-                claves: ["que debo responder", "respuesta profesional", "como responder profesional", "decirlo mejor", "respuesta formal"],
-                respuesta: "Responde con orden: primero identifica el hecho, luego menciona el dato verificable y finalmente aclara que no debes afirmar informacion que no este en el caso. Una respuesta profesional es clara, breve y basada en evidencia."
-            },
-            {
-                claves: ["que informacion es importante", "que mencionar primero", "datos importantes", "puntos clave"],
-                respuesta: `Lo mas importante es mencionar identidad, rol aparente, situacion investigada, posibles contradicciones y objetivo de la entrevista. En ${titulo}, evita desviarte hacia opiniones personales sin soporte.`
-            },
-            {
-                claves: ["que no debo inventar", "no inventar", "informacion no debo decir", "evitar inventar"],
-                respuesta: "No inventes fechas, nombres, pruebas, confesiones ni relaciones que no aparezcan en el expediente. Si falta un dato, indica que debe verificarse con documentos, registros o fuentes oficiales."
-            },
-            {
-                claves: ["pregunta relacionada", "seguimiento", "si me preguntan mas", "mas detalles", "pregunta derivada"],
-                respuesta: "Si te hacen una pregunta de seguimiento, retoma la respuesta anterior, agrega solo un dato verificable y cierra indicando que cualquier detalle adicional debe confirmarse con el contexto del caso."
-            }
-        ];
-    }
-
-    Object.values(bancoDeHistorias).forEach((caso) => {
-        caso.titulo = caso.titulo || `Entrenamiento basico - ${caso.alias || caso.id}`;
-        caso.descripcion = caso.descripcion || `Caso basico asociado a ${caso.delito || "una situacion investigativa"}.`;
-        caso.contextoGeneral = caso.contextoGeneral || `Entrevista inicial con ${caso.personaje}. El objetivo es practicar preguntas claras, escuchar respuestas y reconocer informacion relevante sin agregar hechos no verificados.`;
-        caso.preguntasPosibles = caso.preguntasPosibles || [
-            "De que trata este caso?",
-            "Cual es la situacion principal?",
-            "Como explico el caso de forma sencilla?",
-            "Que informacion deberia mencionar primero?",
-            "Que informacion no debo inventar?"
-        ];
-        caso.preguntasSeguimiento = caso.preguntasSeguimiento || [
-            "Puede aclarar ese punto?",
-            "Que dato confirma esa version?",
-            "Que parte del expediente respalda esa respuesta?",
-            "Que faltaria verificar?"
-        ];
-        caso.palabrasClaveEntrenamiento = caso.palabrasClaveEntrenamiento || [
-            "contexto",
-            "situacion principal",
-            "respuesta profesional",
-            "seguimiento",
-            "no inventar",
-            caso.delito || "caso"
-        ];
-
-        const clavesExistentes = new Set((caso.respuestas || []).flatMap((item) => item.claves || []));
-        respuestasGeneralesBasicas(caso).forEach((item) => {
-            if (!item.claves.some((clave) => clavesExistentes.has(clave))) {
-                caso.respuestas.push(item);
-            }
-        });
-    });
-
-    const nuevosCasosBasicos = {
-        "caso_013": {
-            id: "caso_013",
-            titulo: "CASO #013 - EL CELULAR PERDIDO",
-            personaje: "Mariana Torres Rivas",
-            alias: "La Administradora",
-            delito: "Uso no autorizado de informacion personal",
-            edad: 29,
-            descripcion: "Caso simple sobre un telefono institucional extraviado y el posible uso indebido de contactos, fotografias y mensajes laborales.",
-            contextoGeneral: "Mariana administraba un pequeno negocio familiar. Tras perder un telefono de trabajo, varios clientes reportaron mensajes extranos solicitando pagos anticipados.",
-            intro: "Yo perdi el celular de la tienda, pero no envie ningun mensaje pidiendo dinero. Quiero aclarar lo ocurrido.",
-            preguntasPosibles: [
-                "Cuando se perdio el celular?",
-                "Quien tenia acceso al telefono?",
-                "Que informacion habia en el dispositivo?",
-                "Que hicieron al notar los mensajes?",
-                "Como se debe explicar el caso sin inventar?"
-            ],
-            preguntasSeguimiento: [
-                "A quien aviso primero?",
-                "Cambio las claves de las cuentas?",
-                "Tiene soporte de los mensajes enviados?",
-                "Que clientes fueron contactados?"
-            ],
-            palabrasClaveEntrenamiento: ["celular", "clientes", "mensajes", "pagos", "claves", "contactos"],
-            respuestas: [
-                { claves: ["hola", "buenos dias", "buenas tardes", "buenas noches"], respuesta: "Buenas. Estoy dispuesta a explicar lo que paso con el telefono de la tienda." },
-                { claves: ["nombre", "quien eres", "como te llamas"], respuesta: "Mi nombre es Mariana Torres Rivas y administraba la tienda familiar." },
-                { claves: ["celular", "telefono", "dispositivo"], respuesta: "Era el celular de trabajo de la tienda. Alli estaban contactos de clientes, fotos de productos y conversaciones de pedidos." },
-                { claves: ["cuando", "fecha", "dia", "perdio"], respuesta: "Lo perdi un viernes en la tarde, despues de cerrar el local y tomar transporte publico hacia mi casa." },
-                { claves: ["mensajes", "pagos", "dinero", "anticipo"], respuesta: "Varios clientes recibieron mensajes pidiendo anticipos. Yo no los envie y por eso avise que no hicieran pagos." },
-                { claves: ["claves", "contraseñas", "cuentas", "bloqueo"], respuesta: "Cambie las claves de las redes sociales de la tienda y solicite bloquear la linea telefonica." },
-                { claves: ["clientes afectados", "quienes recibieron", "contactados"], respuesta: "Hasta donde se, tres clientes escribieron para preguntar si la solicitud de pago era real." },
-                { claves: ["denuncia", "reporte", "autoridad"], respuesta: "Hice el reporte ante el operador y conserve capturas de los mensajes que enviaron a los clientes." },
-                { claves: ["responsabilidad", "culpa", "fuiste tu"], respuesta: "Reconozco que debi proteger mejor el equipo, pero no envie esos mensajes ni autorice a nadie a hacerlo." },
-                { claves: ["que aprendio", "mejora", "evitar"], respuesta: "Ahora usamos doble verificacion, bloqueo de pantalla y copias separadas de contactos para reducir riesgos." },
-                { claves: ["de que trata", "resumen", "idea principal"], respuesta: "El caso trata del posible uso indebido de un celular de trabajo perdido. La practica consiste en separar hechos confirmados de suposiciones." },
-                { claves: ["que no inventar", "no inventar"], respuesta: "No se debe inventar quien envio los mensajes si no existe prueba. Solo se puede afirmar que hubo mensajes no autorizados desde o sobre la cuenta del negocio." }
-            ],
-            desconocido: "No tengo ese dato confirmado. Puedo responder sobre el celular, los mensajes y las acciones que realizamos despues."
-        },
-        "caso_014": {
-            id: "caso_014",
-            titulo: "CASO #014 - EL INVENTARIO INCOMPLETO",
-            personaje: "Luis Fernando Mora Cano",
-            alias: "El Auxiliar",
-            delito: "Perdida de inventario",
-            edad: 33,
-            descripcion: "Caso basico sobre diferencias entre inventario fisico y registro digital en una bodega pequena.",
-            contextoGeneral: "Luis era auxiliar de bodega. Durante un cierre mensual faltaron cajas de insumos y el registro digital aparecio modificado fuera del horario normal.",
-            intro: "Yo registraba entradas y salidas, pero no era la unica persona con acceso a la bodega.",
-            preguntasPosibles: [
-                "Que productos faltaron?",
-                "Quien tenia acceso a la bodega?",
-                "Como se hacian los registros?",
-                "Que significa una diferencia de inventario?",
-                "Que deberia responder si no sabe un dato?"
-            ],
-            preguntasSeguimiento: [
-                "Quien tenia las llaves?",
-                "A que hora se modifico el registro?",
-                "Habia camaras disponibles?",
-                "Que documento soporta la salida?"
-            ],
-            palabrasClaveEntrenamiento: ["inventario", "bodega", "registro", "cajas", "llaves", "camara"],
-            respuestas: [
-                { claves: ["hola", "buenos", "buenas"], respuesta: "Buenas. Puedo explicar como funcionaba el inventario de la bodega." },
-                { claves: ["nombre", "quien eres"], respuesta: "Soy Luis Fernando Mora Cano, auxiliar de bodega." },
-                { claves: ["productos", "faltaron", "cajas", "mercancia"], respuesta: "Faltaron cajas de insumos de empaque y algunos repuestos pequenos. No eran productos de venta directa." },
-                { claves: ["acceso", "llaves", "quien entraba"], respuesta: "Tenian acceso el jefe de bodega, dos auxiliares y personal de despacho cuando habia entregas urgentes." },
-                { claves: ["registro", "sistema", "digital", "modificado"], respuesta: "El registro se hacia en una hoja digital compartida. Cada salida debia tener fecha, responsable y soporte." },
-                { claves: ["horario", "fuera de horario", "noche"], respuesta: "La modificacion que revisaron aparece fuera del horario normal. Yo no recuerdo haber ingresado al sistema a esa hora." },
-                { claves: ["camara", "video", "grabacion"], respuesta: "Habia camara en la entrada, pero no en todos los pasillos. Esa limitacion debe tenerse en cuenta." },
-                { claves: ["culpa", "responsable", "robo"], respuesta: "No puedo senalar a una persona sin prueba. Lo correcto es revisar accesos, camaras y soportes de salida." },
-                { claves: ["explicar sencillo", "resumen", "de que trata"], respuesta: "El caso trata de una diferencia entre lo que habia fisicamente en bodega y lo que decia el registro digital." },
-                { claves: ["respuesta profesional", "como responder"], respuesta: "Una respuesta profesional debe reconocer la diferencia, explicar el procedimiento y proponer revisar evidencias sin acusar sin soporte." }
-            ],
-            desconocido: "No tengo ese dato. Para responderlo bien habria que revisar el registro, las camaras o el soporte de salida."
-        },
-        "caso_015": {
-            id: "caso_015",
-            titulo: "CASO #015 - EL REPORTE DEL CONJUNTO",
-            personaje: "Diana Marcela Pardo Ruiz",
-            alias: "La Vecina",
-            delito: "Conflicto de convivencia",
-            edad: 40,
-            descripcion: "Caso sencillo para practicar entrevistas sobre un conflicto vecinal y manejo de versiones contradictorias.",
-            contextoGeneral: "Diana fue reportada por una discusion en zona comun. Ella afirma que solo reclamo por ruido y que no agredio a nadie.",
-            intro: "Yo no agredi a nadie. Solo pedi respeto porque habia ruido muy tarde.",
-            preguntasPosibles: [
-                "Que paso en la zona comun?",
-                "Quien estaba presente?",
-                "Hubo agresion o solo discusion?",
-                "Que pruebas existen?",
-                "Como se evita exagerar la version?"
-            ],
-            preguntasSeguimiento: [
-                "A que hora ocurrio?",
-                "Que dijo exactamente?",
-                "Habia testigos?",
-                "Se levanto acta del conjunto?"
-            ],
-            palabrasClaveEntrenamiento: ["ruido", "vecinos", "discusion", "zona comun", "testigos", "acta"],
-            respuestas: [
-                { claves: ["hola", "buenos", "buenas"], respuesta: "Buenas. Quiero explicar lo ocurrido sin exageraciones." },
-                { claves: ["nombre", "quien eres"], respuesta: "Soy Diana Marcela Pardo Ruiz, residente del conjunto." },
-                { claves: ["que paso", "situacion", "discusion"], respuesta: "Hubo una discusion por ruido en la zona comun. Yo pedi que bajaran el volumen porque era tarde." },
-                { claves: ["hora", "cuando", "noche"], respuesta: "Ocurrio cerca de las once de la noche, despues de varias quejas previas por ruido." },
-                { claves: ["agresion", "golpe", "amenaza"], respuesta: "No golpee ni amenace a nadie. Reconozco que subi el tono de voz, pero no hubo agresion fisica." },
-                { claves: ["testigos", "quien vio", "presentes"], respuesta: "Estaban algunos vecinos y el guarda de turno. Ellos pueden confirmar que la situacion fue verbal." },
-                { claves: ["acta", "administracion", "reporte"], respuesta: "La administracion hizo un reporte de convivencia y dejo constancia de las versiones." },
-                { claves: ["pruebas", "evidencia", "camara"], respuesta: "Segun entiendo, hay camaras en el pasillo, pero no se si captaron el audio." },
-                { claves: ["resumen", "de que trata", "idea principal"], respuesta: "El caso trata de una queja de convivencia donde es importante diferenciar una discusion verbal de una agresion." },
-                { claves: ["que no inventar", "evitar"], respuesta: "No se debe inventar que hubo golpes, amenazas o danos si no existen pruebas. Debe hablarse solo de hechos observados." }
-            ],
-            desconocido: "No puedo confirmar eso. Solo puedo hablar de la discusion, los testigos y el reporte de administracion."
-        }
-    };
-
-    Object.entries(nuevosCasosBasicos).forEach(([id, caso]) => {
-        if (!bancoDeHistorias[id]) {
-            bancoDeHistorias[id] = caso;
-        }
-    });
-})();

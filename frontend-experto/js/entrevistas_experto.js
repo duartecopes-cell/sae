@@ -247,124 +247,6 @@ function respuestaGenerica() {
 // PROCESAR PREGUNTA LIBRE — CON IA LOCAL (OLLAMA)
 // ═══════════════════════════════════════════════════
 
-// =====================================================
-// ENTRENADOR EXPERTO - RESPUESTAS DE COACHING
-// =====================================================
-function obtenerEntrevistaSimuladaActual() {
-    if (!casoActivo) return null;
-
-    const temas = Object.values(casoActivo.temas_calificables || {});
-    const preguntasIniciales = [
-        "Explique con sus propias palabras por que fue citado a esta entrevista.",
-        "Cual es su version sobre los hechos investigados?",
-        "Que soporte puede aportar para respaldar su version?"
-    ];
-    const preguntasSeguimiento = temas.slice(0, 3).map((tema) => `Usted menciono una version general. Precise ahora lo relacionado con ${tema.etiqueta}.`);
-    const preguntasCriticas = temas.slice(0, 3).map((tema) => `Que explicacion verificable tiene frente a ${tema.etiqueta}?`);
-
-    return {
-        id_entrevista: `sim_${casoActivo.id}`,
-        caso_relacionado: casoActivo.id,
-        rol_persona_pregunta: "Investigador en entrenamiento",
-        rol_persona_responde: `${casoActivo.nombre}, sospechoso del caso`,
-        conversacion_simulada: [
-            { pregunta: preguntasIniciales[0], respuesta_esperada: "Respuesta abierta que permite ubicar postura, coartada y tono emocional." },
-            { pregunta: preguntasIniciales[1], respuesta_esperada: "Version inicial del sospechoso sin confrontacion inmediata." },
-            { pregunta: preguntasCriticas[0] || preguntasIniciales[2], respuesta_esperada: "Respuesta conectada con evidencia, contradiccion o vacio verificable." }
-        ],
-        preguntas_iniciales: preguntasIniciales,
-        preguntas_seguimiento: preguntasSeguimiento,
-        preguntas_criticas: preguntasCriticas,
-        respuestas_esperadas: [
-            "Debe ser concreta, respetuosa y conectada con un dato del expediente.",
-            "Debe evitar acusaciones sin soporte y pedir precision verificable.",
-            "Debe permitir una repregunta natural si el sospechoso evade."
-        ],
-        respuestas_alternativas_validas: [
-            "Reformular la pregunta de forma mas simple.",
-            "Pedir una fecha, lugar, documento o persona especifica.",
-            "Reconocer que falta informacion y solicitar verificacion."
-        ],
-        retroalimentacion_agente: [
-            "Buena pregunta si se entiende, toca un tema del caso y permite evaluar contradiccion.",
-            "Debe mejorar si es demasiado amplia, acusatoria o contiene datos no verificados.",
-            "Una respuesta profesional mantiene control del tema y no inventa evidencia."
-        ],
-        evaluacion_respuesta: [
-            "claridad",
-            "pertinencia",
-            "coherencia",
-            "uso de evidencia",
-            "capacidad de seguimiento"
-        ],
-        sugerencias_mejora: [
-            "Divida preguntas compuestas en una sola idea.",
-            "Pida precision despues de cada evasiva.",
-            "No revele toda la evidencia al inicio.",
-            "Cierre cada bloque con un dato verificable."
-        ]
-    };
-}
-
-function obtenerRespuestaEntrenador(pregunta) {
-    if (!casoActivo) return null;
-
-    const texto = normalizarTexto(pregunta);
-    const simulacion = obtenerEntrevistaSimuladaActual();
-    const guia = casoActivo.entrenamiento_experto || {};
-
-    if (["simulacion", "entrevista simulada", "guion", "conversacion simulada"].some((clave) => texto.includes(clave))) {
-        return [
-            `Simulacion para ${casoActivo.delito}:`,
-            `1. ${simulacion.preguntas_iniciales[0]}`,
-            `2. ${simulacion.preguntas_iniciales[1]}`,
-            `3. ${simulacion.preguntas_criticas[0] || simulacion.preguntas_iniciales[2]}`,
-            "Objetivo: iniciar con version libre, pasar a precision verificable y cerrar con una contradiccion o vacio del caso."
-        ].join("\n");
-    }
-
-    if (["evalua", "evaluar", "califica", "retroalimentacion", "feedback"].some((clave) => texto.includes(clave))) {
-        return [
-            "Evaluacion de entrenamiento:",
-            "- Una respuesta fuerte es clara, breve, verificable y conectada con el expediente.",
-            "- Si tu respuesta no menciona evidencia o siguiente paso, esta incompleta.",
-            "- Mejora sugerida: formula una sola pregunta, pide precision y evita conclusiones que el caso no soporte."
-        ].join("\n");
-    }
-
-    if (["mejorar", "mejor respuesta", "decirlo mejor", "respuesta profesional"].some((clave) => texto.includes(clave))) {
-        return [
-            "Version profesional sugerida:",
-            `En este caso de ${casoActivo.delito}, conviene responder con un dato del expediente, explicar por que es relevante y pedir una aclaracion verificable.`,
-            "Ejemplo: 'Usted afirma una version general; precise fecha, lugar y soporte documental para contrastarla con el expediente'."
-        ].join("\n");
-    }
-
-    if (["pregunta critica", "preguntas criticas", "pregunta dificil", "seguimiento"].some((clave) => texto.includes(clave))) {
-        return [
-            "Preguntas criticas recomendadas:",
-            ...simulacion.preguntas_criticas.slice(0, 3),
-            "Use una por vez y espere respuesta antes de confrontar con otro tema."
-        ].join("\n");
-    }
-
-    if (["que debo evitar", "errores", "no inventar", "informacion no debo"].some((clave) => texto.includes(clave))) {
-        const errores = guia.errores_evitar || [
-            "Acusar sin base.",
-            "Inventar informacion.",
-            "Hacer preguntas confusas."
-        ];
-        return `Evite estos errores: ${errores.join(" ")} Mantenga cada pregunta dentro del expediente y pida verificacion cuando falte informacion.`;
-    }
-
-    if (["criterios", "buena respuesta", "como se evalua", "evaluacion"].some((clave) => texto.includes(clave))) {
-        const criterios = guia.criterios_evaluacion || simulacion.evaluacion_respuesta;
-        return `Criterios para una buena respuesta: ${criterios.join(", ")}. Una respuesta experta debe poder sostenerse con datos del caso y abrir una pregunta de seguimiento.`;
-    }
-
-    return null;
-}
-
 function procesarPreguntaLibre() {
     if (bloqueadoEsperando) {
         console.warn("⏳ Esperando respuesta anterior...");
@@ -388,10 +270,7 @@ function procesarPreguntaLibre() {
 
     // ← ÚNICO CAMBIO: el callback es async para poder usar await
     setTimeout(async () => {
-        const respuestaEntrenador = obtenerRespuestaEntrenador(pregunta);
-        const clasificacion = respuestaEntrenador
-            ? { tipo: "entrenador", respuesta: respuestaEntrenador, coincidencias: 1 }
-            : clasificarPregunta(pregunta);
+        const clasificacion = clasificarPregunta(pregunta);
         console.log(`🎯 Tipo: ${clasificacion.tipo} | Coincidencias: ${clasificacion.coincidencias}`);
 
         let textoRespuesta  = "";
@@ -401,14 +280,7 @@ function procesarPreguntaLibre() {
         let etiquetaTema    = "";
 
         // ── ALTA VALOR: calificable ─────────────────────────────
-        if (clasificacion.tipo === "entrenador") {
-            textoRespuesta  = clasificacion.respuesta;
-            impacto         = 0;
-            esContradiccion = false;
-            razonLog        = "Entrenador experto";
-            console.log("ENTRENADOR: respuesta de coaching sin impacto");
-
-        } else if (clasificacion.tipo === "alta_valor") {
+        if (clasificacion.tipo === "alta_valor") {
             const tema = clasificacion.tema;
 
             textoRespuesta  = obtenerRespuestaEvolutiva(tema);

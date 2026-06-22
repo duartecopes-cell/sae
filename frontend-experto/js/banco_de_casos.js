@@ -39,7 +39,7 @@ const BANCO_DE_CASOS = {
     "conocimiento_victima": {
       "tema_id": "conocimiento_victima",
       "etiqueta": "Conocimiento previo de la víctima",
-      "palabras_clave": ["conocías", "conocía", "víctima", "la viste", "cliente", "frecuentaba", "occisa", "esa mujer", "quién era", "marina"],
+      "palabras_clave": ["conocías", "conocía", "víctima", "la viste", "cliente", "frecuentaba", "occisa", "esa mujer", "quién era", "marina", "Marina"],
       "impacto": 25,
       "es_calificable": true,
       "respuestas_evolucion": [
@@ -186,7 +186,7 @@ const BANCO_DE_CASOS = {
   // Preguntas válidas que no son calificables pero merecen
   // respuesta coherente (no penalizan, no aportan puntos).
   respuestas_exploratorias: [
-    { palabras_clave: ["hola", "buenos", "dias", "tardes", "noches"], 
+    { palabras_clave: ["hola", "buenos", "dias", "buenas", "tardes", "noches"], 
       respuesta: "Como va todo, muy estresado per espero que me entiendan rápido." },
 
     { palabras_clave: ["nombre", "quien eres", "nombres y apellidos", "llama", "nombres", "le dicen"], 
@@ -4899,132 +4899,5 @@ function obtenerCasosPorDelito(delito) {
 function contarCasos() {
   return Object.keys(BANCO_DE_CASOS).length;
 }
-
-// =====================================================
-// CAPA DE ENTRENAMIENTO INTELIGENTE - NIVEL EXPERTO
-// Enriquece cada caso sin modificar el motor por temas.
-// =====================================================
-(function ampliarEntrenamientoExperto() {
-  if (typeof BANCO_DE_CASOS === "undefined") return;
-
-  function crearGuiaExperta(caso) {
-    const temas = Object.values(caso.temas_calificables || {}).map((tema) => tema.etiqueta);
-
-    return {
-      id_caso_experto: caso.id,
-      titulo: caso.titulo || `Caso experto ${caso.id}`,
-      contexto_estrategico: `Entrenamiento experto sobre ${caso.delito}. La entrevista debe explorar contradicciones, evidencias, contexto operativo y posibles justificaciones sin inventar informacion externa al expediente.`,
-      situacion_principal: caso.descripcion || "Situacion principal no especificada en el expediente.",
-      antecedentes: caso.perfil || "Perfil no especificado.",
-      elementos_importantes: [
-        "Identidad del sospechoso y alias operativo.",
-        "Delito investigado y contexto del expediente.",
-        "Temas calificables propios del caso.",
-        "Respuestas exploratorias utiles para rapport.",
-        "Vacios que deben formularse como hipotesis verificables."
-      ],
-      posibles_preguntas_usuario: [
-        "Como puedo iniciar la entrevista?",
-        "Que pregunta critica deberia hacer?",
-        "Como respondo si el sospechoso evade?",
-        "Que informacion no debo inventar?",
-        "Como mejoro mi respuesta anterior?"
-      ],
-      posibles_respuestas_agente: [
-        "Inicia con una pregunta abierta y concreta, luego avanza hacia un dato verificable del expediente.",
-        "Si hay evasiva, retoma la evidencia y pide una explicacion especifica.",
-        "Si falta informacion, di que debe verificarse y no completes el vacio con suposiciones."
-      ],
-      preguntas_dificiles: temas.slice(0, 5).map((tema) => `Explique de forma precisa su relacion con: ${tema}.`),
-      respuestas_profesionales_criticas: [
-        "Una buena respuesta debe conectar el hecho con evidencia, pedir precision y evitar acusaciones sin soporte.",
-        "Una respuesta incompleta debe corregirse agregando quien, cuando, como se sabe y que falta verificar.",
-        "Una respuesta profesional mantiene tono firme, claro y no especulativo."
-      ],
-      contra_preguntas_posibles: [
-        "Que evidencia concreta sostiene esa afirmacion?",
-        "Puede precisar fecha, lugar o persona involucrada?",
-        "Que explicacion alternativa existe y como se verifica?",
-        "Que documento o registro confirma su version?"
-      ],
-      recomendaciones_respuesta: [
-        "Usar preguntas abiertas al inicio y preguntas cerradas para confirmar datos.",
-        "No introducir informacion nueva que no aparezca en el caso.",
-        "Reformular si la respuesta del sospechoso es evasiva.",
-        "Registrar contradicciones por tema, no por intuicion."
-      ],
-      errores_evitar: [
-        "Acusar sin base.",
-        "Hacer preguntas compuestas con varias ideas a la vez.",
-        "Confundir una hipotesis con una prueba.",
-        "Ignorar una respuesta anterior importante.",
-        "Inventar nombres, fechas o evidencia."
-      ],
-      criterios_evaluacion: [
-        "claridad",
-        "pertinencia",
-        "coherencia con el expediente",
-        "seguimiento de respuestas previas",
-        "uso responsable de evidencia",
-        "control de sesgos"
-      ],
-      palabras_clave: [
-        caso.delito,
-        caso.alias,
-        caso.nombre,
-        ...temas
-      ].filter(Boolean),
-      nivel_complejidad: caso.grado_dificultad || "Experto"
-    };
-  }
-
-  function respuestasExploratoriasDeEntrenamiento(caso) {
-    const guia = caso.entrenamiento_experto;
-    const temasClave = guia.preguntas_dificiles.slice(0, 3).join(" ");
-
-    return [
-      {
-        palabras_clave: ["como puedo iniciar", "pregunta inicial", "iniciar entrevista", "abrir entrevista"],
-        respuesta: `Para iniciar este caso, formule una pregunta abierta sobre el rol del sospechoso en ${caso.delito} y luego pida una precision verificable. Ejemplo: "Explique su version de los hechos y que soporte documental respalda esa version".`
-      },
-      {
-        palabras_clave: ["pregunta critica", "preguntas criticas", "pregunta dificil", "que pregunta hacer"],
-        respuesta: `Una pregunta critica debe tocar un tema calificable sin acusar de entrada. Puede trabajar sobre: ${temasClave}. Pida explicacion, fecha, soporte y contradiccion observable.`
-      },
-      {
-        palabras_clave: ["como responder mejor", "mejor respuesta", "respuesta profesional", "decirlo mejor"],
-        respuesta: "Una respuesta experta debe tener cuatro partes: dato del caso, razon de relevancia, pregunta concreta y limite de informacion. Si falta evidencia, digalo expresamente y solicite verificacion."
-      },
-      {
-        palabras_clave: ["que debo evitar", "errores evitar", "que no debo inventar", "no inventar"],
-        respuesta: `Evite inventar datos fuera del expediente de ${caso.delito}. No afirme autores, fechas, rutas, pagos o confesiones que no esten en el caso. Trabaje con hipotesis verificables.`
-      },
-      {
-        palabras_clave: ["evalua mi respuesta", "evaluar respuesta", "califica mi respuesta", "retroalimentacion"],
-        respuesta: "Para evaluar una respuesta, revise si fue clara, especifica, conectada con evidencia, libre de suposiciones y util para una pregunta de seguimiento. Si no cumple esos criterios, reformulela con un dato verificable y una solicitud concreta."
-      },
-      {
-        palabras_clave: ["respuesta incompleta", "incompleta", "me falta", "que le falta"],
-        respuesta: "Una respuesta queda incompleta cuando no precisa hecho, fuente, relacion con el caso o siguiente paso de verificacion. Mejorela agregando quien, que, cuando, como se sabe y que falta confirmar."
-      },
-      {
-        palabras_clave: ["contexto estrategico", "contexto del caso", "explicame este caso", "de que trata"],
-        respuesta: guia.contexto_estrategico
-      }
-    ];
-  }
-
-  Object.values(BANCO_DE_CASOS).forEach((caso) => {
-    caso.entrenamiento_experto = caso.entrenamiento_experto || crearGuiaExperta(caso);
-    caso.respuestas_exploratorias = caso.respuestas_exploratorias || [];
-
-    const clavesExistentes = new Set(caso.respuestas_exploratorias.flatMap((item) => item.palabras_clave || []));
-    respuestasExploratoriasDeEntrenamiento(caso).forEach((item) => {
-      if (!item.palabras_clave.some((clave) => clavesExistentes.has(clave))) {
-        caso.respuestas_exploratorias.push(item);
-      }
-    });
-  });
-})();
 
 console.log(`✅ BANCO_DE_CASOS v8 cargado: ${contarCasos()} casos con temas propios`);
