@@ -119,9 +119,19 @@ function autenticar(datos = {}) {
     }, 2500);
 }
 
+function limpiarSesionPreservandoAuditoria() {
+    const registros = localStorage.getItem('sae_auditoria_registros');
+    const actual = localStorage.getItem('sae_auditoria_sesion_actual');
+    const ultima = localStorage.getItem('sae_ultima_auditoria');
+    localStorage.clear();
+    if (registros) localStorage.setItem('sae_auditoria_registros', registros);
+    if (actual) localStorage.setItem('sae_auditoria_sesion_actual', actual);
+    if (ultima) localStorage.setItem('sae_ultima_auditoria', ultima);
+}
+
 function volverAlNivel() {
     if (confirm('¿Deseas volver al menú?')) {
-        localStorage.clear();
+        limpiarSesionPreservandoAuditoria();
         window.location.href = '../../inicio/niveles/niveles.html';
     }
 }

@@ -21,6 +21,13 @@ let preguntasCalificables = 0;   // ← solo ALTA_VALOR
 let casoActivo            = null;
 let tiempoInicio          = null;
 let bloqueadoEsperando    = false;
+let historialPreguntas    = [];
+
+const CONFIG_EVALUACION_EXPERTO = {
+    nivel: "Experto",
+    minimoTemasClave: 2,
+    preguntasMaximas: 30
+};
 
 // Historial de temas ya abordados en esta sesión
 // { tema_id: veces_preguntado }
@@ -68,6 +75,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     localStorage.setItem("nombreSospechoso", casoActivo.nombre);
     localStorage.setItem("delitoSospechoso", casoActivo.delito);
+
+    historialPreguntas = [];
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.crearSesion({
+            nivel: CONFIG_EVALUACION_EXPERTO.nivel,
+            caso: {
+                id: idCaso,
+                titulo: casoActivo.titulo || casoActivo.nombre,
+                personaje: casoActivo.nombre,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: localStorage.getItem("nombreUsuario") || "AGENTE ESPECIAL"
+        });
+        window.SAEAuditoria.agregarObservacion("Inicio de entrevista en nivel Experto con evaluacion por temas calificables.");
+    }
 
     // Reiniciar historial de temas
     temasAbordados = {};
@@ -247,6 +270,28 @@ function respuestaGenerica() {
 // PROCESAR PREGUNTA LIBRE — CON IA LOCAL (OLLAMA)
 // ═══════════════════════════════════════════════════
 
+function obtenerRecomendacionExperto(tipo, etiquetaTema) {
+    if (tipo === "alta_valor") {
+        return `Tema clave abordado: ${etiquetaTema}. Para mayor profundidad, repregunte con evidencia concreta.`;
+    }
+    if (tipo === "exploratoria") {
+        return "Pregunta exploratoria valida. Sirve para contexto, pero en Experto debe avanzar pronto hacia evidencia, contradicciones o temas calificables.";
+    }
+    return "La pregunta no se conecto con un tema calificable. Reoriente con palabras del caso: persona, lugar, fecha, evidencia, ruta, dinero o contradiccion.";
+}
+
+function mostrarRetroalimentacionExperto(tipo, etiquetaTema) {
+    const chat = document.getElementById("chat");
+    if (!chat) return;
+
+    const texto = obtenerRecomendacionExperto(tipo, etiquetaTema);
+    const msg = document.createElement("div");
+    msg.className = "msg-wrap system";
+    msg.innerHTML = `<div class="system-msg" style="font-size:11px; color:#7fb3ff;">${texto}</div>`;
+    chat.appendChild(msg);
+    chat.scrollTop = chat.scrollHeight;
+}
+
 function procesarPreguntaLibre() {
     if (bloqueadoEsperando) {
         console.warn("⏳ Esperando respuesta anterior...");
@@ -319,6 +364,53 @@ function procesarPreguntaLibre() {
 
         mostrarMensajeChat("sospechoso", textoRespuesta);
         hacerHablarSAE(textoRespuesta);
+        mostrarRetroalimentacionExperto(clasificacion.tipo, etiquetaTema);
+
+        const evaluacionExperto = {
+            nivel: CONFIG_EVALUACION_EXPERTO.nivel,
+            tipo: clasificacion.tipo,
+            puntaje: impacto,
+            correcta: clasificacion.tipo === "alta_valor",
+            tema: etiquetaTema || razonLog,
+            recomendacion: obtenerRecomendacionExperto(clasificacion.tipo, etiquetaTema),
+            criterios: {
+                relacionCaso: clasificacion.tipo !== "generica",
+                profundizacion: clasificacion.tipo === "alta_valor",
+                respetoObjetividad: true,
+                secuenciaLogica: preguntasFormuladas <= CONFIG_EVALUACION_EXPERTO.preguntasMaximas
+            }
+        };
+
+        const registroPregunta = {
+            pregunta,
+            respuesta: textoRespuesta,
+            correcta: evaluacionExperto.correcta,
+            tipo: clasificacion.tipo,
+            tema: etiquetaTema || razonLog,
+            evaluacion: evaluacionExperto
+        };
+
+        historialPreguntas.push(registroPregunta);
+
+        if (window.SAEAuditoria) {
+            window.SAEAuditoria.registrarInteraccion({
+                nivel: CONFIG_EVALUACION_EXPERTO.nivel,
+                caso: {
+                    id: localStorage.getItem("casoSeleccionado"),
+                    titulo: casoActivo.titulo || casoActivo.nombre,
+                    personaje: casoActivo.nombre,
+                    alias: casoActivo.alias,
+                    delito: casoActivo.delito
+                },
+                pregunta,
+                respuesta: textoRespuesta,
+                correcta: evaluacionExperto.correcta,
+                puntaje: impacto,
+                recomendacion: evaluacionExperto.recomendacion,
+                criterio: evaluacionExperto,
+                clave: etiquetaTema || razonLog
+            });
+        }
 
         if (impacto !== 0) {
             mostrarImpacto(impacto, esContradiccion, razonLog);
@@ -741,6 +833,37 @@ function guardarResultadosMision(estado, cred, contra, pregs, rango) {
 
     // Guardar temas abordados para análisis post-misión
     localStorage.setItem("temasAbordados", JSON.stringify(temasAbordados));
+    localStorage.setItem("preguntasRealizadas", JSON.stringify(historialPreguntas));
+
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.cerrarSesion({
+            nivel: CONFIG_EVALUACION_EXPERTO.nivel,
+            caso: {
+                id: localStorage.getItem("casoSeleccionado"),
+                titulo: casoActivo.titulo || casoActivo.nombre,
+                personaje: casoActivo.nombre,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: localStorage.getItem("nombreUsuario") || "AGENTE ESPECIAL",
+            calificacion: Math.round(cred),
+            estadoFinal: estado,
+            observaciones: [
+                "Evaluacion experta basada en temas calificables, preguntas exploratorias y cobertura de contradicciones.",
+                preguntasCalificables >= CONFIG_EVALUACION_EXPERTO.minimoTemasClave
+                    ? "Se abordaron temas clave suficientes para sostener una entrevista experta."
+                    : "Faltaron mas temas calificables; se recomienda usar evidencia concreta y repreguntas de profundidad."
+            ],
+            metricas: {
+                credibilidad: Math.round(cred),
+                contradicciones: contra,
+                preguntasFormuladas: pregs,
+                preguntasCalificables,
+                temasAbordados,
+                duracionMs: tiempoFinal
+            }
+        });
+    }
 }
 
 // ═══════════════════════════════════════════════════
@@ -760,7 +883,11 @@ function mostrarError(mensaje) {
 
 function volverAlNivel() {
     if (confirm("¿Abandonar? Se perderá el progreso.")) {
-        localStorage.clear();
+        if (window.SAEAuditoria) {
+            window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
+        } else {
+            localStorage.clear();
+        }
         window.location.href = "../inicio/niveles/niveles.html";
     }
 }

@@ -549,7 +549,11 @@ ${noAbordados.map(t => `✗ ${t.etiqueta} — ${t.impacto} pts perdidos`).join('
 
 function volverAlNivel() {
     if (confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
-        localStorage.clear();
+        if (window.SAEAuditoria) {
+            window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
+        } else {
+            localStorage.clear();
+        }
         window.location.href = "../../inicio/niveles/niveles.html";
     }
 }

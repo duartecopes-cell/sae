@@ -154,12 +154,12 @@ function generarAnalisis(datos) {
     // ANÁLISIS DE DESEMPEÑO
     // ========================================
     
-    let nivelDesempenio = 'CATASTRÓFICO';
-    let descripcionDesempenio = 'No acertaste ninguna pregunta. Falta total de preparación.';
+    let nivelDesempenio = 'EN DESARROLLO';
+    let descripcionDesempenio = 'Todavia no se detectan preguntas suficientemente conectadas con el caso.';
     
     if (calificacion === 0) {
-        nivelDesempenio = 'CATASTRÓFICO';
-        descripcionDesempenio = 'No acertaste NINGUNA pregunta durante la entrevista. Falta crítica de preparación y conocimiento del caso.';
+        nivelDesempenio = 'INICIAL';
+        descripcionDesempenio = 'Esta sesion sirve como punto de partida. Revisa el caso y practica preguntas concretas sobre personas, lugares, tiempos y evidencias.';
     } else if (calificacion >= 95) {
         nivelDesempenio = 'EXCEPCIONAL';
         descripcionDesempenio = 'Demostraste un dominio absoluto de la entrevista. Desempeño magistral.';
@@ -169,10 +169,10 @@ function generarAnalisis(datos) {
     } else if (calificacion >= 75) {
         nivelDesempenio = 'BUENO';
         descripcionDesempenio = 'Tu desempeño fue competente con buen manejo de timing y técnicas.';
-    } else if (calificacion >= 60) {
+    } else if (calificacion >= 55) {
         nivelDesempenio = 'ACEPTABLE';
         descripcionDesempenio = 'Alcanzaste el mínimo requerido. Hay margen significativo de mejora.';
-    } else if (calificacion < 60) {
+    } else if (calificacion < 55) {
         nivelDesempenio = 'DEFICIENTE';
         descripcionDesempenio = 'No cumpliste los requisitos mínimos de la evaluación.';
     }
@@ -185,12 +185,12 @@ function generarAnalisis(datos) {
     
     if (respuestasCorrectas === 0) {
         errores.push({
-            titulo: '❌❌ FALLO TOTAL - CERO RESPUESTAS CORRECTAS',
-            desc: 'No respondiste correctamente NINGUNA pregunta. Esto indica que no estudiaste el caso ni entiendes las técnicas de entrevista investigativa.'
+            titulo: 'PREGUNTAS AUN MUY GENERALES',
+            desc: 'No se detectaron preguntas suficientemente relacionadas con las lineas clave del caso. Empieza por identidad, rutina, contactos, lugares y soportes.'
         });
         errores.push({
-            titulo: '⚠️ INCOMPETENCIA DEMOSTRADA',
-            desc: 'Tu calificación de 0/100 demuestra falta absoluta de preparación. No estás listo para realizar entrevistas investigativas.'
+            titulo: 'PREPARACION POR REFORZAR',
+            desc: 'Necesitas revisar la ficha del caso antes de entrar y convertir los datos en preguntas verificables.'
         });
     } else if (respuestasCorrectas < totalRespuestas * 0.25) {
         errores.push({
@@ -204,10 +204,10 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion < 60) {
+    if (calificacion < 55) {
         errores.push({
             titulo: '❌ CALIFICACIÓN NO APROBATORIA',
-            desc: `Obtuviste ${calificacion}/100. Necesitas ${60 - calificacion} puntos más para pasar. REPROBASTE.`
+            desc: `Obtuviste ${calificacion}/100. Te faltan ${Math.max(0, 55 - calificacion)} puntos para aprobar; enfoca la proxima entrevista en preguntas mas claras y relacionadas con el caso.`
         });
     }
     
@@ -225,7 +225,7 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion >= 60 && calificacion < 75) {
+    if (calificacion >= 55 && calificacion < 75) {
         errores.push({
             titulo: 'INCONSISTENCIAS EN TÉCNICA',
             desc: 'Tu entrevista fue desigual. Mantén un nivel de profundidad consistente.'
@@ -238,7 +238,7 @@ function generarAnalisis(datos) {
     
     const fortalezas = [];
     
-    if (calificacion >= 60) {
+    if (calificacion >= 55) {
         fortalezas.push({
             titulo: '✅ MISIÓN APROBADA',
             desc: `Alcanzaste una calificación de ${calificacion}/100. Cumpliste los requisitos mínimos.`
@@ -314,8 +314,8 @@ function generarAnalisis(datos) {
     
     if (calificacion === 0) {
         sugerencias.push({
-            titulo: '🚨 REQUIERE REENTRENAMIENTO URGENTE',
-            desc: 'Con una calificación de 0/100, necesitas volver a capacitación básica antes de intentar otra entrevista.'
+            titulo: 'PRACTICA GUIADA RECOMENDADA',
+            desc: 'Antes de repetir, formula una lista corta de preguntas sobre identidad, ubicacion, contactos, dinero, documentos y contradicciones.'
         });
     }
     
@@ -375,7 +375,7 @@ function generarAnalisis(datos) {
                 <br><br>
                 <strong>Respuestas Correctas:</strong> ${respuestasCorrectas}/${totalRespuestas} (${porcentajeCorrecciones}%)
                 <br>
-                <strong>Calificación Final:</strong> ${calificacion}/100 ${calificacion >= 60 ? '✅ APROBADO' : '❌ NO APROBADO'}
+                <strong>Calificación Final:</strong> ${calificacion}/100 ${calificacion >= 55 ? '✅ APROBADO' : '❌ NO APROBADO'}
             </p>
         </div>
     `;
@@ -454,17 +454,17 @@ Duración:                  ${tiempoFormato}
 INTERPRETACIÓN
 ─────────────────────────────────────────────────────────────
 
-${datos.calificacion >= 60 ? '✅ APROBADO' : '❌ NO APROBADO'}
+${datos.calificacion >= 55 ? '✅ APROBADO' : '❌ NO APROBADO'}
 
 ${datos.calificacion === 0 ? 
-  'RESULTADO: Calificación de 0/100. No acertaste ninguna pregunta. Falta crítica de preparación.' :
+  'RESULTADO: Calificacion de 0/100. Es una sesion inicial; revisa la ficha y vuelve a intentar con preguntas mas concretas.' :
   datos.calificacion >= 95 ? 
   'Desempeño Excepcional: Demostraste dominio absoluto.' :
   datos.calificacion >= 85 ?
   'Desempeño Excelente: Realizaste una entrevista de alta calidad.' :
   datos.calificacion >= 75 ?
   'Desempeño Bueno: Competencia probada en entrevistas.' :
-  datos.calificacion >= 60 ?
+  datos.calificacion >= 55 ?
   'Desempeño Aceptable: Alcanzaste el mínimo requerido.' :
   'Desempeño Insuficiente: Requieres reentrenamiento urgente.'}
 
@@ -515,12 +515,12 @@ Táctica Utilizada:         ${datos.tacticaUsada}
 ─────────────────────────────────────────────────────────────
 RESULTADO
 ─────────────────────────────────────────────────────────────
-${datos.calificacion >= 60 ? '✅ MISIÓN APROBADA' : '❌ MISIÓN NO APROBADA'}
+${datos.calificacion >= 55 ? '✅ MISIÓN APROBADA' : '❌ MISIÓN NO APROBADA'}
 
 Desempeño: ${datos.calificacion >= 95 ? 'Excepcional' : 
              datos.calificacion >= 85 ? 'Excelente' : 
              datos.calificacion >= 75 ? 'Bueno' : 
-             datos.calificacion >= 60 ? 'Aceptable' : 
+             datos.calificacion >= 55 ? 'Aceptable' : 
              datos.calificacion === 0 ? 'Catastrófico - Reentrenamiento Obligatorio' : 'Insuficiente'}
 
 ═══════════════════════════════════════════════════════════════
@@ -545,7 +545,11 @@ Reporte generado automáticamente por SAE - Sistema Avanzado de Entrevistas
 
 function volverAlNivel() {
     if (confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
-        localStorage.clear();
+        if (window.SAEAuditoria) {
+            window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
+        } else {
+            localStorage.clear();
+        }
         window.location.href = "../../inicio/niveles/niveles.html";
     }
 }

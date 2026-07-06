@@ -206,7 +206,257 @@ function iniciarCronometro() {
 // =====================================================
 // PROCESAMIENTO DE PREGUNTAS - VERSIÓN CON IA LOCAL
 // =====================================================
+function normalizarTextoSAE(texto) {
+    return (texto || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function escaparRegExp(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function escaparHTML(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function limpiarRespuestaSistema(respuesta) {
+    const texto = String(respuesta || "").replace(/\s+/g, " ").trim();
+    return texto || "Formule una pregunta mas concreta sobre el hecho investigado para que pueda responder con precision.";
+}
+
+function obtenerTerminosDelCaso() {
+    const terminos = new Set();
+    const fuentes = [
+        casoActivo?.personaje || "",
+        casoActivo?.alias || "",
+        casoActivo?.delito || ""
+    ];
+
+    (casoActivo?.respuestas || []).slice(0, 100).forEach((item) => {
+        (item.claves || []).forEach((clave) => fuentes.push(clave));
+    });
+
+    fuentes.forEach((fuente) => {
+        normalizarTextoSAE(fuente).split(" ").forEach((palabra) => {
+            if (palabra.length > 4) terminos.add(palabra);
+        });
+    });
+
+    return Array.from(terminos);
+}
+
+function buscarMejorCoincidencia(textoNormalizado) {
+    const genericas = ["si", "no", "ok", "aja", "bueno", "claro", "porque"];
+    let mejor = { item: null, index: -1, clave: "", peso: 0 };
+
+    (casoActivo?.respuestas || []).forEach((item, index) => {
+        (item.claves || []).forEach((clave) => {
+            const claveNorm = normalizarTextoSAE(clave);
+            if (!claveNorm || genericas.includes(claveNorm)) return;
+
+            const esFrase = claveNorm.includes(" ");
+            const coincide = esFrase
+                ? textoNormalizado.includes(claveNorm)
+                : new RegExp("\\b" + escaparRegExp(claveNorm) + "\\b", "i").test(textoNormalizado);
+
+            if (coincide) {
+                const peso = claveNorm.length + (esFrase ? 6 : 0);
+                if (peso > mejor.peso) mejor = { item, index, clave: claveNorm, peso };
+            }
+        });
+    });
+
+    return mejor.item ? mejor : null;
+}
+
+function evaluarPreguntaAvanzada(textoOriginal, coincidencia, esRepetida) {
+    const texto = normalizarTextoSAE(textoOriginal);
+    const tokens = texto.split(" ").filter(Boolean);
+    const interrogativos = ["que", "quien", "quienes", "cuando", "donde", "como", "porque", "por que", "cual", "cuanto", "explique", "indique", "relate", "confirme", "detalle"];
+    const terminosCaso = obtenerTerminosDelCaso();
+    const profundidad = ["fecha", "hora", "lugar", "direccion", "documento", "cuenta", "dinero", "telefono", "quien", "quienes", "cuando", "donde", "como", "placa", "empresa", "proveedor", "ruta", "viaje", "contrato", "evidencia", "prueba", "contacto", "contradiccion", "registro", "movimiento"].some((p) => texto.includes(p));
+    const faltasRespeto = ["idiota", "estupido", "imbecil", "mierda", "cabron", "pendejo", "maldito", "hp", "hijueputa", "malparido"].some((p) => texto.includes(p));
+    const preguntaApertura = ["hola", "buenos", "nombre", "identificacion", "cedula", "edad", "trabajo", "dedica", "empresa", "familia", "como esta"].some((p) => texto.includes(p));
+    const confrontacionTemprana = preguntasRealizadas.length < 3 && ["confiese", "acepte", "carcel", "culpable", "sabemos todo"].some((p) => texto.includes(p));
+    const relacionPorCaso = Boolean(coincidencia) || terminosCaso.some((termino) => texto.includes(termino)) || preguntaApertura;
+
+    const criterios = {
+        intencion: interrogativos.some((p) => texto.includes(p)) || textoOriginal.includes("?"),
+        claridad: tokens.length >= 5 || textoOriginal.includes("?"),
+        relacionCaso: relacionPorCaso,
+        secuenciaLogica: !confrontacionTemprana,
+        profundizacion: profundidad || (coincidencia && tokens.length >= 5),
+        respetoObjetividad: !faltasRespeto
+    };
+
+    let puntaje = 0;
+    if (criterios.respetoObjetividad) {
+        if (coincidencia && !esRepetida) puntaje += CONFIG_EVALUACION_AVANZADA.puntajeCorrectaUnica;
+        else if (coincidencia && esRepetida) puntaje += 1;
+        else if (criterios.relacionCaso) puntaje += CONFIG_EVALUACION_AVANZADA.puntajeRelacionada;
+
+        Object.values(criterios).forEach((cumple) => {
+            if (cumple) puntaje += 1;
+        });
+
+        if (!coincidencia && criterios.relacionCaso) puntaje = Math.min(puntaje, CONFIG_EVALUACION_AVANZADA.puntajeParcialMaximo);
+        if (!coincidencia && !criterios.relacionCaso) puntaje = Math.min(puntaje, 1);
+        if (esRepetida) puntaje = Math.min(puntaje, CONFIG_EVALUACION_AVANZADA.puntajeDuplicadaMaximo);
+    }
+
+    puntaje = Math.max(0, Math.min(CONFIG_EVALUACION_AVANZADA.puntajePreguntaMaximo, puntaje));
+
+    const evaluacion = {
+        nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+        puntaje,
+        correcta: puntaje >= 7,
+        parcial: puntaje > 0 && puntaje < 7,
+        criterios,
+        esRepetida,
+        recomendacion: ""
+    };
+
+    evaluacion.recomendacion = obtenerRecomendacionAvanzada(evaluacion, coincidencia);
+    return evaluacion;
+}
+
+function obtenerRecomendacionAvanzada(evaluacion, coincidencia) {
+    if (!evaluacion.criterios.respetoObjetividad) return "Mantenga control profesional del lenguaje. En Avanzado se penaliza la presion ofensiva o subjetiva.";
+    if (evaluacion.esRepetida) return "Ya obtuvo esa linea de informacion. Formule una repregunta con evidencia nueva o una contradiccion especifica.";
+    if (!evaluacion.criterios.relacionCaso) return "La pregunta debe conectarse con el caso. Use datos del perfil, personas, lugares, documentos o movimientos concretos.";
+    if (!evaluacion.criterios.secuenciaLogica) return "La confrontacion llego demasiado pronto. Primero asegure contexto, luego contraste con evidencia.";
+    if (!evaluacion.criterios.profundizacion) return "Buena direccion, pero en Avanzado necesita profundizar: pida fechas, soportes, rutas, beneficiarios o responsables.";
+    if (coincidencia) return "Pregunta solida: clara, relacionada con el caso y util para abrir una linea de verificacion.";
+    return "Pregunta aceptable pero incompleta. Conviertala en una pregunta verificable y menos general.";
+}
+
+function mostrarRetroalimentacionAvanzada(evaluacion) {
+    const chat = document.getElementById('chat');
+    if (!chat || !evaluacion) return;
+
+    const logPuntos = document.createElement('div');
+    logPuntos.style.fontSize = "11px";
+    logPuntos.style.fontStyle = "italic";
+    logPuntos.style.margin = "2px 0 15px 0";
+    logPuntos.style.textAlign = "center";
+    logPuntos.style.color = evaluacion.correcta ? "#00eaff" : evaluacion.parcial ? "#fbbf24" : "#ef4444";
+    logPuntos.innerHTML = `[ Evaluacion SAE: ${escaparHTML(evaluacion.recomendacion)} | +${evaluacion.puntaje} pts ]`;
+    chat.appendChild(logPuntos);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function calcularCalificacionFinalAvanzada() {
+    if (preguntasRealizadas.length === 0) return 0;
+    const bonusRitmo = preguntasRealizadas.length >= CONFIG_EVALUACION_AVANZADA.preguntasEsperadas ? 4 : preguntasRealizadas.length >= 6 ? 2 : 0;
+    return Math.max(0, Math.min(100, Math.round(puntajeAcumulado + bonusRitmo)));
+}
+
+function generarObservacionesAvanzadas(calificacionFinal, respuestasHalladas, totalPreguntasRealizadas) {
+    const observaciones = [
+        "Evaluacion avanzada basada en criterios profesionales con mayor exigencia de precision y profundidad."
+    ];
+    if (calificacionFinal >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion) {
+        observaciones.push("Desempeno aprobado: el usuario sostuvo lineas de entrevista utiles y suficientemente concretas.");
+    } else {
+        observaciones.push("Desempeno no aprobado: se requiere mayor profundidad, secuencia logica y uso de datos verificables.");
+    }
+    if (respuestasHalladas < 4) observaciones.push("Faltaron mas coincidencias directas con temas relevantes del caso.");
+    if (totalPreguntasRealizadas < 6) observaciones.push("La entrevista fue breve para nivel Avanzado; se recomienda ampliar cobertura tematica.");
+    return observaciones;
+}
+
+async function procesarPreguntaAvanzadaPedagogica() {
+    if (!entrevistaActivo) return;
+    const input = document.getElementById('inputPregunta');
+    const textoOriginal = input.value.trim();
+    if (!textoOriginal) return;
+
+    agregarChat("Usted", textoOriginal, "user");
+    input.value = "";
+
+    const reaccionFisica = generarReaccionEmocional(textoOriginal);
+    if (reaccionFisica) {
+        setTimeout(() => {
+            const chat = document.getElementById('chat');
+            const emoDiv = document.createElement('div');
+            emoDiv.style.color = "#a855f7";
+            emoDiv.style.fontStyle = "italic";
+            emoDiv.style.fontSize = "13px";
+            emoDiv.style.margin = "5px 0";
+            emoDiv.style.textAlign = "center";
+            emoDiv.innerText = reaccionFisica;
+            chat.appendChild(emoDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }, 300);
+    }
+
+    const textoNormalizado = normalizarTextoSAE(textoOriginal);
+    const coincidencia = buscarMejorCoincidencia(textoNormalizado);
+    const esRepetida = coincidencia ? respuestasIntentadas.has(coincidencia.index) : false;
+    const evaluacion = evaluarPreguntaAvanzada(textoOriginal, coincidencia, esRepetida);
+
+    let respuestaFinal = "";
+    if (coincidencia) {
+        respuestaFinal = limpiarRespuestaSistema(coincidencia.item.respuesta);
+        if (!esRepetida) {
+            respuestasIntentadas.add(coincidencia.index);
+            if (evaluacion.correcta) respuestasCorrectas++;
+        }
+    } else {
+        respuestaFinal = limpiarRespuestaSistema(generarRespuestaSimulada(textoOriginal, casoActivo));
+    }
+
+    puntajeAcumulado += evaluacion.puntaje;
+    criteriosHistorial.push(evaluacion);
+
+    const registroPregunta = {
+        indice: coincidencia?.index ?? null,
+        pregunta: textoOriginal,
+        respuesta: respuestaFinal,
+        correcta: evaluacion.correcta,
+        parcial: evaluacion.parcial,
+        clave: coincidencia?.clave || "",
+        evaluacion
+    };
+
+    preguntasRealizadas.push(registroPregunta);
+    mostrarRetroalimentacionAvanzada(evaluacion);
+
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.registrarInteraccion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: casoActivo.id,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            pregunta: textoOriginal,
+            respuesta: respuestaFinal,
+            correcta: evaluacion.correcta,
+            puntaje: evaluacion.puntaje,
+            recomendacion: evaluacion.recomendacion,
+            criterio: evaluacion,
+            clave: coincidencia?.clave || ""
+        });
+    }
+
+    setTimeout(() => hablar(respuestaFinal), 900);
+}
+
 async function procesarPregunta() {
+    return procesarPreguntaAvanzadaPedagogica();
     if (!entrevistaActivo) return;
     const input = document.getElementById('inputPregunta');
     const textoOriginal = input.value.trim();
@@ -363,7 +613,7 @@ function agregarChat(autor, msg, clase = "sistema") {
     if(chat) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `msg ${clase}`;
-        msgDiv.innerHTML = `<strong>${autor}:</strong> ${msg}`;
+        msgDiv.innerHTML = `<strong>${escaparHTML(autor)}:</strong> ${escaparHTML(msg)}`;
         chat.appendChild(msgDiv);
         chat.scrollTop = chat.scrollHeight;
     }
@@ -496,7 +746,49 @@ function generarReporte() {
 }
 
 // 10. CIERRE
+function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
+    clearInterval(intervaloReloj);
+    entrevistaActivo = false;
+    const input = document.getElementById('inputPregunta');
+    if(input) input.disabled = true;
+
+    const totalRespuestas = CONFIG_EVALUACION_AVANZADA.preguntasEsperadas;
+    const calificacion = calcularCalificacionFinalAvanzada();
+    const estadoFinal = calificacion >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion ? 'EXITOSA' : 'NO APROBADA';
+
+    const mensaje = porTiempo ?
+        `TIEMPO AGOTADO\n\nCalificación: ${calificacion}/100\nPreguntas valiosas: ${respuestasCorrectas}/${totalRespuestas}` :
+        `ENTREVISTA FINALIZADA\n\nCalificación: ${calificacion}/100\nPreguntas valiosas: ${respuestasCorrectas}/${totalRespuestas}`;
+
+    if (window.SAEAuditoria && casoActivo) {
+        window.SAEAuditoria.cerrarSesion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: casoActivo.id,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: funcionarioActual,
+            calificacion,
+            estadoFinal,
+            observaciones: generarObservacionesAvanzadas(calificacion, respuestasCorrectas, preguntasRealizadas.length),
+            metricas: {
+                cierrePorTiempo: Boolean(porTiempo),
+                respuestasCorrectas,
+                preguntasRealizadas: preguntasRealizadas.length,
+                puntajeAcumulado
+            }
+        });
+    }
+
+    alert(mensaje);
+    window.location.href = "../../inicio/niveles/niveles.html";
+}
+
 function finalizarDiligencia(porTiempo = false) {
+    return finalizarDiligenciaAvanzadaPedagogica(porTiempo);
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
     const input = document.getElementById('inputPregunta');
@@ -512,6 +804,20 @@ function finalizarDiligencia(porTiempo = false) {
     alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html";
 } */
+
+let puntajeAcumulado = 0;
+let criteriosHistorial = [];
+
+const CONFIG_EVALUACION_AVANZADA = {
+    nivel: "Avanzado",
+    minimoAprobacion: 65,
+    puntajeCorrectaUnica: 5,
+    puntajeRelacionada: 1,
+    puntajeDuplicadaMaximo: 2,
+    puntajeParcialMaximo: 4,
+    puntajePreguntaMaximo: 10,
+    preguntasEsperadas: 10
+};
 
 // =====================================================
 // SCRIPT.JS - SISTEMA MAESTRO DE EVALUACIÓN Y CHAT
@@ -649,8 +955,25 @@ function seleccionarCasoAleatorio() {
     respuestasCorrectas = 0;
     respuestasIntentadas.clear();
     preguntasRealizadas = [];
+    puntajeAcumulado = 0;
+    criteriosHistorial = [];
     
     localStorage.setItem('startTime', Date.now().toString());
+
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.crearSesion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: idGuardado,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: funcionarioActual
+        });
+        window.SAEAuditoria.agregarObservacion("Inicio de entrevista en nivel Avanzado con evaluacion exigente y retroalimentacion guiada.");
+    }
     
     iniciarCronometro();
     agregarChat("Sistema", `Entrevistando a: ${casoActivo.personaje} (${casoActivo.alias})`);
@@ -710,7 +1033,257 @@ function generarReaccionEmocional(textoOriginal) {
 // =====================================================
 // PROCESAMIENTO DE PREGUNTAS - MOTOR INTELIGENTE
 // =====================================================
+function normalizarTextoSAE(texto) {
+    return (texto || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function escaparRegExp(texto) {
+    return texto.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function escaparHTML(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function limpiarRespuestaSistema(respuesta) {
+    const texto = String(respuesta || "").replace(/\s+/g, " ").trim();
+    return texto || "Formule una pregunta mas concreta sobre el hecho investigado para que pueda responder con precision.";
+}
+
+function obtenerTerminosDelCaso() {
+    const terminos = new Set();
+    const fuentes = [
+        casoActivo?.personaje || "",
+        casoActivo?.alias || "",
+        casoActivo?.delito || ""
+    ];
+
+    (casoActivo?.respuestas || []).slice(0, 100).forEach((item) => {
+        (item.claves || []).forEach((clave) => fuentes.push(clave));
+    });
+
+    fuentes.forEach((fuente) => {
+        normalizarTextoSAE(fuente).split(" ").forEach((palabra) => {
+            if (palabra.length > 4) terminos.add(palabra);
+        });
+    });
+
+    return Array.from(terminos);
+}
+
+function buscarMejorCoincidencia(textoNormalizado) {
+    const genericas = ["si", "no", "ok", "aja", "bueno", "claro", "porque"];
+    let mejor = { item: null, index: -1, clave: "", peso: 0 };
+
+    (casoActivo?.respuestas || []).forEach((item, index) => {
+        (item.claves || []).forEach((clave) => {
+            const claveNorm = normalizarTextoSAE(clave);
+            if (!claveNorm || genericas.includes(claveNorm)) return;
+
+            const esFrase = claveNorm.includes(" ");
+            const coincide = esFrase
+                ? textoNormalizado.includes(claveNorm)
+                : new RegExp("\\b" + escaparRegExp(claveNorm) + "\\b", "i").test(textoNormalizado);
+
+            if (coincide) {
+                const peso = claveNorm.length + (esFrase ? 6 : 0);
+                if (peso > mejor.peso) mejor = { item, index, clave: claveNorm, peso };
+            }
+        });
+    });
+
+    return mejor.item ? mejor : null;
+}
+
+function evaluarPreguntaAvanzada(textoOriginal, coincidencia, esRepetida) {
+    const texto = normalizarTextoSAE(textoOriginal);
+    const tokens = texto.split(" ").filter(Boolean);
+    const interrogativos = ["que", "quien", "quienes", "cuando", "donde", "como", "porque", "por que", "cual", "cuanto", "explique", "indique", "relate", "confirme", "detalle"];
+    const terminosCaso = obtenerTerminosDelCaso();
+    const profundidad = ["fecha", "hora", "lugar", "direccion", "documento", "cuenta", "dinero", "telefono", "quien", "quienes", "cuando", "donde", "como", "placa", "empresa", "proveedor", "ruta", "viaje", "contrato", "evidencia", "prueba", "contacto", "contradiccion", "registro", "movimiento"].some((p) => texto.includes(p));
+    const faltasRespeto = ["idiota", "estupido", "imbecil", "mierda", "cabron", "pendejo", "maldito", "hp", "hijueputa", "malparido"].some((p) => texto.includes(p));
+    const preguntaApertura = ["hola", "buenos", "nombre", "identificacion", "cedula", "edad", "trabajo", "dedica", "empresa", "familia", "como esta"].some((p) => texto.includes(p));
+    const confrontacionTemprana = preguntasRealizadas.length < 3 && ["confiese", "acepte", "carcel", "culpable", "sabemos todo"].some((p) => texto.includes(p));
+    const relacionPorCaso = Boolean(coincidencia) || terminosCaso.some((termino) => texto.includes(termino)) || preguntaApertura;
+
+    const criterios = {
+        intencion: interrogativos.some((p) => texto.includes(p)) || textoOriginal.includes("?"),
+        claridad: tokens.length >= 5 || textoOriginal.includes("?"),
+        relacionCaso: relacionPorCaso,
+        secuenciaLogica: !confrontacionTemprana,
+        profundizacion: profundidad || (coincidencia && tokens.length >= 5),
+        respetoObjetividad: !faltasRespeto
+    };
+
+    let puntaje = 0;
+    if (criterios.respetoObjetividad) {
+        if (coincidencia && !esRepetida) puntaje += CONFIG_EVALUACION_AVANZADA.puntajeCorrectaUnica;
+        else if (coincidencia && esRepetida) puntaje += 1;
+        else if (criterios.relacionCaso) puntaje += CONFIG_EVALUACION_AVANZADA.puntajeRelacionada;
+
+        Object.values(criterios).forEach((cumple) => {
+            if (cumple) puntaje += 1;
+        });
+
+        if (!coincidencia && criterios.relacionCaso) puntaje = Math.min(puntaje, CONFIG_EVALUACION_AVANZADA.puntajeParcialMaximo);
+        if (!coincidencia && !criterios.relacionCaso) puntaje = Math.min(puntaje, 1);
+        if (esRepetida) puntaje = Math.min(puntaje, CONFIG_EVALUACION_AVANZADA.puntajeDuplicadaMaximo);
+    }
+
+    puntaje = Math.max(0, Math.min(CONFIG_EVALUACION_AVANZADA.puntajePreguntaMaximo, puntaje));
+
+    const evaluacion = {
+        nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+        puntaje,
+        correcta: puntaje >= 7,
+        parcial: puntaje > 0 && puntaje < 7,
+        criterios,
+        esRepetida,
+        recomendacion: ""
+    };
+
+    evaluacion.recomendacion = obtenerRecomendacionAvanzada(evaluacion, coincidencia);
+    return evaluacion;
+}
+
+function obtenerRecomendacionAvanzada(evaluacion, coincidencia) {
+    if (!evaluacion.criterios.respetoObjetividad) return "Mantenga control profesional del lenguaje. En Avanzado se penaliza la presion ofensiva o subjetiva.";
+    if (evaluacion.esRepetida) return "Ya obtuvo esa linea de informacion. Formule una repregunta con evidencia nueva o una contradiccion especifica.";
+    if (!evaluacion.criterios.relacionCaso) return "La pregunta debe conectarse con el caso. Use datos del perfil, personas, lugares, documentos o movimientos concretos.";
+    if (!evaluacion.criterios.secuenciaLogica) return "La confrontacion llego demasiado pronto. Primero asegure contexto, luego contraste con evidencia.";
+    if (!evaluacion.criterios.profundizacion) return "Buena direccion, pero en Avanzado necesita profundizar: pida fechas, soportes, rutas, beneficiarios o responsables.";
+    if (coincidencia) return "Pregunta solida: clara, relacionada con el caso y util para abrir una linea de verificacion.";
+    return "Pregunta aceptable pero incompleta. Conviertala en una pregunta verificable y menos general.";
+}
+
+function mostrarRetroalimentacionAvanzada(evaluacion) {
+    const chat = document.getElementById('chat');
+    if (!chat || !evaluacion) return;
+
+    const logPuntos = document.createElement('div');
+    logPuntos.style.fontSize = "11px";
+    logPuntos.style.fontStyle = "italic";
+    logPuntos.style.margin = "2px 0 15px 0";
+    logPuntos.style.textAlign = "center";
+    logPuntos.style.color = evaluacion.correcta ? "#00eaff" : evaluacion.parcial ? "#fbbf24" : "#ef4444";
+    logPuntos.innerHTML = `[ Evaluacion SAE: ${escaparHTML(evaluacion.recomendacion)} | +${evaluacion.puntaje} pts ]`;
+    chat.appendChild(logPuntos);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function calcularCalificacionFinalAvanzada() {
+    if (preguntasRealizadas.length === 0) return 0;
+    const bonusRitmo = preguntasRealizadas.length >= CONFIG_EVALUACION_AVANZADA.preguntasEsperadas ? 4 : preguntasRealizadas.length >= 6 ? 2 : 0;
+    return Math.max(0, Math.min(100, Math.round(puntajeAcumulado + bonusRitmo)));
+}
+
+function generarObservacionesAvanzadas(calificacionFinal, respuestasHalladas, totalPreguntasRealizadas) {
+    const observaciones = [
+        "Evaluacion avanzada basada en criterios profesionales con mayor exigencia de precision y profundidad."
+    ];
+    if (calificacionFinal >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion) {
+        observaciones.push("Desempeno aprobado: el usuario sostuvo lineas de entrevista utiles y suficientemente concretas.");
+    } else {
+        observaciones.push("Desempeno no aprobado: se requiere mayor profundidad, secuencia logica y uso de datos verificables.");
+    }
+    if (respuestasHalladas < 4) observaciones.push("Faltaron mas coincidencias directas con temas relevantes del caso.");
+    if (totalPreguntasRealizadas < 6) observaciones.push("La entrevista fue breve para nivel Avanzado; se recomienda ampliar cobertura tematica.");
+    return observaciones;
+}
+
+async function procesarPreguntaAvanzadaPedagogica() {
+    if (!entrevistaActivo) return;
+    const input = document.getElementById('inputPregunta');
+    const textoOriginal = input.value.trim();
+    if (!textoOriginal) return;
+
+    agregarChat("Usted", textoOriginal, "user");
+    input.value = "";
+
+    const reaccionFisica = generarReaccionEmocional(textoOriginal);
+    if (reaccionFisica) {
+        setTimeout(() => {
+            const chat = document.getElementById('chat');
+            const emoDiv = document.createElement('div');
+            emoDiv.style.color = "#a855f7";
+            emoDiv.style.fontStyle = "italic";
+            emoDiv.style.fontSize = "13px";
+            emoDiv.style.margin = "5px 0";
+            emoDiv.style.textAlign = "center";
+            emoDiv.innerText = reaccionFisica;
+            chat.appendChild(emoDiv);
+            chat.scrollTop = chat.scrollHeight;
+        }, 300);
+    }
+
+    const textoNormalizado = normalizarTextoSAE(textoOriginal);
+    const coincidencia = buscarMejorCoincidencia(textoNormalizado);
+    const esRepetida = coincidencia ? respuestasIntentadas.has(coincidencia.index) : false;
+    const evaluacion = evaluarPreguntaAvanzada(textoOriginal, coincidencia, esRepetida);
+
+    let respuestaFinal = "";
+    if (coincidencia) {
+        respuestaFinal = limpiarRespuestaSistema(coincidencia.item.respuesta);
+        if (!esRepetida) {
+            respuestasIntentadas.add(coincidencia.index);
+            if (evaluacion.correcta) respuestasCorrectas++;
+        }
+    } else {
+        respuestaFinal = limpiarRespuestaSistema(generarRespuestaSimulada(textoOriginal, casoActivo));
+    }
+
+    puntajeAcumulado += evaluacion.puntaje;
+    criteriosHistorial.push(evaluacion);
+
+    const registroPregunta = {
+        indice: coincidencia?.index ?? null,
+        pregunta: textoOriginal,
+        respuesta: respuestaFinal,
+        correcta: evaluacion.correcta,
+        parcial: evaluacion.parcial,
+        clave: coincidencia?.clave || "",
+        evaluacion
+    };
+
+    preguntasRealizadas.push(registroPregunta);
+    mostrarRetroalimentacionAvanzada(evaluacion);
+
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.registrarInteraccion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: casoActivo.id,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            pregunta: textoOriginal,
+            respuesta: respuestaFinal,
+            correcta: evaluacion.correcta,
+            puntaje: evaluacion.puntaje,
+            recomendacion: evaluacion.recomendacion,
+            criterio: evaluacion,
+            clave: coincidencia?.clave || ""
+        });
+    }
+
+    setTimeout(() => hablar(respuestaFinal), 900);
+}
+
 async function procesarPregunta() {
+    return procesarPreguntaAvanzadaPedagogica();
     if (!entrevistaActivo) return;
     const input = document.getElementById('inputPregunta');
     const textoOriginal = input.value.trim();
@@ -923,7 +1496,7 @@ function agregarChat(autor, msg, clase = "sistema") {
     if(chat) {
         const msgDiv = document.createElement('div');
         msgDiv.className = `msg ${clase}`;
-        msgDiv.innerHTML = `<strong>${autor}:</strong> ${msg}`;
+        msgDiv.innerHTML = `<strong>${escaparHTML(autor)}:</strong> ${escaparHTML(msg)}`;
         chat.appendChild(msgDiv);
         chat.scrollTop = chat.scrollHeight;
     }
@@ -932,7 +1505,83 @@ function agregarChat(autor, msg, clase = "sistema") {
 // ==========================================
 // 9. FUNCIÓN GENERADOR DE REPORTE 
 // ==========================================
+function generarReporteAvanzadoPedagogico() {
+    if (!casoActivo) {
+        alert('Error: No hay caso activo');
+        return;
+    }
+
+    const totalRespuestasDelCaso = CONFIG_EVALUACION_AVANZADA.preguntasEsperadas;
+    const respuestasHalladas = respuestasCorrectas;
+    const calificacionFinal = calcularCalificacionFinalAvanzada();
+    const estado = calificacionFinal >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion ? 'EXITOSA' : 'NO APROBADA';
+
+    let rangoDesempenio = 'D (INAPTO)';
+    let descripcionRango = 'DESEMPEÑO INSUFICIENTE';
+
+    if (calificacionFinal >= 95) {
+        rangoDesempenio = 'S (ESTRATEGA)';
+        descripcionRango = 'DOMINIO ABSOLUTO DE LA ENTREVISTA';
+    } else if (calificacionFinal >= 85) {
+        rangoDesempenio = 'A (ESPECIALISTA)';
+        descripcionRango = 'ESPECIALISTA EN ENTREVISTA';
+    } else if (calificacionFinal >= 75) {
+        rangoDesempenio = 'B (COMPETENTE)';
+        descripcionRango = 'AGENTE COMPETENTE';
+    } else if (calificacionFinal >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion) {
+        rangoDesempenio = 'C (BÁSICO)';
+        descripcionRango = 'DESEMPEÑO AVANZADO EN DESARROLLO';
+    }
+
+    const totalPreguntasRealizadas = preguntasRealizadas.length;
+    const contradiccionesDetectadas = Math.min(5, Math.max(Math.floor(respuestasHalladas / 2), criteriosHistorial.filter((item) => item.criterios?.profundizacion).length));
+    const observacionesAuditoria = generarObservacionesAvanzadas(calificacionFinal, respuestasHalladas, totalPreguntasRealizadas);
+
+    localStorage.setItem('calificacionFinal', calificacionFinal);
+    localStorage.setItem('credibilidadFinal', calificacionFinal);
+    localStorage.setItem('respuestasCorrectas', respuestasHalladas);
+    localStorage.setItem('totalRespuestasDelCaso', totalRespuestasDelCaso);
+    localStorage.setItem('evidenciasFinal', contradiccionesDetectadas);
+    localStorage.setItem('totalPreguntas', totalPreguntasRealizadas);
+    localStorage.setItem('nombreSospechoso', casoActivo.personaje);
+    localStorage.setItem('delitoSospechoso', casoActivo.delito);
+    localStorage.setItem('estadoMision', estado);
+    localStorage.setItem('rangoFinal', rangoDesempenio);
+    localStorage.setItem('descripcionRango', descripcionRango);
+    localStorage.setItem('tacticaSeleccionada', 'Estándar');
+    localStorage.setItem('preguntasRealizadas', JSON.stringify(preguntasRealizadas));
+    localStorage.setItem('criteriosCalificacion', JSON.stringify(criteriosHistorial));
+    localStorage.setItem('puntajeAcumulado', puntajeAcumulado.toString());
+
+    if (window.SAEAuditoria) {
+        window.SAEAuditoria.cerrarSesion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: casoActivo.id,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: funcionarioActual,
+            calificacion: calificacionFinal,
+            estadoFinal: estado,
+            observaciones: observacionesAuditoria,
+            metricas: {
+                respuestasCorrectas: respuestasHalladas,
+                preguntasRealizadas: totalPreguntasRealizadas,
+                puntajeAcumulado,
+                criterios: criteriosHistorial.length,
+                nivelMinimoAprobacion: CONFIG_EVALUACION_AVANZADA.minimoAprobacion
+            }
+        });
+    }
+
+    window.location.href = '../postbasico/post_basico.html';
+}
+
 function generarReporte() {
+    return generarReporteAvanzadoPedagogico();
     if (!casoActivo) {
         alert('Error: No hay caso activo');
         return;
@@ -987,7 +1636,49 @@ function generarReporte() {
 }
 
 // 10. CIERRE
+function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
+    clearInterval(intervaloReloj);
+    entrevistaActivo = false;
+    const input = document.getElementById('inputPregunta');
+    if(input) input.disabled = true;
+
+    const totalRespuestas = CONFIG_EVALUACION_AVANZADA.preguntasEsperadas;
+    const calificacion = calcularCalificacionFinalAvanzada();
+    const estadoFinal = calificacion >= CONFIG_EVALUACION_AVANZADA.minimoAprobacion ? 'EXITOSA' : 'NO APROBADA';
+
+    const mensaje = porTiempo ?
+        `TIEMPO AGOTADO\n\nCalificación: ${calificacion}/100\nPreguntas valiosas: ${respuestasCorrectas}/${totalRespuestas}` :
+        `ENTREVISTA FINALIZADA\n\nCalificación: ${calificacion}/100\nPreguntas valiosas: ${respuestasCorrectas}/${totalRespuestas}`;
+
+    if (window.SAEAuditoria && casoActivo) {
+        window.SAEAuditoria.cerrarSesion({
+            nivel: CONFIG_EVALUACION_AVANZADA.nivel,
+            caso: {
+                id: casoActivo.id,
+                titulo: casoActivo.titulo || casoActivo.personaje,
+                personaje: casoActivo.personaje,
+                alias: casoActivo.alias,
+                delito: casoActivo.delito
+            },
+            investigador: funcionarioActual,
+            calificacion,
+            estadoFinal,
+            observaciones: generarObservacionesAvanzadas(calificacion, respuestasCorrectas, preguntasRealizadas.length),
+            metricas: {
+                cierrePorTiempo: Boolean(porTiempo),
+                respuestasCorrectas,
+                preguntasRealizadas: preguntasRealizadas.length,
+                puntajeAcumulado
+            }
+        });
+    }
+
+    alert(mensaje);
+    window.location.href = "../../inicio/niveles/niveles.html";
+}
+
 function finalizarDiligencia(porTiempo = false) {
+    return finalizarDiligenciaAvanzadaPedagogica(porTiempo);
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
     const input = document.getElementById('inputPregunta');
