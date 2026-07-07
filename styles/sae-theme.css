@@ -727,3 +727,792 @@ pre,
         display: none;
     }
 }
+
+/* Tema visual SAE unificado: fondo de entrevista, modo oscuro y modo claro. */
+:root,
+:root[data-theme="dark"] {
+    --sae-page-bg: #050812;
+    --sae-page-overlay:
+        linear-gradient(90deg, rgba(5, 8, 18, 0.96) 0%, rgba(5, 8, 18, 0.82) 42%, rgba(5, 8, 18, 0.46) 72%, rgba(5, 8, 18, 0.9) 100%),
+        linear-gradient(180deg, rgba(5, 8, 18, 0.1) 0%, rgba(5, 8, 18, 0.92) 100%);
+    --sae-hero-image: url("../assets/images/sae-interview-hero.png");
+    --sae-card-bg: rgba(9, 15, 28, 0.9);
+    --sae-card-soft: rgba(255, 255, 255, 0.07);
+    --sae-ink: #f8fafc;
+    --sae-muted: #b7c2d6;
+    --sae-line: rgba(255, 255, 255, 0.16);
+    --sae-white: #0d1626;
+    --sae-mint-25: #0d1626;
+    --sae-mint-50: #101c2f;
+    --sae-mint-100: rgba(34, 197, 94, 0.13);
+    --sae-mint-200: rgba(34, 197, 94, 0.24);
+    --sae-mint-300: #86efac;
+    --sae-mint-500: #22c55e;
+    --sae-forest-700: #86efac;
+    --sae-forest-800: #dcfce7;
+    --sae-forest-900: #f8fafc;
+    --sae-blue: #38bdf8;
+    --sae-purple: #a78bfa;
+    --sae-gold: #facc15;
+    --sae-danger: #fb7185;
+    --sae-shadow: 0 22px 58px rgba(0, 0, 0, 0.42);
+    --sae-soft-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="light"] {
+    --sae-page-bg: #eef4fb;
+    --sae-page-overlay:
+        linear-gradient(90deg, rgba(242, 247, 252, 0.98) 0%, rgba(242, 247, 252, 0.86) 48%, rgba(242, 247, 252, 0.28) 76%, rgba(242, 247, 252, 0.76) 100%),
+        linear-gradient(180deg, rgba(242, 247, 252, 0.08) 0%, rgba(238, 244, 251, 0.96) 100%);
+    --sae-card-bg: rgba(255, 255, 255, 0.92);
+    --sae-card-soft: rgba(15, 23, 42, 0.06);
+    --sae-ink: #101827;
+    --sae-muted: #526274;
+    --sae-line: rgba(15, 23, 42, 0.14);
+    --sae-white: #ffffff;
+    --sae-mint-25: #f7fbff;
+    --sae-mint-50: #eef4fb;
+    --sae-mint-100: rgba(34, 197, 94, 0.12);
+    --sae-mint-200: rgba(34, 197, 94, 0.2);
+    --sae-mint-300: #16a34a;
+    --sae-mint-500: #16a34a;
+    --sae-forest-700: #15803d;
+    --sae-forest-800: #0f172a;
+    --sae-forest-900: #0f172a;
+    --sae-blue: #2563eb;
+    --sae-purple: #7c3aed;
+    --sae-gold: #b7791f;
+    --sae-danger: #b91c1c;
+    --sae-shadow: 0 22px 48px rgba(15, 23, 42, 0.16);
+    --sae-soft-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+}
+
+:root body,
+:root[data-theme="dark"] body,
+:root[data-theme="light"] body {
+    background:
+        var(--sae-page-overlay),
+        var(--sae-hero-image) !important;
+    background-attachment: fixed !important;
+    background-position: center !important;
+    background-size: cover !important;
+    color: var(--sae-ink) !important;
+}
+
+:root .login-card,
+:root .view,
+:root .expediente-container,
+:root .contexto-container,
+:root .debriefing-container,
+:root .contenido-documento,
+:root .chat-container,
+:root .chat-box,
+:root .sospechoso-card,
+:root .seccion,
+:root .stat-card,
+:root .rango-section,
+:root .analisis-card,
+:root .error-item,
+:root .fortaleza-item,
+:root .sugerencia-item,
+:root .suspect-card,
+:root .intel-item,
+:root .ev-tag,
+:root .orientation-item,
+:root .delito-card,
+:root .modal,
+:root #modal-reporte > div,
+:root[data-theme="dark"] .login-card,
+:root[data-theme="dark"] .view,
+:root[data-theme="dark"] .expediente-container,
+:root[data-theme="dark"] .contexto-container,
+:root[data-theme="dark"] .debriefing-container,
+:root[data-theme="dark"] .contenido-documento,
+:root[data-theme="dark"] .chat-container,
+:root[data-theme="dark"] .chat-box,
+:root[data-theme="dark"] .sospechoso-card,
+:root[data-theme="dark"] .seccion,
+:root[data-theme="dark"] .stat-card,
+:root[data-theme="dark"] .rango-section,
+:root[data-theme="dark"] .analisis-card,
+:root[data-theme="dark"] .error-item,
+:root[data-theme="dark"] .fortaleza-item,
+:root[data-theme="dark"] .sugerencia-item,
+:root[data-theme="dark"] .suspect-card,
+:root[data-theme="dark"] .intel-item,
+:root[data-theme="dark"] .ev-tag,
+:root[data-theme="dark"] .orientation-item,
+:root[data-theme="dark"] .delito-card,
+:root[data-theme="dark"] .modal,
+:root[data-theme="dark"] #modal-reporte > div,
+:root[data-theme="light"] .login-card,
+:root[data-theme="light"] .view,
+:root[data-theme="light"] .expediente-container,
+:root[data-theme="light"] .contexto-container,
+:root[data-theme="light"] .debriefing-container,
+:root[data-theme="light"] .contenido-documento,
+:root[data-theme="light"] .chat-container,
+:root[data-theme="light"] .chat-box,
+:root[data-theme="light"] .sospechoso-card,
+:root[data-theme="light"] .seccion,
+:root[data-theme="light"] .stat-card,
+:root[data-theme="light"] .rango-section,
+:root[data-theme="light"] .analisis-card,
+:root[data-theme="light"] .error-item,
+:root[data-theme="light"] .fortaleza-item,
+:root[data-theme="light"] .sugerencia-item,
+:root[data-theme="light"] .suspect-card,
+:root[data-theme="light"] .intel-item,
+:root[data-theme="light"] .ev-tag,
+:root[data-theme="light"] .orientation-item,
+:root[data-theme="light"] .delito-card,
+:root[data-theme="light"] .modal,
+:root[data-theme="light"] #modal-reporte > div {
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: var(--sae-card-bg) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+    backdrop-filter: blur(16px) !important;
+}
+
+:root header,
+:root .classified-bar,
+:root .header-main,
+:root .evidence-strip,
+:root .side-panel,
+:root #opciones-container,
+:root .input-area-experto,
+:root[data-theme="dark"] header,
+:root[data-theme="dark"] .classified-bar,
+:root[data-theme="dark"] .header-main,
+:root[data-theme="dark"] .evidence-strip,
+:root[data-theme="dark"] .side-panel,
+:root[data-theme="dark"] #opciones-container,
+:root[data-theme="dark"] .input-area-experto,
+:root[data-theme="light"] header,
+:root[data-theme="light"] .classified-bar,
+:root[data-theme="light"] .header-main,
+:root[data-theme="light"] .evidence-strip,
+:root[data-theme="light"] .side-panel,
+:root[data-theme="light"] #opciones-container,
+:root[data-theme="light"] .input-area-experto {
+    border-color: var(--sae-line) !important;
+    background: var(--sae-card-bg) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+    backdrop-filter: blur(16px) !important;
+}
+
+:root .header-section h1,
+:root .expediente-container h1,
+:root .contexto-container h1,
+:root .debriefing-container h1,
+:root .header-contexto h1,
+:root .rango-title,
+:root .section-titulo,
+:root .agency-name,
+:root .agency-sub,
+:root .s-name,
+:root .s-alias,
+:root .s-status,
+:root .risk-value,
+:root .side-section h3,
+:root .delito-card h3,
+:root pre,
+:root #contenido-reporte,
+:root[data-theme="dark"] .header-section h1,
+:root[data-theme="dark"] .expediente-container h1,
+:root[data-theme="dark"] .contexto-container h1,
+:root[data-theme="dark"] .debriefing-container h1,
+:root[data-theme="dark"] .header-contexto h1,
+:root[data-theme="dark"] .rango-title,
+:root[data-theme="dark"] .section-titulo,
+:root[data-theme="dark"] .agency-name,
+:root[data-theme="dark"] .agency-sub,
+:root[data-theme="dark"] .s-name,
+:root[data-theme="dark"] .s-alias,
+:root[data-theme="dark"] .s-status,
+:root[data-theme="dark"] .risk-value,
+:root[data-theme="dark"] .side-section h3,
+:root[data-theme="dark"] .delito-card h3,
+:root[data-theme="dark"] pre,
+:root[data-theme="dark"] #contenido-reporte,
+:root[data-theme="light"] .header-section h1,
+:root[data-theme="light"] .expediente-container h1,
+:root[data-theme="light"] .contexto-container h1,
+:root[data-theme="light"] .debriefing-container h1,
+:root[data-theme="light"] .header-contexto h1,
+:root[data-theme="light"] .rango-title,
+:root[data-theme="light"] .section-titulo,
+:root[data-theme="light"] .agency-name,
+:root[data-theme="light"] .agency-sub,
+:root[data-theme="light"] .s-name,
+:root[data-theme="light"] .s-alias,
+:root[data-theme="light"] .s-status,
+:root[data-theme="light"] .risk-value,
+:root[data-theme="light"] .side-section h3,
+:root[data-theme="light"] .delito-card h3,
+:root[data-theme="light"] pre,
+:root[data-theme="light"] #contenido-reporte {
+    color: var(--sae-forest-800) !important;
+    text-shadow: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important;
+}
+
+:root .subtitle,
+:root .form-group label,
+:root .footer,
+:root .footer a,
+:root #detalle-contexto,
+:root .seccion p,
+:root .rango-descripcion,
+:root .stat-sub,
+:root .info-valor,
+:root .intel-val,
+:root .system-msg,
+:root[data-theme="dark"] .subtitle,
+:root[data-theme="dark"] .form-group label,
+:root[data-theme="dark"] .footer,
+:root[data-theme="dark"] .footer a,
+:root[data-theme="dark"] #detalle-contexto,
+:root[data-theme="dark"] .seccion p,
+:root[data-theme="dark"] .rango-descripcion,
+:root[data-theme="dark"] .stat-sub,
+:root[data-theme="dark"] .info-valor,
+:root[data-theme="dark"] .intel-val,
+:root[data-theme="dark"] .system-msg,
+:root[data-theme="light"] .subtitle,
+:root[data-theme="light"] .form-group label,
+:root[data-theme="light"] .footer,
+:root[data-theme="light"] .footer a,
+:root[data-theme="light"] #detalle-contexto,
+:root[data-theme="light"] .seccion p,
+:root[data-theme="light"] .rango-descripcion,
+:root[data-theme="light"] .stat-sub,
+:root[data-theme="light"] .info-valor,
+:root[data-theme="light"] .intel-val,
+:root[data-theme="light"] .system-msg {
+    color: var(--sae-muted) !important;
+}
+
+:root .badge-advanced,
+:root .security-alert,
+:root .instruccion,
+:root .classified,
+:root .status-pill,
+:root .badge,
+:root #timer,
+:root .classified-bar,
+:root[data-theme="dark"] .badge-advanced,
+:root[data-theme="dark"] .security-alert,
+:root[data-theme="dark"] .instruccion,
+:root[data-theme="dark"] .classified,
+:root[data-theme="dark"] .status-pill,
+:root[data-theme="dark"] .badge,
+:root[data-theme="dark"] #timer,
+:root[data-theme="dark"] .classified-bar,
+:root[data-theme="light"] .badge-advanced,
+:root[data-theme="light"] .security-alert,
+:root[data-theme="light"] .instruccion,
+:root[data-theme="light"] .classified,
+:root[data-theme="light"] .status-pill,
+:root[data-theme="light"] .badge,
+:root[data-theme="light"] #timer,
+:root[data-theme="light"] .classified-bar {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-soft) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+:root .logo-badge,
+:root[data-theme="dark"] .logo-badge,
+:root[data-theme="light"] .logo-badge {
+    border: 1px solid rgba(34, 197, 94, 0.55) !important;
+    background: rgba(34, 197, 94, 0.18) !important;
+    color: var(--sae-forest-800) !important;
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.22) !important;
+}
+
+:root .form-group input,
+:root .form-group select,
+:root #inputPregunta,
+:root .modo-selector,
+:root[data-theme="dark"] .form-group input,
+:root[data-theme="dark"] .form-group select,
+:root[data-theme="dark"] #inputPregunta,
+:root[data-theme="dark"] .modo-selector,
+:root[data-theme="light"] .form-group input,
+:root[data-theme="light"] .form-group select,
+:root[data-theme="light"] #inputPregunta,
+:root[data-theme="light"] .modo-selector {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-soft) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: none !important;
+}
+
+:root .form-group input:focus,
+:root .form-group select:focus,
+:root #inputPregunta:focus,
+:root[data-theme="dark"] .form-group input:focus,
+:root[data-theme="dark"] .form-group select:focus,
+:root[data-theme="dark"] #inputPregunta:focus,
+:root[data-theme="light"] .form-group input:focus,
+:root[data-theme="light"] .form-group select:focus,
+:root[data-theme="light"] #inputPregunta:focus {
+    border-color: var(--sae-mint-500) !important;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16) !important;
+}
+
+:root .form-group input::placeholder,
+:root #inputPregunta::placeholder,
+:root[data-theme="dark"] .form-group input::placeholder,
+:root[data-theme="dark"] #inputPregunta::placeholder,
+:root[data-theme="light"] .form-group input::placeholder,
+:root[data-theme="light"] #inputPregunta::placeholder {
+    color: var(--sae-muted) !important;
+}
+
+:root .btn-primary,
+:root .btn-send,
+:root .btn-siguiente,
+:root .btn-primario,
+:root .btn-opcion,
+:root .btn,
+:root .btn-dl,
+:root .btn-micro,
+:root .btn-rep,
+:root[data-theme="dark"] .btn-primary,
+:root[data-theme="dark"] .btn-send,
+:root[data-theme="dark"] .btn-siguiente,
+:root[data-theme="dark"] .btn-primario,
+:root[data-theme="dark"] .btn-opcion,
+:root[data-theme="dark"] .btn,
+:root[data-theme="dark"] .btn-dl,
+:root[data-theme="dark"] .btn-micro,
+:root[data-theme="dark"] .btn-rep,
+:root[data-theme="light"] .btn-primary,
+:root[data-theme="light"] .btn-send,
+:root[data-theme="light"] .btn-siguiente,
+:root[data-theme="light"] .btn-primario,
+:root[data-theme="light"] .btn-opcion,
+:root[data-theme="light"] .btn,
+:root[data-theme="light"] .btn-dl,
+:root[data-theme="light"] .btn-micro,
+:root[data-theme="light"] .btn-rep {
+    border: 1px solid rgba(34, 197, 94, 0.42) !important;
+    background: linear-gradient(135deg, #15803d, var(--sae-mint-500)) !important;
+    color: #ffffff !important;
+    box-shadow: 0 14px 28px rgba(34, 197, 94, 0.18) !important;
+}
+
+:root .btn-secondary,
+:root .btn-secundario,
+:root .btn-volver,
+:root .btn-abandonar,
+:root[data-theme="dark"] .btn-secondary,
+:root[data-theme="dark"] .btn-secundario,
+:root[data-theme="dark"] .btn-volver,
+:root[data-theme="dark"] .btn-abandonar,
+:root[data-theme="light"] .btn-secondary,
+:root[data-theme="light"] .btn-secundario,
+:root[data-theme="light"] .btn-volver,
+:root[data-theme="light"] .btn-abandonar {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-bg) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+}
+
+:root .msg,
+:root .msg-bubble,
+:root .bubble,
+:root .msg-content,
+:root[data-theme="dark"] .msg,
+:root[data-theme="dark"] .msg-bubble,
+:root[data-theme="dark"] .bubble,
+:root[data-theme="dark"] .msg-content,
+:root[data-theme="light"] .msg,
+:root[data-theme="light"] .msg-bubble,
+:root[data-theme="light"] .bubble,
+:root[data-theme="light"] .msg-content {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-bg) !important;
+    color: var(--sae-ink) !important;
+}
+
+:root .msg.user,
+:root .detective .msg-avatar,
+:root .suspect .msg-avatar,
+:root[data-theme="dark"] .msg.user,
+:root[data-theme="dark"] .detective .msg-avatar,
+:root[data-theme="dark"] .suspect .msg-avatar,
+:root[data-theme="light"] .msg.user,
+:root[data-theme="light"] .detective .msg-avatar,
+:root[data-theme="light"] .suspect .msg-avatar {
+    border-color: rgba(34, 197, 94, 0.42) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+:root .theme-toggle,
+:root[data-theme="dark"] .theme-toggle,
+:root[data-theme="light"] .theme-toggle {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-bg) !important;
+    color: var(--sae-ink) !important;
+    box-shadow: var(--sae-soft-shadow) !important;
+}
+
+:root .theme-toggle[data-theme-state="dark"],
+:root[data-theme="dark"] .theme-toggle[data-theme-state="dark"] {
+    border-color: rgba(34, 197, 94, 0.42) !important;
+    background: rgba(34, 197, 94, 0.18) !important;
+    color: #dcfce7 !important;
+}
+
+:root .theme-toggle__icon::after,
+:root[data-theme="dark"] .theme-toggle__icon::after,
+:root[data-theme="light"] .theme-toggle__icon::after {
+    background: var(--sae-mint-500) !important;
+    box-shadow: 0 0 0 2px var(--sae-card-bg) !important;
+}
+
+/* Ajuste solicitado: claro azul pastel y oscuro azul rey en todo SAE. */
+:root,
+:root[data-theme="light"] {
+    --sae-page-bg: #eef8ff;
+    --sae-page-overlay:
+        linear-gradient(90deg, rgba(238, 248, 255, 0.98) 0%, rgba(224, 242, 254, 0.9) 42%, rgba(224, 242, 254, 0.34) 72%, rgba(238, 248, 255, 0.82) 100%),
+        linear-gradient(180deg, rgba(238, 248, 255, 0.1) 0%, rgba(238, 248, 255, 0.96) 100%);
+    --sae-card-bg: rgba(255, 255, 255, 0.9);
+    --sae-card-soft: rgba(125, 211, 252, 0.14);
+    --sae-ink: #102033;
+    --sae-muted: #5f7894;
+    --sae-line: rgba(37, 99, 235, 0.16);
+    --sae-white: #ffffff;
+    --sae-mint-25: #f7fcff;
+    --sae-mint-50: #eff9ff;
+    --sae-mint-100: rgba(186, 230, 253, 0.42);
+    --sae-mint-200: rgba(125, 211, 252, 0.42);
+    --sae-mint-300: #7dd3fc;
+    --sae-mint-500: #38bdf8;
+    --sae-forest-700: #0369a1;
+    --sae-forest-800: #0f3356;
+    --sae-forest-900: #0f172a;
+    --sae-blue: #38bdf8;
+    --sae-purple: #8b5cf6;
+    --sae-gold: #b7791f;
+    --sae-danger: #b91c1c;
+    --sae-shadow: 0 22px 48px rgba(14, 116, 144, 0.14);
+    --sae-soft-shadow: 0 14px 30px rgba(14, 116, 144, 0.1);
+}
+
+:root[data-theme="dark"] {
+    --sae-page-bg: #061a4f;
+    --sae-page-overlay:
+        linear-gradient(90deg, rgba(4, 12, 38, 0.96) 0%, rgba(6, 26, 79, 0.88) 42%, rgba(30, 64, 175, 0.42) 72%, rgba(4, 12, 38, 0.92) 100%),
+        linear-gradient(180deg, rgba(4, 12, 38, 0.14) 0%, rgba(4, 12, 38, 0.96) 100%);
+    --sae-card-bg: rgba(7, 20, 64, 0.9);
+    --sae-card-soft: rgba(96, 165, 250, 0.12);
+    --sae-ink: #f8fbff;
+    --sae-muted: #c4d7f8;
+    --sae-line: rgba(147, 197, 253, 0.22);
+    --sae-white: #071440;
+    --sae-mint-25: #071440;
+    --sae-mint-50: #0a1d5f;
+    --sae-mint-100: rgba(37, 99, 235, 0.24);
+    --sae-mint-200: rgba(59, 130, 246, 0.32);
+    --sae-mint-300: #93c5fd;
+    --sae-mint-500: #3b82f6;
+    --sae-forest-700: #93c5fd;
+    --sae-forest-800: #dbeafe;
+    --sae-forest-900: #ffffff;
+    --sae-blue: #60a5fa;
+    --sae-purple: #a78bfa;
+    --sae-gold: #facc15;
+    --sae-danger: #fb7185;
+    --sae-shadow: 0 26px 62px rgba(0, 0, 0, 0.44);
+    --sae-soft-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+}
+
+body.login-page {
+    display: grid !important;
+    width: 100% !important;
+    min-height: 100svh !important;
+    height: 100svh !important;
+    place-items: center !important;
+    overflow: hidden !important;
+    padding: 18px !important;
+}
+
+body.login-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(56, 189, 248, 0.24), transparent 28%),
+        radial-gradient(circle at 78% 14%, rgba(59, 130, 246, 0.22), transparent 30%);
+    pointer-events: none;
+}
+
+body.login-page .bg-particles,
+body.login-page .glow-ring {
+    opacity: 0.18 !important;
+}
+
+body.login-page .login-wrapper {
+    display: grid !important;
+    width: min(980px, 100%) !important;
+    max-width: 980px !important;
+    height: min(640px, calc(100svh - 36px)) !important;
+    margin: 0 !important;
+    place-items: center !important;
+    z-index: 1 !important;
+}
+
+body.login-page .login-card {
+    display: grid !important;
+    grid-template-columns: minmax(250px, 0.85fr) minmax(320px, 1.15fr) !important;
+    grid-template-rows: auto auto 1fr auto !important;
+    column-gap: 34px !important;
+    row-gap: 12px !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: calc(100svh - 36px) !important;
+    overflow: hidden !important;
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--sae-card-bg) 86%, transparent), color-mix(in srgb, var(--sae-mint-100) 42%, transparent)),
+        var(--sae-card-bg) !important;
+    box-shadow: var(--sae-shadow) !important;
+    padding: 26px !important;
+    backdrop-filter: blur(20px) !important;
+}
+
+body.login-page .header-section {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    display: grid !important;
+    align-content: center !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+
+body.login-page .logo-container {
+    justify-content: flex-start !important;
+    margin-bottom: 16px !important;
+}
+
+body.login-page .logo-badge {
+    width: 68px !important;
+    height: 68px !important;
+    border: 1px solid rgba(56, 189, 248, 0.48) !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, var(--sae-mint-500), #1d4ed8) !important;
+    color: #ffffff !important;
+    box-shadow: 0 18px 34px rgba(37, 99, 235, 0.24) !important;
+    animation: none !important;
+}
+
+body.login-page .header-section h1 {
+    margin: 0 0 8px !important;
+    color: var(--sae-forest-800) !important;
+    font-size: 3rem !important;
+    line-height: 1 !important;
+}
+
+body.login-page .subtitle {
+    max-width: 260px !important;
+    margin: 0 !important;
+    color: var(--sae-muted) !important;
+    font-size: 0.84rem !important;
+    letter-spacing: 0.7px !important;
+}
+
+body.login-page .badge-advanced {
+    width: fit-content !important;
+    margin-top: 18px !important;
+    border: 1px solid rgba(56, 189, 248, 0.42) !important;
+    border-radius: 999px !important;
+    background: var(--sae-card-soft) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+body.login-page .divider {
+    width: 96px !important;
+    height: 3px !important;
+    margin: 20px 0 0 !important;
+    background: linear-gradient(90deg, var(--sae-mint-500), transparent) !important;
+}
+
+body.login-page .security-alert {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    align-self: end !important;
+    margin: 0 !important;
+    border-left: 4px solid var(--sae-mint-500) !important;
+    background: var(--sae-card-soft) !important;
+    color: var(--sae-muted) !important;
+    font-size: 0.82rem !important;
+    line-height: 1.45 !important;
+}
+
+body.login-page #errorMessage,
+body.login-page #successMessage,
+body.login-page #warningMessage {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+}
+
+body.login-page #loginForm {
+    grid-column: 2 !important;
+    grid-row: 1 / 4 !important;
+    align-self: center !important;
+    display: grid !important;
+    gap: 16px !important;
+}
+
+body.login-page .form-wrapper {
+    display: grid !important;
+    gap: 12px !important;
+}
+
+body.login-page .form-group {
+    margin: 0 !important;
+}
+
+body.login-page .form-group label {
+    margin-bottom: 6px !important;
+    color: var(--sae-forest-700) !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.6px !important;
+}
+
+body.login-page .form-group input,
+body.login-page .form-group select {
+    min-height: 45px !important;
+    padding: 0 14px !important;
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 8px !important;
+    background: color-mix(in srgb, var(--sae-white) 72%, transparent) !important;
+    color: var(--sae-ink) !important;
+}
+
+body.login-page .action-buttons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    margin: 2px 0 0 !important;
+}
+
+body.login-page .btn-primary,
+body.login-page .btn-secondary {
+    min-height: 45px !important;
+    border-radius: 8px !important;
+    padding: 0 14px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.6px !important;
+}
+
+body.login-page .btn-primary {
+    border: 1px solid rgba(56, 189, 248, 0.52) !important;
+    background: linear-gradient(135deg, #38bdf8, #2563eb) !important;
+    color: #ffffff !important;
+}
+
+body.login-page .btn-secondary {
+    border: 1px solid var(--sae-line) !important;
+    background: var(--sae-card-soft) !important;
+    color: var(--sae-forest-800) !important;
+}
+
+body.login-page .footer {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    margin: 0 !important;
+    padding-top: 12px !important;
+    border-top: 1px solid var(--sae-line) !important;
+    color: var(--sae-muted) !important;
+    font-size: 0.72rem !important;
+}
+
+body.login-page .theme-toggle--floating {
+    top: 14px !important;
+    right: 14px !important;
+}
+
+@media (max-width: 760px) {
+    body.login-page {
+        height: 100svh !important;
+        min-height: 100svh !important;
+        overflow: hidden !important;
+        padding: 10px !important;
+    }
+
+    body.login-page .login-wrapper {
+        height: calc(100svh - 20px) !important;
+    }
+
+    body.login-page .login-card {
+        grid-template-columns: 1fr !important;
+        height: 100% !important;
+        max-height: calc(100svh - 20px) !important;
+        row-gap: 8px !important;
+        padding: 12px !important;
+    }
+
+    body.login-page .header-section,
+    body.login-page .security-alert,
+    body.login-page #loginForm,
+    body.login-page .footer {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    body.login-page .header-section {
+        text-align: center !important;
+    }
+
+    body.login-page .logo-container {
+        justify-content: center !important;
+        margin-bottom: 8px !important;
+    }
+
+    body.login-page .logo-badge {
+        width: 46px !important;
+        height: 46px !important;
+        font-size: 1.35rem !important;
+    }
+
+    body.login-page .header-section h1 {
+        font-size: 2rem !important;
+    }
+
+    body.login-page .subtitle,
+    body.login-page .security-alert,
+    body.login-page .footer {
+        display: none !important;
+    }
+
+    body.login-page .form-wrapper {
+        gap: 8px !important;
+    }
+
+    body.login-page .form-group input,
+    body.login-page .form-group select,
+    body.login-page .btn-primary,
+    body.login-page .btn-secondary {
+        min-height: 40px !important;
+    }
+
+    body.login-page .divider {
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+}

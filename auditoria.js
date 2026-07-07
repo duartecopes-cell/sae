@@ -249,12 +249,14 @@
         const registros = obtenerRegistros();
         const actual = obtenerSesionActual();
         const ultima = leerJSON(LAST_KEY, null);
+        const tema = localStorage.getItem("sae-theme");
 
         try {
             localStorage.clear();
             guardarJSON(STORAGE_KEY, registros);
             if (actual) guardarJSON(CURRENT_KEY, actual);
             if (ultima) guardarJSON(LAST_KEY, ultima);
+            if (tema) localStorage.setItem("sae-theme", tema);
         } catch (error) {
             console.warn("Auditoria SAE: no se pudo limpiar la sesion preservando auditoria", error);
         }

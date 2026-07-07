@@ -552,7 +552,9 @@ function volverAlNivel() {
         if (window.SAEAuditoria) {
             window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
         } else {
+            const tema = localStorage.getItem('sae-theme');
             localStorage.clear();
+            if (tema) localStorage.setItem('sae-theme', tema);
         }
         window.location.href = "../../inicio/niveles/niveles.html";
     }

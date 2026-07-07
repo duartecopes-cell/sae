@@ -145,10 +145,12 @@ function limpiarSesionPreservandoAuditoria() {
     const registros = localStorage.getItem('sae_auditoria_registros');
     const actual = localStorage.getItem('sae_auditoria_sesion_actual');
     const ultima = localStorage.getItem('sae_ultima_auditoria');
+    const tema = localStorage.getItem('sae-theme');
     localStorage.clear();
     if (registros) localStorage.setItem('sae_auditoria_registros', registros);
     if (actual) localStorage.setItem('sae_auditoria_sesion_actual', actual);
     if (ultima) localStorage.setItem('sae_ultima_auditoria', ultima);
+    if (tema) localStorage.setItem('sae-theme', tema);
 }
 
 function volverAlNivel() {

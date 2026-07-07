@@ -35,7 +35,8 @@
 
     function readStoredTheme() {
         try {
-            return localStorage.getItem(storageKey) === "dark" ? "dark" : "light";
+            const storedTheme = localStorage.getItem(storageKey);
+            return storedTheme === "dark" ? "dark" : "light";
         } catch (error) {
             return "light";
         }
