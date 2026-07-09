@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src *;">
     <title>Contexto del Caso - SAE</title>
     <link rel="stylesheet" href="style_experto.css">
     <link rel="icon" href="data:,">
@@ -229,6 +229,7 @@
     </style>
     <link rel="stylesheet" href="../styles/sae-theme.css">
     <script src="../styles/theme-toggle.js" defer></script>
+    <script src="../styles/sae-alerts.js"></script>
 </head>
 <body>
 
@@ -365,8 +366,8 @@
         window.location.href = "entrevistas_experto.html";
     }
 
-    function volverSeleccion() {
-        if (confirm("?Deseas cambiar el caso? Perder?s cualquier progreso.")) {
+    async function volverSeleccion() {
+        if (await window.SAEAlerts.confirm("?Deseas cambiar el caso? Perder?s cualquier progreso.")) {
             localStorage.removeItem("casoSeleccionado");
             localStorage.removeItem("delitoNombre");
             window.location.href = "seleccion_delito.html";

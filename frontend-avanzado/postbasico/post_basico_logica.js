@@ -97,6 +97,9 @@ function inicializarPantalla() {
 
     console.log("✅ Datos obtenidos, inyectando en DOM...");
     inyectarDatos(datos);
+    if (window.SAERenderReportDashboard) {
+        window.SAERenderReportDashboard(datos, { nivel: "Avanzado" });
+    }
     generarAnalisis(datos);
 
     console.log('✅ Pantalla inicializada correctamente');
@@ -435,10 +438,10 @@ function generarAnalisis(datos) {
 
 // ===== REPORTE COMPLETO =====
 
-function mostrarReporte() {
+async function mostrarReporte() {
     const datos = obtenerDatos();
     if (!datos) {
-        alert('Error: No hay datos para mostrar');
+        await window.SAEAlerts.alert('Error: No hay datos para mostrar');
         return;
     }
 
@@ -498,10 +501,10 @@ ${datos.calificacion === 0 ?
 }
 
 // ✅ Descargar reporte con nombre completo
-function descargarResultados() {
+async function descargarResultados() {
     const datos = obtenerDatos();
     if (!datos) {
-        alert('Error: No hay datos para descargar');
+        await window.SAEAlerts.alert('Error: No hay datos para descargar');
         return;
     }
 
@@ -563,8 +566,8 @@ Reporte generado automáticamente por SAE - Sistema Avanzado de Entrevistas
     document.body.removeChild(elemento);
 }
 
-function volverAlNivel() {
-    if (confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
+async function volverAlNivel() {
+    if (await window.SAEAlerts.confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
         if (window.SAEAuditoria) {
             window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
         } else {

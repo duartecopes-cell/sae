@@ -131,8 +131,8 @@ function limpiarSesionPreservandoAuditoria() {
     if (tema) localStorage.setItem('sae-theme', tema);
 }
 
-function volverAlNivel() {
-    if (confirm('¿Deseas volver al menú?')) {
+async function volverAlNivel() {
+    if (await window.SAEAlerts.confirm('¿Deseas volver al menú?')) {
         limpiarSesionPreservandoAuditoria();
         window.location.href = '../../inicio/niveles/niveles.html';
     }
@@ -184,13 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // FUNCIÓN ACCEDER A SAE
 // ==========================================
 
-function irAContextos() {
+async function irAContextos() {
     console.log('🟢 Accediendo a Contextos...');
     
     // ✅ OBTENER EL NOMBRE ANTES DE NAVEGAR
     const nombre = document.getElementById('nombreUsuario').value.trim();
     if (!nombre) {
-        alert('Por favor, ingresa tu nombre primero.');
+        await window.SAEAlerts.alert('Por favor, ingresa tu nombre primero.');
         return;
     }
     
@@ -200,7 +200,7 @@ function irAContextos() {
     
     // Validar que exista el banco de historias
     if (typeof bancoDeHistorias === 'undefined' || !bancoDeHistorias) {
-        alert("Error: No se cargó correctamente el banco de datos. Recarga la página.");
+        await window.SAEAlerts.alert("Error: No se cargó correctamente el banco de datos. Recarga la página.");
         return;
     }
     

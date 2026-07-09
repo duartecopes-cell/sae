@@ -39,7 +39,7 @@ let preguntasRealizadas = [];  // Historial detallado
 let pistasDescubiertas = new Set();  // Se mantiene para compatibilidad
 
 // 3. CONEXIÓN A INDEXEDDB
-function inicializarSistema() {
+async function inicializarSistema() {
     const request = indexedDB.open("SistemaEvaluacion", 2);
 
     request.onupgradeneeded = (e) => {
@@ -69,7 +69,7 @@ function inicializarSistema() {
 }
 
 // 4. LÓGICA DE INICIO DE CASO
-function obtenerNombreDelLogin() {
+async function obtenerNombreDelLogin() {
     console.log("🔍 DEBUG: Buscando nombre en localStorage...");
     console.log("📋 localStorage completo:", localStorage);
     
@@ -108,7 +108,7 @@ function obtenerNombreDelLogin() {
         console.error('LocalStorage keys:', Object.keys(localStorage));
         
         // Opción 1: Volver al login
-        const opcion = confirm('No se encontró tu nombre en la sesión.\n\n¿Deseas volver al login para iniciar sesión nuevamente?');
+        const opcion = await window.SAEAlerts.confirm('No se encontró tu nombre en la sesión.\n\n¿Deseas volver al login para iniciar sesión nuevamente?');
         
         if (opcion) {
             console.log('El usuario eligió volver al login');
@@ -135,11 +135,11 @@ function mostrarNombreEnInterfaz(nombre) {
 }
 
 // ✅ NUEVO: Fallback para solicitar nombre manualmente
-function solicitarNombreManual() {
-    const nombre = prompt("Por favor, ingresa tu nombre completo:");
+async function solicitarNombreManual() {
+    const nombre = await window.SAEAlerts.prompt("Por favor, ingresa tu nombre completo:", { inputPlaceholder: "Nombre completo" });
     
     if (!nombre || nombre.trim() === '') {
-        alert('Nombre requerido para continuar.');
+        await window.SAEAlerts.alert('Nombre requerido para continuar.');
         window.location.href = "../../inicio/niveles/niveles.html";
         return;
     }
@@ -157,14 +157,14 @@ function solicitarNombreManual() {
     seleccionarCasoAleatorio();
 }
 
-function seleccionarCasoAleatorio() {
+async function seleccionarCasoAleatorio() {
     const idGuardado = localStorage.getItem("casoSeleccionado");
     
     console.log('🔍 DEBUG: casoSeleccionado =', idGuardado);
     
     if (!idGuardado || typeof bancoDeHistorias === 'undefined' || !bancoDeHistorias[idGuardado]) {
         console.error('❌ Error: No hay caso seleccionado o bancoDeHistorias no existe');
-        alert("Error de sincronización. Reinicie el nivel.");
+        await window.SAEAlerts.alert("Error de sincronización. Reinicie el nivel.");
         window.location.href = "../../inicio/niveles/niveles.html";
         return;
     }
@@ -558,7 +558,7 @@ Instrucciones:
 function iniciarEscucha() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.");
+        window.SAEAlerts.alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.");
         return;
     }
 
@@ -639,7 +639,7 @@ function generarReporte() {
     console.log('📊 Generando reporte con calificación 0-100...');
     
     if (!casoActivo) {
-        alert('Error: No hay caso activo');
+        window.SAEAlerts.alert('Error: No hay caso activo');
         return;
     }
 
@@ -746,7 +746,7 @@ function generarReporte() {
 }
 
 // 10. CIERRE
-function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
+async function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
     const input = document.getElementById('inputPregunta');
@@ -782,12 +782,11 @@ function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
             }
         });
     }
-
-    alert(mensaje);
+    await window.SAEAlerts.alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html";
 }
 
-function finalizarDiligencia(porTiempo = false) {
+async function finalizarDiligencia(porTiempo = false) {
     return finalizarDiligenciaAvanzadaPedagogica(porTiempo);
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
@@ -800,8 +799,7 @@ function finalizarDiligencia(porTiempo = false) {
     const mensaje = porTiempo ? 
         `TIEMPO AGOTADO\n\nCalificación: ${calificacion}/100\nRespuestas: ${respuestasCorrectas}/${totalRespuestas}` :
         `RESULTADO\n\nCalificación: ${calificacion}/100\nRespuestas: ${respuestasCorrectas}/${totalRespuestas}`;
-    
-    alert(mensaje);
+    await window.SAEAlerts.alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html";
 } */
 
@@ -858,7 +856,7 @@ let preguntasRealizadas = [];
 let pistasDescubiertas = new Set();
 
 // 3. CONEXIÓN A INDEXEDDB
-function inicializarSistema() {
+async function inicializarSistema() {
     const request = indexedDB.open("SistemaEvaluacion", 2);
 
     request.onupgradeneeded = (e) => {
@@ -888,7 +886,7 @@ function inicializarSistema() {
 }
 
 // 4. LÓGICA DE INICIO DE CASO
-function obtenerNombreDelLogin() {
+async function obtenerNombreDelLogin() {
     let nombreGuardado = localStorage.getItem('nombreUsuario');
     
     if (!nombreGuardado) {
@@ -908,7 +906,7 @@ function obtenerNombreDelLogin() {
         mostrarNombreEnInterfaz(funcionarioActual);
         seleccionarCasoAleatorio();
     } else {
-        const opcion = confirm('No se encontró tu nombre en la sesión.\n\n¿Deseas volver al menú para iniciar sesión nuevamente?');
+        const opcion = await window.SAEAlerts.confirm('No se encontró tu nombre en la sesión.\n\n¿Deseas volver al menú para iniciar sesión nuevamente?');
         if (opcion) {
             window.location.href = "../../inicio/niveles/niveles.html"; 
         } else {
@@ -926,10 +924,10 @@ function mostrarNombreEnInterfaz(nombre) {
     }
 }
 
-function solicitarNombreManual() {
-    const nombre = prompt("Por favor, ingresa tu nombre completo:");
+async function solicitarNombreManual() {
+    const nombre = await window.SAEAlerts.prompt("Por favor, ingresa tu nombre completo:", { inputPlaceholder: "Nombre completo" });
     if (!nombre || nombre.trim() === '') {
-        alert('Nombre requerido para continuar.');
+        await window.SAEAlerts.alert('Nombre requerido para continuar.');
         window.location.href = "../../inicio/niveles/niveles.html"; 
         return;
     }
@@ -939,11 +937,11 @@ function solicitarNombreManual() {
     seleccionarCasoAleatorio();
 }
 
-function seleccionarCasoAleatorio() {
+async function seleccionarCasoAleatorio() {
     const idGuardado = localStorage.getItem("casoSeleccionado");
     
     if (!idGuardado || typeof bancoDeHistorias === 'undefined' || !bancoDeHistorias[idGuardado]) {
-        alert("Error de sincronización. Reinicie el nivel.");
+        await window.SAEAlerts.alert("Error de sincronización. Reinicie el nivel.");
         window.location.href = "../../inicio/niveles/niveles.html"; 
         return;
     }
@@ -1441,7 +1439,7 @@ function mostrarNotificacionCalificacion(puntos, valido) {
 function iniciarEscucha() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
-        alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.");
+        window.SAEAlerts.alert("Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.");
         return;
     }
 
@@ -1507,7 +1505,7 @@ function agregarChat(autor, msg, clase = "sistema") {
 // ==========================================
 function generarReporteAvanzadoPedagogico() {
     if (!casoActivo) {
-        alert('Error: No hay caso activo');
+        window.SAEAlerts.alert('Error: No hay caso activo');
         return;
     }
 
@@ -1583,7 +1581,7 @@ function generarReporteAvanzadoPedagogico() {
 function generarReporte() {
     return generarReporteAvanzadoPedagogico();
     if (!casoActivo) {
-        alert('Error: No hay caso activo');
+        window.SAEAlerts.alert('Error: No hay caso activo');
         return;
     }
 
@@ -1636,7 +1634,7 @@ function generarReporte() {
 }
 
 // 10. CIERRE
-function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
+async function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
     const input = document.getElementById('inputPregunta');
@@ -1672,12 +1670,11 @@ function finalizarDiligenciaAvanzadaPedagogica(porTiempo = false) {
             }
         });
     }
-
-    alert(mensaje);
+    await window.SAEAlerts.alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html";
 }
 
-function finalizarDiligencia(porTiempo = false) {
+async function finalizarDiligencia(porTiempo = false) {
     return finalizarDiligenciaAvanzadaPedagogica(porTiempo);
     clearInterval(intervaloReloj);
     entrevistaActivo = false;
@@ -1693,7 +1690,6 @@ function finalizarDiligencia(porTiempo = false) {
     const mensaje = porTiempo ? 
         `TIEMPO AGOTADO\n\nCalificación Forense: ${calificacion}/100\nRespuestas halladas: ${respuestasCorrectas}/${totalRespuestas}` :
         `ENTREVISTA FINALIZADA\n\nCalificación Forense: ${calificacion}/100\nRespuestas halladas: ${respuestasCorrectas}/${totalRespuestas}`;
-    
-    alert(mensaje);
+    await window.SAEAlerts.alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html"; 
 }

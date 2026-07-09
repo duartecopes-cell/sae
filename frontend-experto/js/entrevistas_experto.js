@@ -724,7 +724,7 @@ function alternarMicrofono() {
     });
         
     if (!soportaMicrofono) {
-        alert("❌ Micrófono no disponible\nUsa Chrome, Edge o Firefox reciente");
+        window.SAEAlerts.alert("❌ Micrófono no disponible\nUsa Chrome, Edge o Firefox reciente");
         return;
     }
     if (!reconocimiento) return;
@@ -881,8 +881,8 @@ function mostrarError(mensaje) {
     }
 }
 
-function volverAlNivel() {
-    if (confirm("¿Abandonar? Se perderá el progreso.")) {
+async function volverAlNivel() {
+    if (await window.SAEAlerts.confirm("¿Abandonar? Se perderá el progreso.")) {
         if (window.SAEAuditoria) {
             window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
         } else {

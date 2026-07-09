@@ -101,8 +101,8 @@ function limpiarSesionPreservandoAuditoria() {
     if (tema) localStorage.setItem('sae-theme', tema);
 }
 
-function volverAlNivel() {
-    if (confirm('¿Deseas volver al menú?')) {
+async function volverAlNivel() {
+    if (await window.SAEAlerts.confirm('¿Deseas volver al menú?')) {
         limpiarSesionPreservandoAuditoria();
         window.location.href = '../../inicio/niveles/niveles.html';
     }

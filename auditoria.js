@@ -114,6 +114,7 @@
             nivelUtilizado: limpiarTexto(config.nivel) || "No definido",
             casoSeleccionado: normalizarCaso(config.caso),
             investigador: limpiarTexto(config.investigador) || "No identificado",
+            conversacion: [],
             preguntasRealizadas: [],
             respuestasGeneradas: [],
             calificacionObtenida: null,
@@ -148,6 +149,24 @@
             criterio: entrada.criterio || entrada.evaluacion || null,
             claveDetectada: entrada.clave || ""
         };
+
+        if (!Array.isArray(sesion.conversacion)) {
+            sesion.conversacion = [];
+        }
+
+        if (interaccion.pregunta) {
+            sesion.conversacion.push({
+                participante: "Investigador",
+                mensaje: interaccion.pregunta
+            });
+        }
+
+        if (interaccion.respuesta) {
+            sesion.conversacion.push({
+                participante: "Entrevistado",
+                mensaje: interaccion.respuesta
+            });
+        }
 
         sesion.preguntasRealizadas.push(interaccion);
         sesion.respuestasGeneradas.push({
@@ -232,17 +251,61 @@
         document.body.removeChild(enlace);
     }
 
-    function descargarAuditorias() {
-        descargarJSON("auditoria_sae.json", {
-            version: VERSION,
-            generadoEn: ahoraISO(),
-            registros: obtenerRegistros()
+    function obtenerConversacion(registro) {
+        if (!registro || typeof registro !== "object") return [];
+
+        if (Array.isArray(registro.conversacion) && registro.conversacion.length > 0) {
+            return registro.conversacion
+                .map((mensaje) => ({
+                    participante: limpiarTexto(mensaje.participante) || "Participante",
+                    mensaje: limpiarTexto(mensaje.mensaje)
+                }))
+                .filter((mensaje) => mensaje.mensaje);
+        }
+
+        const preguntas = Array.isArray(registro.preguntasRealizadas) ? registro.preguntasRealizadas : [];
+        const conversacion = [];
+
+        preguntas.forEach((item) => {
+            const pregunta = limpiarTexto(item && item.pregunta);
+            const respuesta = limpiarTexto(item && item.respuesta);
+
+            if (pregunta) {
+                conversacion.push({
+                    participante: "Investigador",
+                    mensaje: pregunta
+                });
+            }
+
+            if (respuesta) {
+                conversacion.push({
+                    participante: "Entrevistado",
+                    mensaje: respuesta
+                });
+            }
         });
+
+        return conversacion;
+    }
+
+    function prepararAuditoriaSoloConversacion(registros) {
+        const lista = Array.isArray(registros) ? registros : [];
+        return {
+            conversaciones: lista
+                .map((registro) => ({
+                    conversacion: obtenerConversacion(registro)
+                }))
+                .filter((registro) => registro.conversacion.length > 0)
+        };
+    }
+
+    function descargarAuditorias() {
+        descargarJSON("auditoria_sae_conversacion.json", prepararAuditoriaSoloConversacion(obtenerRegistros()));
     }
 
     function descargarUltimaAuditoria() {
         const ultima = leerJSON(LAST_KEY, obtenerSesionActual());
-        descargarJSON("auditoria_sae_ultima_sesion.json", ultima || {});
+        descargarJSON("auditoria_sae_ultima_conversacion.json", prepararAuditoriaSoloConversacion(ultima ? [ultima] : []));
     }
 
     function limpiarSesionPreservandoAuditoria() {

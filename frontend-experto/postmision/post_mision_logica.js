@@ -421,9 +421,9 @@ function generarAnalisis(credibilidad, contradicciones, tactica, casoId, temasAb
 
 // ===== REPORTE COMPLETO (MODAL) =====
 
-function mostrarReporte() {
+async function mostrarReporte() {
     const datos = obtenerDatos();
-    if (!datos) { alert('Error: No hay datos para mostrar'); return; }
+    if (!datos) { await window.SAEAlerts.alert('Error: No hay datos para mostrar'); return; }
 
     const { abordados, noAbordados, impactoTotal } = analizarTemasCaso(datos.casoId, datos.temasAbordados);
 
@@ -503,9 +503,9 @@ ${noAbordados.slice(0, 3).map((t, i) =>
 
 // ===== DESCARGAR REPORTE =====
 
-function descargarResultados() {
+async function descargarResultados() {
     const datos = obtenerDatos();
-    if (!datos) { alert('Error: No hay datos para descargar'); return; }
+    if (!datos) { await window.SAEAlerts.alert('Error: No hay datos para descargar'); return; }
 
     const { abordados, noAbordados, impactoTotal } = analizarTemasCaso(datos.casoId, datos.temasAbordados);
     const tiempoFormato = formatearTiempo(Date.now() - datos.tiempoInicio);
@@ -547,8 +547,8 @@ ${noAbordados.map(t => `✗ ${t.etiqueta} — ${t.impacto} pts perdidos`).join('
 
 // ===== VOLVER AL MENÚ =====
 
-function volverAlNivel() {
-    if (confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
+async function volverAlNivel() {
+    if (await window.SAEAlerts.confirm('¿Deseas volver al menú? Se perderán los datos de esta sesión.')) {
         if (window.SAEAuditoria) {
             window.SAEAuditoria.limpiarSesionPreservandoAuditoria();
         } else {
@@ -587,6 +587,9 @@ function inicializarPantalla() {
     }
 
     inyectarDatos(datos);
+    if (window.SAERenderReportDashboard) {
+        window.SAERenderReportDashboard(datos, { nivel: "Experto" });
+    }
     generarAnalisis(datos.credibilidad, datos.contradicciones, datos.tacticaUsada, datos.casoId, datos.temasAbordados);
 
     console.log('✅ Pantalla post-misión v3 inicializada');

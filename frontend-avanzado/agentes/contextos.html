@@ -2,11 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src *;">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src *;">
     <title>Contexto del Caso - Evaluación</title>
     <link rel="stylesheet" href="style.css"> 
     <link rel="stylesheet" href="../../styles/sae-theme.css">
     <script src="../../styles/theme-toggle.js" defer></script>
+    <script src="../../styles/sae-alerts.js"></script>
 </head>
 <!-- ... (cabecera igual) ... -->
 <body class="body-contexto">
@@ -53,7 +54,7 @@
     }
  
     // L?gica para cargar el contexto del caso
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
         const idActivo = localStorage.getItem("casoSeleccionado");
         
         console.log(' Cargando contexto...');
@@ -61,7 +62,7 @@
         
         // Verificar que existe el caso seleccionado
         if (!idActivo) {
-            alert("Error: No hay caso seleccionado. Por favor, inicia desde el nivel.");
+            await window.SAEAlerts.alert("Error: No hay caso seleccionado. Por favor, inicia desde el nivel.");
             window.location.href = "../../inicio/niveles/niveles.html";
             return;
         }
@@ -100,7 +101,7 @@
         }
         
         // Error: No se encontr? el caso
-        alert("Error: No se encontraron datos del caso.");
+        await window.SAEAlerts.alert("Error: No se encontraron datos del caso.");
         window.location.href = "../../inicio/niveles/niveles.html";
     });
 </script>

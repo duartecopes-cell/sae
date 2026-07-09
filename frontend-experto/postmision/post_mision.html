@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="post_mision.css">
     <link rel="stylesheet" href="../../styles/sae-theme.css">
     <script src="../../styles/theme-toggle.js" defer></script>
+    <script src="../../styles/sae-alerts.js"></script>
 </head>
 <body>
 
@@ -27,6 +28,35 @@
         <div class="rango-valor" id="rango-valor">A</div>
         <div class="rango-descripcion" id="rango-desc">ESPECIALISTA EN ENTREVISTAS</div>
     </div>
+
+    <section class="report-dashboard" aria-label="Panel estadistico">
+        <div class="report-dashboard__topbar">
+            <div>
+                <span>Reportes</span>
+                <strong>Panel estadistico</strong>
+            </div>
+            <div class="report-dashboard__meta" id="report-dashboard-meta"></div>
+        </div>
+
+        <div class="report-chart-grid">
+            <article class="report-chart-card chart-wide">
+                <header>Rendimiento por etapa</header>
+                <div id="chart-rendimiento" class="chart-slot"></div>
+            </article>
+            <article class="report-chart-card">
+                <header>Indicadores principales</header>
+                <div id="chart-indicadores" class="chart-slot"></div>
+            </article>
+            <article class="report-chart-card">
+                <header>Distribucion del resultado</header>
+                <div id="chart-distribucion" class="chart-slot"></div>
+            </article>
+            <article class="report-chart-card chart-wide">
+                <header>Evolucion de la entrevista</header>
+                <div id="chart-evolucion" class="chart-slot"></div>
+            </article>
+        </div>
+    </section>
 
     <div class="stats-grid">
         <div class="stat-card">
@@ -116,6 +146,7 @@
 <!-- Scripts â€” banco_de_casos PRIMERO para que post_mision_logica lo encuentre -->
 <script src="../js/banco_de_casos.js"></script>
 <script src="../../auditoria.js"></script>
+<script src="../../styles/report-dashboard.js"></script>
 <script src="post_mision_logica.js"></script>
 
 </body>
