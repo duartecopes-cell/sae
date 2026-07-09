@@ -240,16 +240,16 @@
         placeholder="Haz una pregunta al sospechoso..."
         onkeydown="if(event.key==='Enter') procesarPreguntaLibre()"
       >
-      <button class="btn-send" onclick="procesarPreguntaLibre()" title="Enviar pregunta">
+      <button class="btn-send" type="button" onclick="procesarPreguntaLibre()" title="Enviar pregunta">
         ENVIAR
       </button>
-      <button class="btn-micro" id="btnMicrofono" onclick="alternarMicrofono()" title="Activar micr?fono">
-        
+      <button class="btn-micro" id="btnMicrofono" type="button" onclick="alternarMicrofono()" title="Activar microfono" aria-label="Activar microfono">
+        Microfono
       </button>
-      <button class="btn-send" onclick="generarReporteIntermedio()" title="Ver reporte actual">
+      <button class="btn-rep" type="button" onclick="generarReporteIntermedio()" title="Ver reporte actual">
          REPORTE
       </button>
-      <button class="btn-abandonar" onclick="volverAlNivel()">
+      <button class="btn-abandonar" type="button" onclick="volverAlNivel()">
          ABANDONAR
       </button>
     </div>

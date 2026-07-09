@@ -645,7 +645,7 @@ function inicializarMicrofono() {
         escuchandoMicrofono = true;
         resultadoRecibido   = false; // reset por cada sesión
         const btn = document.getElementById("btnMicrofono");
-        if (btn) { btn.classList.add("recording"); btn.textContent = "⏹️ DETENER"; }
+        if (btn) { btn.classList.add("recording"); btn.textContent = "Detener"; }
         console.log("🎤 Micrófono activo");
     };
 
@@ -686,7 +686,7 @@ function inicializarMicrofono() {
     reconocimiento.onend = () => {
         escuchandoMicrofono = false;
         const btn = document.getElementById("btnMicrofono");
-        if (btn) { btn.classList.remove("recording"); btn.textContent = "🎤 MICRÓFONO"; }
+        if (btn) { btn.classList.remove("recording"); btn.textContent = "Microfono"; }
 
         // ✅ Solo loguear si no hubo resultado (ayuda a detectar silencios)
         if (!resultadoRecibido) {
@@ -700,7 +700,7 @@ function inicializarMicrofono() {
         resultadoRecibido   = false;
 
         const btn = document.getElementById("btnMicrofono");
-        if (btn) { btn.classList.remove("recording"); btn.textContent = "🎤 MICRÓFONO"; }
+        if (btn) { btn.classList.remove("recording"); btn.textContent = "Microfono"; }
 
         // ✅ Mensajes de error específicos por tipo
         const errores = {
@@ -749,7 +749,7 @@ function alternarMicrofono() {
         // ✅ Resetear estado si start() falla
         escuchandoMicrofono = false;
         const btn = document.getElementById("btnMicrofono");
-        if (btn) { btn.classList.remove("recording"); btn.textContent = "🎤 MICRÓFONO"; }
+        if (btn) { btn.classList.remove("recording"); btn.textContent = "Microfono"; }
     }
 }
 

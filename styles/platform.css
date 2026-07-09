@@ -470,3 +470,364 @@ h1 {
         font-size: 1rem;
     }
 }
+
+/* Tema corporativo inspirado en Facebook: azul profesional y blanco. */
+:root,
+:root[data-theme="light"] {
+    --pastel-blue: #e7f3ff;
+    --pastel-blue-soft: #f4f8ff;
+    --pastel-blue-strong: #1877f2;
+    --pastel-blue-deep: #0b3d78;
+    --white: #ffffff;
+    --bg: #f4f8ff;
+    --surface: rgba(255, 255, 255, 0.94);
+    --surface-soft: rgba(24, 119, 242, 0.08);
+    --text: var(--pastel-blue-deep);
+    --muted: #4267b2;
+    --line: rgba(24, 119, 242, 0.22);
+    --blue: var(--pastel-blue-strong);
+    --green: var(--pastel-blue-strong);
+    --purple: var(--pastel-blue-strong);
+    --shadow: 0 22px 48px rgba(24, 119, 242, 0.14);
+    --header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(231, 243, 255, 0.82));
+    --hero-layer:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 248, 255, 0.9) 44%, rgba(231, 243, 255, 0.72) 76%, rgba(255, 255, 255, 0.92) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(244, 248, 255, 0.98) 100%);
+    --brand-bg: var(--surface-soft);
+    --brand-color: var(--pastel-blue-deep);
+    --heading: var(--pastel-blue-deep);
+    --card-title: var(--pastel-blue-deep);
+    --status-color: var(--pastel-blue-deep);
+    --button-bg: #1877f2;
+    --button-text: #ffffff;
+}
+
+:root[data-theme="dark"] {
+    --pastel-blue: #e7f3ff;
+    --pastel-blue-soft: #f4f8ff;
+    --pastel-blue-strong: #1877f2;
+    --pastel-blue-deep: #0b3d78;
+    --white: #ffffff;
+    --bg: #0b3d78;
+    --surface: rgba(14, 74, 138, 0.88);
+    --surface-soft: rgba(255, 255, 255, 0.16);
+    --text: var(--white);
+    --muted: #e7f3ff;
+    --line: rgba(255, 255, 255, 0.32);
+    --blue: var(--pastel-blue);
+    --green: var(--pastel-blue);
+    --purple: var(--pastel-blue);
+    --shadow: 0 26px 62px rgba(5, 34, 74, 0.36);
+    --header-bg: linear-gradient(180deg, rgba(11, 61, 120, 0.96), rgba(11, 61, 120, 0.5));
+    --hero-layer:
+        linear-gradient(90deg, rgba(11, 61, 120, 0.96) 0%, rgba(24, 119, 242, 0.76) 45%, rgba(231, 243, 255, 0.18) 76%, rgba(11, 61, 120, 0.92) 100%),
+        linear-gradient(180deg, rgba(11, 61, 120, 0.08) 0%, rgba(11, 61, 120, 0.96) 100%);
+    --brand-bg: rgba(255, 255, 255, 0.18);
+    --brand-color: var(--white);
+    --heading: var(--white);
+    --card-title: var(--white);
+    --status-color: var(--white);
+    --button-bg: var(--white);
+    --button-text: var(--pastel-blue-deep);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+.site-header {
+    border-bottom-color: var(--line);
+    background: var(--header-bg);
+}
+
+.hero,
+.compat-page {
+    background:
+        var(--hero-layer),
+        url("../assets/images/sae-interview-hero.png"),
+        linear-gradient(135deg, var(--white), var(--pastel-blue));
+    background-position: center;
+    background-size: cover;
+}
+
+.brand-mark,
+.eyebrow,
+.level-number,
+.level-status,
+.theme-toggle {
+    border-color: var(--line);
+    background: var(--surface-soft);
+    color: var(--text);
+    box-shadow: var(--shadow);
+}
+
+.brand-mark {
+    background: var(--button-bg);
+    color: var(--button-text);
+}
+
+.level-card.basic,
+.level-card.advanced,
+.level-card.expert {
+    --accent: var(--blue);
+}
+
+.level-card,
+.compat-card {
+    border-color: var(--line);
+    border-top-color: var(--blue);
+    background: var(--surface);
+    color: var(--text);
+}
+
+.level-button,
+.btn {
+    border: 1px solid var(--line);
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: 0 14px 30px rgba(24, 119, 242, 0.18);
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible,
+.level-button:hover,
+.level-button:focus-visible {
+    border-color: var(--blue);
+    box-shadow: 0 0 26px rgba(24, 119, 242, 0.22);
+}
+
+.theme-toggle[data-theme-state="dark"],
+.theme-toggle__icon::after {
+    background: var(--button-bg);
+    color: var(--button-text);
+}
+
+.theme-toggle__icon::after {
+    box-shadow: 0 0 0 2px var(--surface);
+}
+
+@media (max-width: 560px) {
+    .site-header {
+        background: var(--header-bg);
+    }
+}
+
+/* Tipografia uniforme solicitada: negro en claro, blanco en oscuro. */
+:root,
+:root[data-theme="light"] {
+    --text: #000000;
+    --muted: #000000;
+    --heading: #000000;
+    --card-title: #000000;
+    --status-color: #000000;
+    --brand-color: #000000;
+    --button-text: #000000;
+    color: #000000;
+}
+
+:root[data-theme="dark"] {
+    --text: #ffffff;
+    --muted: #ffffff;
+    --heading: #ffffff;
+    --card-title: #ffffff;
+    --status-color: #ffffff;
+    --brand-color: #ffffff;
+    --button-bg: #1877f2;
+    --button-text: #ffffff;
+    color: #ffffff;
+}
+
+html,
+body,
+body *,
+body *::before,
+body *::after {
+    color: #000000 !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] body *,
+:root[data-theme="dark"] body *::before,
+:root[data-theme="dark"] body *::after {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+.brand-mark,
+.level-button,
+.btn,
+.theme-toggle,
+.theme-toggle[data-theme-state="dark"] {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
+
+:root[data-theme="dark"] .brand-mark,
+:root[data-theme="dark"] .level-button,
+:root[data-theme="dark"] .btn,
+:root[data-theme="dark"] .theme-toggle,
+:root[data-theme="dark"] .theme-toggle[data-theme-state="dark"] {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Portada final: claro estilo Facebook y oscuro de sistema SAE. */
+:root,
+:root[data-theme="light"] {
+    --bg: #f0f2f5;
+    --surface: rgba(255, 255, 255, 0.96);
+    --surface-soft: #f5f7fb;
+    --text: #1c1e21;
+    --muted: #606770;
+    --line: #dbe3ef;
+    --blue: #1877f2;
+    --green: #1877f2;
+    --purple: #1877f2;
+    --shadow: 0 18px 42px rgba(24, 119, 242, 0.14);
+    --header-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(240, 242, 245, 0.72));
+    --hero-layer:
+        linear-gradient(90deg, rgba(240, 242, 245, 0.98) 0%, rgba(247, 248, 252, 0.9) 44%, rgba(231, 243, 255, 0.66) 78%, rgba(240, 242, 245, 0.96) 100%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(240, 242, 245, 0.96) 100%);
+    --brand-bg: #1877f2;
+    --brand-color: #ffffff;
+    --heading: #1c1e21;
+    --card-title: #1c1e21;
+    --status-color: #1c1e21;
+    --button-bg: #1877f2;
+    --button-bg-hover: #166fe5;
+    --button-soft: #e4e6eb;
+    --button-text: #ffffff;
+}
+
+:root[data-theme="dark"] {
+    --bg: #07111f;
+    --surface: rgba(14, 23, 38, 0.96);
+    --surface-soft: #111f33;
+    --text: #f8fafc;
+    --muted: #cbd5e1;
+    --line: rgba(226, 232, 240, 0.18);
+    --blue: #2d88ff;
+    --green: #2d88ff;
+    --purple: #8ab4ff;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.36);
+    --header-bg: linear-gradient(180deg, rgba(7, 17, 31, 0.98), rgba(7, 17, 31, 0.62));
+    --hero-layer:
+        linear-gradient(90deg, rgba(7, 17, 31, 0.98) 0%, rgba(8, 25, 48, 0.94) 45%, rgba(24, 119, 242, 0.2) 78%, rgba(7, 17, 31, 0.98) 100%),
+        linear-gradient(180deg, rgba(7, 17, 31, 0.12) 0%, rgba(7, 17, 31, 0.98) 100%);
+    --brand-bg: #2d88ff;
+    --brand-color: #ffffff;
+    --heading: #ffffff;
+    --card-title: #ffffff;
+    --status-color: #f8fafc;
+    --button-bg: #2d88ff;
+    --button-bg-hover: #4c9aff;
+    --button-soft: #243247;
+    --button-text: #ffffff;
+}
+
+body {
+    background: var(--bg) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+.site-header {
+    border-bottom-color: var(--line) !important;
+    background: var(--header-bg) !important;
+    backdrop-filter: blur(14px) !important;
+}
+
+.hero,
+.compat-page {
+    background:
+        var(--hero-layer),
+        url("../assets/images/sae-interview-hero.png"),
+        var(--bg) !important;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.hero::after {
+    background: linear-gradient(180deg, transparent, var(--bg)) !important;
+}
+
+.brand strong,
+.brand small,
+.eyebrow,
+h1,
+.hero p,
+.level-card h2,
+.level-card p,
+.level-status,
+.site-footer,
+.compat-card h1,
+.compat-card p {
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+.brand small,
+.hero p,
+.level-card p,
+.site-footer {
+    color: var(--muted) !important;
+    -webkit-text-fill-color: var(--muted) !important;
+}
+
+.brand-mark,
+.level-button,
+.btn {
+    border-color: transparent !important;
+    background: var(--button-bg) !important;
+    color: var(--button-text) !important;
+    -webkit-text-fill-color: var(--button-text) !important;
+    box-shadow: 0 14px 30px rgba(24, 119, 242, 0.2) !important;
+}
+
+.level-button:hover,
+.level-button:focus-visible,
+.btn:hover,
+.btn:focus-visible {
+    background: var(--button-bg-hover) !important;
+    box-shadow: 0 16px 34px rgba(24, 119, 242, 0.26) !important;
+}
+
+.eyebrow,
+.level-number,
+.level-status,
+.theme-toggle {
+    border-color: var(--line) !important;
+    background: var(--button-soft) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+    box-shadow: var(--shadow) !important;
+}
+
+.level-card,
+.compat-card {
+    border-color: var(--line) !important;
+    border-top-color: var(--blue) !important;
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    box-shadow: var(--shadow) !important;
+}
+
+.theme-toggle[data-theme-state="dark"] {
+    background: var(--button-soft) !important;
+    color: var(--text) !important;
+    -webkit-text-fill-color: var(--text) !important;
+}
+
+.theme-toggle__icon::after {
+    background: var(--blue) !important;
+    box-shadow: 0 0 0 2px var(--surface) !important;
+}
+
+@media (max-width: 560px) {
+    .site-header {
+        background: var(--header-bg) !important;
+    }
+}

@@ -25,9 +25,9 @@
             
             <div class="controls">
                 <input type="text" id="inputPregunta" placeholder="Haz una pregunta..." onkeydown="if(event.key==='Enter') procesarPregunta()">
-                <button class="btn-send" onclick="procesarPregunta()">Enviar</button>
-                <button class="btn-micro" onclick="iniciarEscucha()"></button>
-                <button class="btn-rep" onclick="generarReporte()">Reporte</button>
+                <button class="btn-send" type="button" onclick="procesarPregunta()">Enviar</button>
+                <button class="btn-micro" id="btn-micro" type="button" onclick="iniciarEscucha()" title="Usar audio" aria-label="Usar audio">Audio</button>
+                <button class="btn-rep" type="button" onclick="generarReporte()">Reporte</button>
             </div>
         </div>
 
