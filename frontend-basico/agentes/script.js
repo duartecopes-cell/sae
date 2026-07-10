@@ -408,7 +408,19 @@ function mostrarRetroalimentacionPedagogica(evaluacion) {
     feedback.style.color = evaluacion.correcta ? "#16a34a" : evaluacion.parcial ? "#f59e0b" : "#64748b";
     feedback.innerHTML = `<strong>Orientacion SAE:</strong> ${escaparHTML(evaluacion.recomendacion)} <span style="opacity:.75;">(+${evaluacion.puntaje} pts)</span>`;
     chat.appendChild(feedback);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerConversacionAlFinal(chat);
+}
+
+function mantenerConversacionAlFinal(chat) {
+    if (!chat) return;
+    chat.dataset.hasConversation = "true";
+    const bajar = () => {
+        chat.scrollTop = chat.scrollHeight;
+    };
+    bajar();
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(bajar);
+    }
 }
 
 function calcularCalificacionFinalBasica() {
@@ -670,7 +682,7 @@ function agregarChat(autor, msg, clase = "sistema") {
         msgDiv.className = `msg ${clase}`;
         msgDiv.innerHTML = `<strong>${escaparHTML(autor)}:</strong> ${escaparHTML(msg)}`;
         chat.appendChild(msgDiv);
-        chat.scrollTop = chat.scrollHeight;
+        mantenerConversacionAlFinal(chat);
     }
 }
 

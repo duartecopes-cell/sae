@@ -24,6 +24,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+function mantenerConversacionAlFinal(chat) {
+    if (!chat) return;
+    chat.dataset.hasConversation = "true";
+    const bajar = () => {
+        chat.scrollTop = chat.scrollHeight;
+    };
+    bajar();
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(bajar);
+    }
+}
+
 // 2. VARIABLES DE CONTROL DEL JUEGO
 let db;
 let funcionarioActual = "";
@@ -352,7 +364,19 @@ function mostrarRetroalimentacionAvanzada(evaluacion) {
     logPuntos.style.color = evaluacion.correcta ? "#00eaff" : evaluacion.parcial ? "#fbbf24" : "#ef4444";
     logPuntos.innerHTML = `[ Evaluacion SAE: ${escaparHTML(evaluacion.recomendacion)} | +${evaluacion.puntaje} pts ]`;
     chat.appendChild(logPuntos);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerConversacionAlFinal(chat);
+}
+
+function mantenerConversacionAlFinal(chat) {
+    if (!chat) return;
+    chat.dataset.hasConversation = "true";
+    const bajar = () => {
+        chat.scrollTop = chat.scrollHeight;
+    };
+    bajar();
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(bajar);
+    }
 }
 
 function calcularCalificacionFinalAvanzada() {
@@ -396,7 +420,7 @@ async function procesarPreguntaAvanzadaPedagogica() {
             emoDiv.style.textAlign = "center";
             emoDiv.innerText = reaccionFisica;
             chat.appendChild(emoDiv);
-            chat.scrollTop = chat.scrollHeight;
+            mantenerConversacionAlFinal(chat);
         }, 300);
     }
 
@@ -615,7 +639,7 @@ function agregarChat(autor, msg, clase = "sistema") {
         msgDiv.className = `msg ${clase}`;
         msgDiv.innerHTML = `<strong>${escaparHTML(autor)}:</strong> ${escaparHTML(msg)}`;
         chat.appendChild(msgDiv);
-        chat.scrollTop = chat.scrollHeight;
+        mantenerConversacionAlFinal(chat);
     }
 }
 
@@ -802,6 +826,18 @@ async function finalizarDiligencia(porTiempo = false) {
     await window.SAEAlerts.alert(mensaje);
     window.location.href = "../../inicio/niveles/niveles.html";
 } */
+
+function mantenerConversacionAlFinal(chat) {
+    if (!chat) return;
+    chat.dataset.hasConversation = "true";
+    const bajar = () => {
+        chat.scrollTop = chat.scrollHeight;
+    };
+    bajar();
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(bajar);
+    }
+}
 
 let puntajeAcumulado = 0;
 let criteriosHistorial = [];
@@ -1177,7 +1213,7 @@ function mostrarRetroalimentacionAvanzada(evaluacion) {
     logPuntos.style.color = evaluacion.correcta ? "#00eaff" : evaluacion.parcial ? "#fbbf24" : "#ef4444";
     logPuntos.innerHTML = `[ Evaluacion SAE: ${escaparHTML(evaluacion.recomendacion)} | +${evaluacion.puntaje} pts ]`;
     chat.appendChild(logPuntos);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerConversacionAlFinal(chat);
 }
 
 function calcularCalificacionFinalAvanzada() {
@@ -1221,7 +1257,7 @@ async function procesarPreguntaAvanzadaPedagogica() {
             emoDiv.style.textAlign = "center";
             emoDiv.innerText = reaccionFisica;
             chat.appendChild(emoDiv);
-            chat.scrollTop = chat.scrollHeight;
+            mantenerConversacionAlFinal(chat);
         }, 300);
     }
 
@@ -1304,7 +1340,7 @@ async function procesarPregunta() {
             emoDiv.style.textAlign = "center";
             emoDiv.innerText = reaccionFisica;
             chat.appendChild(emoDiv);
-            chat.scrollTop = chat.scrollHeight;
+            mantenerConversacionAlFinal(chat);
         }, 300);
     }
 
@@ -1432,7 +1468,7 @@ function mostrarNotificacionCalificacion(puntos, valido) {
         logPuntos.innerText = `[ Interfaz IA: Evasiva táctica detectada. Replantee su enfoque. ]`;
     }
     chat.appendChild(logPuntos);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerConversacionAlFinal(chat);
 }
 
 // 7. FUNCIONES DE ESCUCHA Y VOZ
@@ -1496,7 +1532,7 @@ function agregarChat(autor, msg, clase = "sistema") {
         msgDiv.className = `msg ${clase}`;
         msgDiv.innerHTML = `<strong>${escaparHTML(autor)}:</strong> ${escaparHTML(msg)}`;
         chat.appendChild(msgDiv);
-        chat.scrollTop = chat.scrollHeight;
+        mantenerConversacionAlFinal(chat);
     }
 }
 

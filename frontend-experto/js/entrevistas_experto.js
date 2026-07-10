@@ -173,9 +173,21 @@ function mostrarSaludoInicial() {
         </div>
     `;
     chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerChatAlFinal(chat);
 
     hacerHablarSAE(textoSaludo);
+}
+
+function mantenerChatAlFinal(chat) {
+    if (!chat) return;
+    chat.dataset.hasConversation = "true";
+    const bajar = () => {
+        chat.scrollTop = chat.scrollHeight;
+    };
+    bajar();
+    if (typeof requestAnimationFrame === "function") {
+        requestAnimationFrame(bajar);
+    }
 }
 
 // ═══════════════════════════════════════════════════
@@ -289,7 +301,7 @@ function mostrarRetroalimentacionExperto(tipo, etiquetaTema) {
     msg.className = "msg-wrap system";
     msg.innerHTML = `<div class="system-msg" style="font-size:11px; color:#7fb3ff;">${texto}</div>`;
     chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerChatAlFinal(chat);
 }
 
 function procesarPreguntaLibre() {
@@ -518,7 +530,7 @@ function mostrarMensajeChat(tipo, texto) {
     }
 
     chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
+    mantenerChatAlFinal(chat);
 }
 
 // ═══════════════════════════════════════════════════
