@@ -118,8 +118,8 @@ function inyectarDatos(datos) {
     if (rangoValor) rangoValor.textContent = datos.rango.split(' ')[0];
     if (rangoDesc) rangoDesc.textContent = datos.descripcionRango;
 
-    // ✅ Calificación (0-100)
-    document.getElementById('credibilidad-valor').textContent = `${datos.calificacion}/100`;
+    // ✅ Calificación (0-50)
+    document.getElementById('credibilidad-valor').textContent = `${datos.calificacion}/50`;
     
     // Contradicciones
     document.getElementById('contradicciones-valor').textContent = `${datos.contradicciones}/5`;
@@ -151,7 +151,7 @@ function generarAnalisis(datos) {
     const calificacion = datos.calificacion;
     const respuestasCorrectas = datos.respuestasCorrectas;
     const totalRespuestas = datos.totalRespuestas;
-    const porcentajeCorrecciones = totalRespuestas > 0 ? Math.round((respuestasCorrectas / totalRespuestas) * 100) : 0;
+    const porcentajeCorrecciones = totalRespuestas > 0 ? Math.round((respuestasCorrectas / totalRespuestas) * 50) : 0;
     
     // ========================================
     // ANÁLISIS DE DESEMPEÑO
@@ -163,19 +163,19 @@ function generarAnalisis(datos) {
     if (calificacion === 0) {
         nivelDesempenio = 'INICIAL';
         descripcionDesempenio = 'Esta sesion sirve como punto de partida. Revisa el caso y practica preguntas concretas sobre personas, lugares, tiempos y evidencias.';
-    } else if (calificacion >= 95) {
+    } else if (calificacion >= 47.5) {
         nivelDesempenio = 'EXCEPCIONAL';
         descripcionDesempenio = 'Demostraste un dominio absoluto de la entrevista. Desempeño magistral.';
-    } else if (calificacion >= 85) {
+    } else if (calificacion >= 42.5) {
         nivelDesempenio = 'EXCELENTE';
         descripcionDesempenio = 'Realizaste una entrevista de alta calidad con excelente manejo de presión.';
-    } else if (calificacion >= 75) {
+    } else if (calificacion >= 37.5) {
         nivelDesempenio = 'BUENO';
         descripcionDesempenio = 'Tu desempeño fue competente con buen manejo de timing y técnicas.';
-    } else if (calificacion >= 55) {
+    } else if (calificacion >= 27.5) {
         nivelDesempenio = 'ACEPTABLE';
         descripcionDesempenio = 'Alcanzaste el mínimo requerido. Hay margen significativo de mejora.';
-    } else if (calificacion < 55) {
+    } else if (calificacion < 2.7) {
         nivelDesempenio = 'DEFICIENTE';
         descripcionDesempenio = 'No cumpliste los requisitos mínimos de la evaluación.';
     }
@@ -207,10 +207,10 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion < 55) {
+    if (calificacion < 27.5) {
         errores.push({
             titulo: '❌ CALIFICACIÓN NO APROBATORIA',
-            desc: `Obtuviste ${calificacion}/100. Te faltan ${Math.max(0, 55 - calificacion)} puntos para aprobar; enfoca la proxima entrevista en preguntas mas claras y relacionadas con el caso.`
+            desc: `Obtuviste ${calificacion}/50. Te faltan ${Math.max(0, 27.5    - calificacion)} puntos para aprobar; enfoca la proxima entrevista en preguntas mas claras y relacionadas con el caso.`
         });
     }
     
@@ -228,7 +228,7 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion >= 55 && calificacion < 75) {
+    if (calificacion >= 27.5 && calificacion < 37.5) {
         errores.push({
             titulo: 'INCONSISTENCIAS EN TÉCNICA',
             desc: 'Tu entrevista fue desigual. Mantén un nivel de profundidad consistente.'
@@ -241,10 +241,10 @@ function generarAnalisis(datos) {
     
     const fortalezas = [];
     
-    if (calificacion >= 55) {
+    if (calificacion >= 47.5) {
         fortalezas.push({
             titulo: '✅ MISIÓN APROBADA',
-            desc: `Alcanzaste una calificación de ${calificacion}/100. Cumpliste los requisitos mínimos.`
+            desc: `Alcanzaste una calificación de ${calificacion}/50. Cumpliste los requisitos mínimos.`
         });
     }
     
@@ -289,12 +289,12 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion >= 90) {
+    if (calificacion >= 47.5) {
         fortalezas.push({
             titulo: '🏆 DESEMPEÑO EXCEPCIONAL',
             desc: 'Alcanzaste un rango superior. Considerase para misiones de mayor dificultad.'
         });
-    } else if (calificacion >= 80) {
+    } else if (calificacion >= 42.5 && calificacion < 47.5) {
         fortalezas.push({
             titulo: '⭐ DESEMPEÑO DESTACADO',
             desc: 'Tu rango indica especialización en entrevistas. Excelente trabajo.'
@@ -322,7 +322,7 @@ function generarAnalisis(datos) {
         });
     }
     
-    if (calificacion < 100) {
+    if (calificacion < 27.5) {
         sugerencias.push({
             titulo: 'ESTUDIA MÁS EL PERFIL DEL SOSPECHOSO',
             desc: 'Revisa antecedentes, inconsistencias, debilidades. Llega a la entrevista PREPARADO y con un plan.'
@@ -360,7 +360,7 @@ function generarAnalisis(datos) {
         desc: 'Si es evasivo, sé directo y agresivo. Si es cooperativo, construye rapport. Lee sus patrones de comportamiento.'
     });
     
-    if (calificacion < 75) {
+    if (calificacion < 27.5) {
         sugerencias.push({
             titulo: 'REVISAR TÉCNICAS FUNDAMENTALES',
             desc: 'Recapacita en: rapport, escucha activa, timing de confrontación, lectura de lenguaje corporal y presión psicológica.'
@@ -378,7 +378,7 @@ function generarAnalisis(datos) {
                 <br><br>
                 <strong>Respuestas Correctas:</strong> ${respuestasCorrectas}/${totalRespuestas} (${porcentajeCorrecciones}%)
                 <br>
-                <strong>Calificación Final:</strong> ${calificacion}/100 ${calificacion >= 55 ? '✅ APROBADO' : '❌ NO APROBADO'}
+                <strong>Calificación Final:</strong> ${calificacion}/50 ${calificacion >= 27.5 ? '✅ APROBADO' : '❌ NO APROBADO'}
             </p>
         </div>
     `;
@@ -430,7 +430,7 @@ async function mostrarReporte() {
     const ahora = Date.now();
     const tiempoMs = ahora - datos.tiempoInicio;
     const tiempoFormato = formatearTiempo(tiempoMs);
-    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 100);
+    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 50);
 
     const contenido = `
 ═══════════════════════════════════════════════════════════════
@@ -446,7 +446,7 @@ ESTADO: ${datos.estado}
 ─────────────────────────────────────────────────────────────
 CALIFICACIÓN Y RESULTADOS
 ─────────────────────────────────────────────────────────────
-Calificación Final:        ${datos.calificacion}/100
+Calificación Final:        ${datos.calificacion}/50
 Respuestas Correctas:      ${datos.respuestasCorrectas}/${datos.totalRespuestas}
 Porcentaje:                ${porcentaje}%
 Rango de Desempeño:        ${datos.rango}
@@ -457,17 +457,17 @@ Duración:                  ${tiempoFormato}
 INTERPRETACIÓN
 ─────────────────────────────────────────────────────────────
 
-${datos.calificacion >= 55 ? '✅ APROBADO' : '❌ NO APROBADO'}
+${datos.calificacion >= 47.5 ? '✅ APROBADO' : '❌ NO APROBADO'}
 
 ${datos.calificacion === 0 ? 
-  'RESULTADO: Calificacion de 0/100. Es una sesion inicial; revisa la ficha y vuelve a intentar con preguntas mas concretas.' :
-  datos.calificacion >= 95 ? 
+  'RESULTADO: Calificacion de 0/50. Es una sesion inicial; revisa la ficha y vuelve a intentar con preguntas mas concretas.' :
+  datos.calificacion >= 47.5 ? 
   'Desempeño Excepcional: Demostraste dominio absoluto.' :
-  datos.calificacion >= 85 ?
+  datos.calificacion >= 42.5 ?
   'Desempeño Excelente: Realizaste una entrevista de alta calidad.' :
-  datos.calificacion >= 75 ?
+  datos.calificacion >= 37.5 ?
   'Desempeño Bueno: Competencia probada en entrevistas.' :
-  datos.calificacion >= 55 ?
+  datos.calificacion >= 27.5 ?
   'Desempeño Aceptable: Alcanzaste el mínimo requerido.' :
   'Desempeño Insuficiente: Requieres reentrenamiento urgente.'}
 
@@ -491,12 +491,12 @@ async function descargarResultados() {
     const ahora = Date.now();
     const tiempoMs = ahora - datos.tiempoInicio;
     const tiempoFormato = formatearTiempo(tiempoMs);
-    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 100);
+    const porcentaje = Math.round((datos.respuestasCorrectas / datos.totalRespuestas) * 50);
     
     // ✅ Incluir nombre completo del investigador
     const contenido = `═══════════════════════════════════════════════════════════════
                     REPORTE DE MISIÓN COMPLETO
-═══════════════════════════════════════════════════════════════
+═════════════════════════════════════════
 
 FECHA: ${new Date().toLocaleString('es-CO')}
 INVESTIGADOR: ${datos.nombreInvestigador}
@@ -508,7 +508,7 @@ RANGO: ${datos.rango}
 ─────────────────────────────────────────────────────────────
 CALIFICACIÓN
 ─────────────────────────────────────────────────────────────
-Calificación Final:        ${datos.calificacion}/100
+Calificación Final:        ${datos.calificacion}/50     
 Respuestas Correctas:      ${datos.respuestasCorrectas}/${datos.totalRespuestas}
 Porcentaje:                ${porcentaje}%
 Preguntas Formuladas:      ${datos.preguntas}
@@ -518,19 +518,19 @@ Táctica Utilizada:         ${datos.tacticaUsada}
 ─────────────────────────────────────────────────────────────
 RESULTADO
 ─────────────────────────────────────────────────────────────
-${datos.calificacion >= 55 ? '✅ MISIÓN APROBADA' : '❌ MISIÓN NO APROBADA'}
+${datos.calificacion >= 27.5 ? '✅ MISIÓN APROBADA' : '❌ MISIÓN NO APROBADA'}
 
-Desempeño: ${datos.calificacion >= 95 ? 'Excepcional' : 
-             datos.calificacion >= 85 ? 'Excelente' : 
-             datos.calificacion >= 75 ? 'Bueno' : 
-             datos.calificacion >= 55 ? 'Aceptable' : 
+Desempeño: ${datos.calificacion >= 47.5 ? 'Excepcional' : 
+             datos.calificacion >= 42.5 ? 'Excelente' : 
+             datos.calificacion >= 37.5 ? 'Bueno' : 
+             datos.calificacion >= 27.5 ? 'Aceptable' : 
              datos.calificacion === 0 ? 'Catastrófico - Reentrenamiento Obligatorio' : 'Insuficiente'}
 
 ═══════════════════════════════════════════════════════════════
 Reporte generado automáticamente por SAE - Sistema Avanzado de Entrevistas
 ═══════════════════════════════════════════════════════════════`;
 
-    // ✅ Crear archivo con nombre descriptivo
+    // ✅ Crear archivo con nombre descriptivo  
     const elemento = document.createElement('a');
     elemento.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(contenido));
     
