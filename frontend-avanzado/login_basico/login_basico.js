@@ -35,28 +35,50 @@ function showSuccess(msg) {
     setTimeout(() => successEl.classList.remove('show'), 5000);
 }
 
-function validarCredenciales() {
-    // @ts-ignore
-    const nombre = document.getElementById('nombreUsuario').value.trim();
-    // @ts-ignore
-    const id = document.getElementById('numeroID').value.trim();
-    // @ts-ignore
-    const institucion = document.getElementById('institucion').value;
-    // @ts-ignore
-    const cargo = document.getElementById('cargo').value.trim();
+async function mostrarAlertaValidacion(mensaje, campo) {
+    await window.SAEAlerts.alert(mensaje, {
+        icon: 'warning',
+        title: 'Completa el formulario',
+        text: mensaje
+    });
+    campo.focus();
+}
 
-    if (!nombre || !id || !institucion || !cargo) {
-        showError('⚠️ Por favor completa todos los campos');
+async function validarCredenciales() {
+    const campos = [
+        { elemento: document.getElementById('nombreUsuario'), etiqueta: 'Nombre completo' },
+        { elemento: document.getElementById('numeroID'), etiqueta: 'Cédula / Documento / ID' },
+        { elemento: document.getElementById('institucion'), etiqueta: 'Institución / Agencia' },
+        { elemento: document.getElementById('cargo'), etiqueta: 'Cargo / Función' }
+    ];
+    const faltantes = campos.filter(({ elemento }) => !elemento.value.trim());
+
+    if (faltantes.length) {
+        const lista = faltantes.map(({ etiqueta }) => `• ${etiqueta}`).join('\n');
+        await mostrarAlertaValidacion(
+            `Debes llenar todos los campos para continuar.\n\nCampos pendientes:\n${lista}`,
+            faltantes[0].elemento
+        );
         return;
     }
 
+    const nombre = campos[0].elemento.value.trim();
+    const id = campos[1].elemento.value.trim();
+    const institucion = campos[2].elemento.value;
+    const cargo = campos[3].elemento.value.trim();
+
     if (nombre.length < 3) {
-        showError('⚠️ El nombre debe tener al menos 3 caracteres');
+        await mostrarAlertaValidacion('El nombre completo debe tener al menos 3 caracteres.', campos[0].elemento);
         return;
     }
 
     if (id.length < 6) {
-        showError('⚠️ El documento ID debe tener al menos 6 caracteres');
+        await mostrarAlertaValidacion('El documento de identidad debe tener al menos 6 caracteres.', campos[1].elemento);
+        return;
+    }
+
+    if (cargo.length < 3) {
+        await mostrarAlertaValidacion('El cargo o función debe tener al menos 3 caracteres.', campos[3].elemento);
         return;
     }
 
@@ -198,11 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             validarCredenciales();
         });
 
-        loginForm.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                validarCredenciales();
-            }
-        });
     }
 });
 

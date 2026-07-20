@@ -36,7 +36,7 @@
                 Acceso restringido solo a personal autorizado. Se requiere verificación de identidad.
             </div>
 
-            <form id="loginForm">
+            <form id="loginForm" novalidate>
                 <div class="form-wrapper">
                     <div class="form-group">
                         <label for="nombreUsuario">Nombre completo</label>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button type="submit" class="btn-primary" id="submitBtn" onclick="irAContextos()">Acceder a SAE</button>
+                    <button type="submit" class="btn-primary" id="submitBtn">Acceder a SAE</button>
                     <button type="button" class="btn-secondary" onclick="volverAlNivel()">← Volver al menú</button>
                 </div>
             </form>
