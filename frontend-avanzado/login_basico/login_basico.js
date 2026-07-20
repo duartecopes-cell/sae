@@ -115,7 +115,7 @@ function autenticar(datos = {}) {
         id: id,
         institucion: institucion,
         cargo: cargo,
-        nivelAcceso: 'basico',
+        nivelAcceso: 'avanzado',
         fechaIngreso: new Date().toISOString(),
         sesionID: 'sesion_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
     };
@@ -141,8 +141,8 @@ function autenticar(datos = {}) {
     localStorage.setItem('cargoUsuario', cargo);
     console.log('✅ cargoUsuario guardado:', cargo);
     
-    localStorage.setItem('nivelAcceso', 'basico');
-    console.log('✅ nivelAcceso guardado: basico');
+    localStorage.setItem('nivelAcceso', 'avanzado');
+    console.log('✅ nivelAcceso guardado: avanzado');
 
     // ✅ VERIFICAR QUE SE GUARDÓ CORRECTAMENTE
     const verificacion = localStorage.getItem('nombreUsuario');
@@ -154,12 +154,23 @@ function autenticar(datos = {}) {
         return;
     }
 
-    showSuccess(`✅ Bienvenido ${nombre}. Redirigiendo a niveles...`);
+    const casosDisponibles = typeof bancoDeHistorias !== 'undefined'
+        ? Object.keys(bancoDeHistorias)
+        : [];
+
+    if (casosDisponibles.length === 0) {
+        showError('No se encontraron casos disponibles para el nivel avanzado.');
+        return;
+    }
+
+    const casoAleatorio = casosDisponibles[Math.floor(Math.random() * casosDisponibles.length)];
+    localStorage.setItem('casoSeleccionado', casoAleatorio);
+    showSuccess(`✅ Bienvenido ${nombre}. Abriendo caso avanzado...`);
 
     // ✅ REDIRIGIR DESPUÉS DE 2.5 SEGUNDOS
     setTimeout(() => {
-        console.log('🔗 Redirigiendo a niveles.html');
-        window.location.href = '../../inicio/niveles/niveles.html';
+        console.log('🔗 Redirigiendo al caso avanzado:', casoAleatorio);
+        window.location.href = '../agentes/contextos.html';
     }, 2500);
 }
 
@@ -196,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (usuarioGuardado) {
         try {
             const datos = JSON.parse(usuarioGuardado);
-            if (datos.nivelAcceso === 'basico') {
+            if (datos.nivelAcceso === 'avanzado') {
                 // @ts-ignore
                 document.getElementById('nombreUsuario').value = datos.nombre || '';
                 // @ts-ignore

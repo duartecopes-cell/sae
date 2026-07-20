@@ -108,10 +108,10 @@ function autenticar(datos = {}) {
     localStorage.setItem('idUsuario', id);
     localStorage.setItem('nivelAcceso', 'experto');
 
-    showSuccess(`✅ Bienvenido ${nombre}. Redirigiendo a niveles...`);
+    showSuccess(`✅ Bienvenido ${nombre}. Abriendo casos del nivel experto...`);
 
     setTimeout(() => {
-        window.location.href = '../../frontend-experto/seleccion_delito.html';
+        window.location.href = '../seleccion_delito.html';
     }, 2500);
 }
 

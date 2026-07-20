@@ -136,12 +136,23 @@ function autenticar(datos = {}) {
         return;
     }
 
-    showSuccess(`✅ Bienvenido ${nombre}. Redirigiendo a niveles...`);
+    const casosDisponibles = typeof bancoDeHistorias !== 'undefined'
+        ? Object.keys(bancoDeHistorias)
+        : [];
+
+    if (casosDisponibles.length === 0) {
+        showError('No se encontraron casos disponibles para el nivel básico.');
+        return;
+    }
+
+    const casoAleatorio = casosDisponibles[Math.floor(Math.random() * casosDisponibles.length)];
+    localStorage.setItem('casoSeleccionado', casoAleatorio);
+    showSuccess(`✅ Bienvenido ${nombre}. Abriendo caso básico...`);
 
     // ✅ REDIRIGIR DESPUÉS DE 2.5 SEGUNDOS
     setTimeout(() => {
-        console.log('🔗 Redirigiendo a niveles.html');
-        window.location.href = '../../inicio/niveles/niveles.html';
+        console.log('🔗 Redirigiendo al caso básico:', casoAleatorio);
+        window.location.href = '../agentes/contextos.html';
     }, 2500);
 }
 

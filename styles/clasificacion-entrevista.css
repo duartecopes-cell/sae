@@ -1,0 +1,151 @@
+.debriefing-container > .rango-section {
+    display: none !important;
+}
+
+.clasificacion-entrevista {
+    --clasificacion-color: var(--sae-forest-700);
+    --clasificacion-suave: var(--sae-mint-100);
+    position: relative;
+    overflow: hidden;
+    margin: 0 0 24px;
+    padding: 22px 24px;
+    border: 1px solid var(--sae-line);
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--clasificacion-suave), var(--sae-white) 58%);
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.clasificacion-entrevista::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: var(--clasificacion-color);
+    box-shadow: none;
+}
+
+.clasificacion-entrevista__cabecera {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.clasificacion-entrevista__icono {
+    display: grid;
+    flex: 0 0 62px;
+    width: 62px;
+    height: 62px;
+    place-items: center;
+    border: 1px solid var(--sae-line);
+    border-radius: 8px;
+    background: var(--sae-white);
+    color: var(--clasificacion-color);
+    font-size: 27px;
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.clasificacion-entrevista__contenido {
+    min-width: 0;
+    flex: 1;
+}
+
+.clasificacion-entrevista__titulo {
+    color: var(--sae-muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+    text-transform: uppercase;
+}
+
+.clasificacion-entrevista__nivel {
+    margin: 4px 0 3px;
+    color: var(--clasificacion-color);
+    font-size: clamp(27px, 5vw, 40px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    text-shadow: none;
+}
+
+.clasificacion-entrevista__detalle {
+    margin: 0;
+    color: var(--sae-muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.clasificacion-entrevista__nota {
+    flex: 0 0 auto;
+    min-width: 105px;
+    padding: 10px 14px;
+    text-align: center;
+    border: 1px solid var(--sae-line);
+    border-radius: 8px;
+    background: var(--sae-white);
+}
+
+.clasificacion-entrevista__numero {
+    display: block;
+    color: var(--clasificacion-color);
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.clasificacion-entrevista__escala {
+    color: var(--sae-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.clasificacion-entrevista__progreso {
+    overflow: hidden;
+    height: 8px;
+    margin-top: 18px;
+    border-radius: 999px;
+    background: var(--sae-mint-200);
+}
+
+.clasificacion-entrevista__barra {
+    width: var(--progreso);
+    height: 100%;
+    border-radius: inherit;
+    background: var(--clasificacion-color);
+    box-shadow: none;
+}
+
+.clasificacion-entrevista__pie {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 7px;
+    color: var(--sae-muted);
+    font-size: 10px;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+}
+
+.clasificacion-entrevista--deficiente { --clasificacion-color: var(--sae-danger); --clasificacion-suave: #fff4f0; }
+.clasificacion-entrevista--regular { --clasificacion-color: #9a7117; --clasificacion-suave: #fff9e8; }
+.clasificacion-entrevista--bueno { --clasificacion-color: var(--sae-forest-700); --clasificacion-suave: var(--sae-mint-100); }
+.clasificacion-entrevista--excelente { --clasificacion-color: var(--sae-forest-800); --clasificacion-suave: var(--sae-mint-200); }
+
+:root[data-theme="dark"] .clasificacion-entrevista {
+    background: linear-gradient(135deg, #14251a, var(--sae-white) 64%);
+}
+
+:root[data-theme="dark"] .clasificacion-entrevista--regular {
+    --clasificacion-color: var(--sae-gold);
+}
+
+:root[data-theme="dark"] .clasificacion-entrevista--bueno,
+:root[data-theme="dark"] .clasificacion-entrevista--excelente {
+    --clasificacion-color: var(--sae-mint-500);
+}
+
+@media (max-width: 620px) {
+    .clasificacion-entrevista { padding: 18px; }
+    .clasificacion-entrevista__cabecera { align-items: flex-start; flex-wrap: wrap; }
+    .clasificacion-entrevista__icono { flex-basis: 50px; width: 50px; height: 50px; }
+    .clasificacion-entrevista__nota { width: 100%; }
+}
