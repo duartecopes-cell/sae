@@ -1,0 +1,16 @@
+.nivel-introduccion {
+    margin: 0 0 18px;
+    padding: 15px 17px;
+    border: 1px solid var(--sae-line);
+    border-left: 4px solid var(--sae-forest-700);
+    border-radius: 8px;
+    background: var(--sae-mint-50);
+    color: var(--sae-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.nivel-introduccion strong {
+    color: var(--sae-forest-800);
+}
+

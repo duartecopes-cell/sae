@@ -1,0 +1,411 @@
+body.entrevista-unificada {
+    min-height: 100vh;
+    padding: 0 !important;
+    font-family: "Segoe UI Variable Text", "Aptos", "Segoe UI", Arial, sans-serif !important;
+}
+
+.entrevista-unificada #entrevista-container.view {
+    display: grid !important;
+    grid-template-columns: 280px minmax(0, 1fr) !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    width: min(1440px, 100%) !important;
+    height: 100vh !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--sae-white) !important;
+}
+
+.entrevista-experta__header {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    min-height: 76px;
+    padding: 12px 22px;
+    border-bottom: 1px solid var(--sae-line);
+    background: var(--sae-forest-900);
+    color: #fff;
+}
+
+.entrevista-experta__header .theme-toggle--chat {
+    position: static !important;
+    flex: 0 0 auto;
+    min-height: 38px !important;
+    margin-left: 6px;
+    border-color: rgba(255, 255, 255, .22) !important;
+    background: rgba(255, 255, 255, .1) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+.entrevista-experta__marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.entrevista-experta__sigla {
+    display: grid;
+    width: 45px;
+    height: 45px;
+    place-items: center;
+    border: 1px solid var(--sae-mint-500);
+    border-radius: 8px;
+    background: rgba(124, 200, 148, .15);
+    font-weight: 900;
+}
+
+.entrevista-experta__marca strong,
+.entrevista-experta__marca span {
+    display: block;
+}
+
+.entrevista-experta__marca strong {
+    font-size: 16px;
+    font-weight: 750;
+    letter-spacing: -.01em;
+}
+
+.entrevista-experta__marca span {
+    color: var(--sae-mint-300);
+    font-size: 11px;
+}
+
+.entrevista-experta__caso {
+    max-width: 55%;
+    text-align: right;
+}
+
+.entrevista-experta__caso strong,
+.entrevista-experta__caso span {
+    display: block;
+}
+
+.entrevista-experta__caso strong {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.entrevista-experta__caso span {
+    margin-top: 3px;
+    color: var(--sae-mint-300);
+    font-size: 11px;
+}
+
+.entrevista-experta__panel {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+    padding: 18px;
+    overflow-y: auto;
+    border-right: 1px solid var(--sae-line);
+    background: var(--sae-mint-50);
+}
+
+.entrevista-experta__foto {
+    width: 100%;
+    aspect-ratio: 4 / 4.5;
+    border: 3px solid var(--sae-white);
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center top;
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.entrevista-experta__identidad {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--sae-line);
+}
+
+.entrevista-experta__identidad h2 {
+    margin: 0;
+    color: var(--sae-forest-800);
+    font-size: 18px;
+    font-weight: 750;
+    line-height: 1.25;
+}
+
+.entrevista-experta__identidad p {
+    margin: 4px 0 0;
+    color: var(--sae-muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.entrevista-experta__dato {
+    padding: 9px 10px;
+    border: 1px solid var(--sae-line);
+    border-radius: 7px;
+    background: var(--sae-white);
+}
+
+.entrevista-experta__dato span,
+.entrevista-experta__dato strong {
+    display: block;
+}
+
+.entrevista-experta__dato span {
+    color: var(--sae-muted);
+    font-size: 10px;
+    font-weight: 650;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.entrevista-experta__dato strong {
+    margin-top: 3px;
+    color: var(--sae-forest-800);
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+.entrevista-experta__panel #timer {
+    width: 100% !important;
+    margin: 0 !important;
+    text-align: center;
+}
+
+.entrevista-experta__principal {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    flex-direction: column;
+    background: var(--sae-white);
+}
+
+.entrevista-experta__principal .chat-container {
+    display: flex !important;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.entrevista-experta__principal #status {
+    padding: 9px 18px;
+    border-bottom: 1px solid var(--sae-line);
+    background: var(--sae-mint-100);
+    color: var(--sae-forest-800);
+    font-size: 11px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.entrevista-experta__principal .chat-box#chat {
+    min-height: 0 !important;
+    flex: 1;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+.entrevista-experta__principal .controls {
+    display: grid !important;
+    grid-template-columns: minmax(180px, 1fr) auto auto auto;
+    gap: 8px !important;
+    padding: 14px 16px !important;
+    border-top: 1px solid var(--sae-line);
+    background: var(--sae-white);
+}
+
+.entrevista-experta__principal .controls input {
+    min-width: 0;
+}
+
+.entrevista-experta__abandonar {
+    margin-top: auto !important;
+    padding: 10px !important;
+    color: var(--sae-danger) !important;
+}
+
+@media (max-width: 800px) {
+    .entrevista-unificada #entrevista-container.view {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto minmax(0, 1fr) !important;
+    }
+    .entrevista-experta__header { min-height: 62px; padding: 8px 12px; }
+    .entrevista-experta__caso { max-width: 48%; }
+    .entrevista-experta__panel {
+        display: grid;
+        grid-template-columns: 74px minmax(0, 1fr) auto;
+        align-items: center;
+        padding: 9px 12px;
+        border-right: 0;
+        border-bottom: 1px solid var(--sae-line);
+        overflow: visible;
+    }
+    .entrevista-experta__foto { width: 70px; height: 70px; aspect-ratio: 1; border-radius: 50%; }
+    .entrevista-experta__identidad { padding: 0; border: 0; }
+    .entrevista-experta__dato { display: none; }
+    .entrevista-experta__panel #timer { width: auto !important; }
+    .entrevista-experta__abandonar { display: none; }
+    .entrevista-experta__principal .controls { grid-template-columns: minmax(0, 1fr) repeat(3, auto); padding: 9px; }
+}
+
+@media (max-width: 520px) {
+    .entrevista-experta__caso span { display: none; }
+    .entrevista-experta__header .theme-toggle__text { display: none; }
+    .entrevista-experta__header .theme-toggle--chat { width: 38px; padding: 0 !important; }
+    .entrevista-experta__principal .controls { grid-template-columns: 1fr 1fr 1fr; }
+    .entrevista-experta__principal .controls input { grid-column: 1 / -1; }
+}
+
+/* Medidas equivalentes al tablero Experto. La especificidad evita que el
+   diseño heredado de Básico/Avanzado cambie el tamaño del tablero. */
+html:root body.entrevista-unificada {
+    width: 100% !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+html:root body.entrevista-unificada #entrevista-container.view {
+    display: grid !important;
+    grid-template-columns: 230px minmax(0, 1fr) !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    gap: 0 !important;
+    width: 100% !important;
+    height: 100svh !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 0 !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__header {
+    min-height: 64px !important;
+    padding: 8px 22px !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__panel {
+    width: 230px !important;
+    padding: 14px !important;
+    gap: 10px !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__foto {
+    width: 100% !important;
+    height: 210px !important;
+    min-height: 210px !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__principal,
+html:root body.entrevista-unificada .entrevista-experta__principal .chat-container {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__principal #chat.chat-box {
+    display: flex !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: none !important;
+    flex: 1 1 auto !important;
+    gap: 14px !important;
+    padding: 20px 24px !important;
+    overflow-y: auto !important;
+}
+
+html:root body.entrevista-unificada #chat .msg.conversacion-mensaje {
+    width: auto !important;
+    max-width: min(720px, 92%) !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+html:root body.entrevista-unificada #chat .chat-unificado__avatar {
+    flex: 0 0 30px !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-width: 1px !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+}
+
+html:root body.entrevista-unificada #chat .chat-unificado__contenido {
+    max-width: calc(100% - 42px) !important;
+}
+
+html:root body.entrevista-unificada #chat .chat-unificado__meta {
+    margin: 0 0 3px !important;
+    font-size: 9px !important;
+}
+
+html:root body.entrevista-unificada #chat .chat-unificado__burbuja {
+    padding: 11px 15px !important;
+    border-radius: 3px !important;
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    line-height: 1.65 !important;
+}
+
+html:root body.entrevista-unificada #chat .conversacion-mensaje.user .chat-unificado__burbuja {
+    border-top-right-radius: 0 !important;
+}
+
+html:root body.entrevista-unificada #chat .conversacion-mensaje.npc .chat-unificado__burbuja {
+    border-top-left-radius: 0 !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__principal .controls {
+    flex: 0 0 auto !important;
+    grid-template-columns: minmax(0, 1fr) auto auto auto !important;
+    gap: 8px !important;
+    padding: 8px 18px !important;
+}
+
+html:root body.entrevista-unificada .entrevista-experta__principal #inputPregunta,
+html:root body.entrevista-unificada .entrevista-experta__principal .controls button {
+    min-height: 42px !important;
+    height: 42px !important;
+}
+
+@media (max-width: 820px) {
+    html:root body.entrevista-unificada #entrevista-container.view {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto minmax(0, 1fr) !important;
+    }
+
+    html:root body.entrevista-unificada .entrevista-experta__panel {
+        display: grid !important;
+        grid-template-columns: 58px minmax(0, 1fr) auto !important;
+        width: 100% !important;
+        padding: 7px 12px !important;
+    }
+
+    html:root body.entrevista-unificada .entrevista-experta__foto {
+        width: 54px !important;
+        height: 54px !important;
+        min-height: 54px !important;
+        border-radius: 4px !important;
+    }
+}
+
+@media (max-width: 720px) {
+    html:root body.entrevista-unificada .entrevista-experta__principal #chat.chat-box {
+        padding: 12px 14px !important;
+    }
+
+    html:root body.entrevista-unificada .entrevista-experta__principal .controls {
+        grid-template-columns: repeat(3, minmax(42px, 1fr)) !important;
+        gap: 6px !important;
+        padding: 8px !important;
+    }
+
+    html:root body.entrevista-unificada .entrevista-experta__principal #inputPregunta {
+        grid-column: 1 / -1 !important;
+    }
+}

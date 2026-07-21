@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 let db;
 let funcionarioActual = "";
 let casoActivo = null;
-let tiempoRestante = 15 * 60;
+let tiempoRestante = 10 * 60;
 let intervaloReloj;
 let entrevistaActivo = false;
 

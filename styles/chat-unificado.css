@@ -6,6 +6,7 @@
     padding: 22px !important;
     overflow-y: auto;
     background: var(--sae-mint-25) !important;
+    font-family: "Segoe UI Variable Text", "Aptos", "Segoe UI", Arial, sans-serif !important;
 }
 
 .chat-box#chat .msg.conversacion-mensaje {
@@ -58,7 +59,9 @@
     gap: 8px;
     margin: 0 8px 5px;
     color: var(--sae-muted);
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .01em;
 }
 
 .conversacion-mensaje.user .chat-unificado__meta {
@@ -71,7 +74,10 @@
     border-radius: 14px 14px 14px 4px;
     background: var(--sae-white);
     color: var(--sae-ink);
-    line-height: 1.5;
+    font-size: 15px;
+    font-weight: 450;
+    line-height: 1.62;
+    letter-spacing: .005em;
     overflow-wrap: anywhere;
     box-shadow: var(--sae-soft-shadow);
 }
@@ -101,4 +107,3 @@
     .chat-box#chat .msg.conversacion-mensaje { width: 94%; }
     .chat-unificado__avatar { flex-basis: 36px; width: 36px; height: 36px; }
 }
-

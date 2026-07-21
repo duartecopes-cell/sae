@@ -22,6 +22,9 @@ let casoActivo            = null;
 let tiempoInicio          = null;
 let bloqueadoEsperando    = false;
 let historialPreguntas    = [];
+let tiempoRestanteExperto = 20 * 60;
+let intervaloTiempoExperto = null;
+let cierrePorTiempoEnCurso = false;
 
 const CONFIG_EVALUACION_EXPERTO = {
     nivel: "Experto",
@@ -99,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarMicrofono();
     inicializarVoz();
     mostrarSaludoInicial();
+    iniciarTemporizadorExperto();
 
     // Listener Enter
     const input = document.getElementById("inputPregunta");
@@ -115,6 +119,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ── CARGAR DATOS DE SOSPECHOSO ──────────────────────
+function iniciarTemporizadorExperto() {
+    const timer = document.getElementById("timer");
+    if (!timer) return;
+
+    const actualizar = () => {
+        const minutos = Math.floor(tiempoRestanteExperto / 60);
+        const segundos = tiempoRestanteExperto % 60;
+        timer.textContent = `${minutos}:${String(segundos).padStart(2, "0")}`;
+        timer.closest(".intel-item")?.classList.toggle("timer-urgente", tiempoRestanteExperto <= 60);
+    };
+
+    actualizar();
+    clearInterval(intervaloTiempoExperto);
+    intervaloTiempoExperto = setInterval(() => {
+        tiempoRestanteExperto = Math.max(0, tiempoRestanteExperto - 1);
+        actualizar();
+        if (tiempoRestanteExperto === 0 && !cierrePorTiempoEnCurso) {
+            cierrePorTiempoEnCurso = true;
+            clearInterval(intervaloTiempoExperto);
+            mostrarMensajeChat("system", "TIEMPO AGOTADO — La entrevista se cerrará y se generará la evaluación.");
+            finalizarMision();
+        }
+    }, 1000);
+}
+
 function cargarDatosSospechoso() {
     if (!casoActivo) return;
 
@@ -166,7 +195,9 @@ function mostrarSaludoInicial() {
     const msg = document.createElement("div");
     msg.className = "msg-wrap suspect";
     msg.innerHTML = `
-        <div class="msg-avatar">${abrev}</div>
+        ${casoActivo.avatar
+            ? `<img class="msg-avatar msg-avatar--foto" src="${casoActivo.avatar}" alt="Foto de ${casoActivo.nombre}">`
+            : `<div class="msg-avatar">${abrev}</div>`}
         <div class="msg-body">
             <div class="msg-meta">${casoActivo.nombre}</div>
             <div class="msg-bubble">${textoSaludo}</div>
@@ -519,7 +550,9 @@ function mostrarMensajeChat(tipo, texto) {
     } else if (tipo === "sospechoso") {
         const abrev = casoActivo ? casoActivo.nombre.substring(0, 2).toUpperCase() : "??";
         msg.innerHTML = `
-            <div class="msg-avatar">${abrev}</div>
+            ${casoActivo && casoActivo.avatar
+                ? `<img class="msg-avatar msg-avatar--foto" src="${casoActivo.avatar}" alt="Foto de ${casoActivo.nombre}">`
+                : `<div class="msg-avatar">${abrev}</div>`}
             <div class="msg-body">
                 <div class="msg-meta">${casoActivo ? casoActivo.nombre : "Sospechoso"}</div>
                 <div class="msg-bubble">${texto}</div>
@@ -793,6 +826,7 @@ function finalizarMisionFallidaPorCredibilidad() {
 }
 
 function finalizarMision() {
+    clearInterval(intervaloTiempoExperto);
     console.log("✅ Misión completada");
 
     // El rango se basa en PREGUNTAS CALIFICABLES + credibilidad

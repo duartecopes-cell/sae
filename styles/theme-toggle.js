@@ -15,8 +15,13 @@
         button.innerHTML = '<span class="theme-toggle__icon" aria-hidden="true"></span><span class="theme-toggle__text"></span>';
 
         const navbar = document.querySelector(".navbar");
+        const chatHeader = document.querySelector(".entrevista-experta__header") ||
+            (document.querySelector(".input-area-experto") ? document.querySelector(".header-main") : null);
         const navLinks = navbar?.querySelector("[data-nav-links]");
-        if (navbar) {
+        if (chatHeader) {
+            button.classList.add("theme-toggle--inline", "theme-toggle--chat");
+            chatHeader.appendChild(button);
+        } else if (navbar) {
             button.classList.add("theme-toggle--inline");
             navbar.insertBefore(button, navLinks || null);
         } else {

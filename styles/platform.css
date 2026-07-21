@@ -471,6 +471,58 @@ h1 {
     }
 }
 
+/* Adaptación global: ventana dividida, tablet y celular. */
+@media (max-width: 1024px) {
+    .site-header { padding: 13px 16px !important; }
+    .brand { width: min(920px, 100%); }
+    .hero { min-height: 440px; padding-inline: 24px; }
+    .hero-content { width: min(760px, 100%); }
+    .levels {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(920px, calc(100% - 32px));
+        gap: 16px;
+    }
+    .level-card:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 700px) {
+    .site-header { position: relative; }
+    .brand-mark { width: 44px; height: 44px; }
+    .brand strong { font-size: .9rem; }
+    .brand small { font-size: .72rem; }
+    .hero,
+    .hero.compact {
+        min-height: 360px;
+        padding: 48px 18px 54px;
+        text-align: left;
+    }
+    .hero h1 { font-size: clamp(2rem, 10vw, 3rem); }
+    .hero p { font-size: .98rem; }
+    .levels {
+        grid-template-columns: 1fr;
+        width: calc(100% - 24px);
+        margin-block: 22px;
+        gap: 12px;
+    }
+    .level-card,
+    .level-card:last-child { grid-column: auto; padding: 20px; }
+    .level-button { width: 100%; text-align: center; }
+    .site-footer { padding: 20px 16px; }
+}
+
+@media (max-width: 420px) {
+    .brand small { display: none; }
+    .theme-toggle { min-width: 40px; padding-inline: 10px; }
+    .hero { min-height: 330px; }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+    .site-header { position: relative; padding-block: 8px !important; }
+    .hero,
+    .hero.compact { min-height: 250px; padding-block: 30px; }
+    .levels { margin-block: 14px; }
+}
+
 /* Tema corporativo inspirado en Facebook: azul profesional y blanco. */
 :root,
 :root[data-theme="light"] {

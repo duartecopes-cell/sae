@@ -18,6 +18,150 @@
     --sae-soft-shadow: 0 12px 28px rgba(20, 63, 39, 0.08);
 }
 
+/* =====================================================
+   RESPONSIVE GLOBAL SAE — media pantalla y dispositivos
+   ===================================================== */
+@media (max-width: 1100px) {
+    .login-wrapper,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container {
+        width: min(94vw, 900px) !important;
+        max-width: 94vw !important;
+        margin-inline: auto !important;
+    }
+
+    .debriefing-container { padding: clamp(18px, 3vw, 30px) !important; }
+    .report-chart-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .delitos-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+}
+
+@media (max-width: 820px) {
+    body:not(.entrevista-unificada) { padding: 12px !important; }
+
+    .login-wrapper,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+
+    .login-card,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container {
+        padding: clamp(18px, 4vw, 26px) !important;
+    }
+
+    .sospechoso-card,
+    .caso-unificado__ficha {
+        grid-template-columns: 150px minmax(0, 1fr) !important;
+    }
+
+    .sospechoso-foto,
+    .caso-unificado__foto {
+        width: 150px !important;
+        height: 180px !important;
+    }
+
+    .report-chart-grid { grid-template-columns: 1fr !important; }
+    .chart-wide { grid-column: auto !important; }
+    .delitos-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .buttons { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .buttons .btn { width: 100% !important; margin: 0 !important; }
+}
+
+@media (max-width: 600px) {
+    body:not(.entrevista-unificada) { padding: 8px !important; }
+
+    .login-card,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container {
+        padding: 16px !important;
+        border-radius: 7px !important;
+    }
+
+    .header-section h1,
+    .expediente-container h1,
+    .contexto-container h1,
+    .debriefing-container h1 {
+        font-size: clamp(1.35rem, 7vw, 1.8rem) !important;
+        overflow-wrap: anywhere;
+    }
+
+    .form-group input,
+    .form-group select,
+    textarea,
+    button,
+    .btn,
+    .btn-primary,
+    .btn-secondary {
+        min-height: 44px;
+        font-size: 16px !important;
+    }
+
+    .sospechoso-card,
+    .caso-unificado__ficha {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        padding: 14px !important;
+    }
+
+    .sospechoso-foto,
+    .caso-unificado__foto {
+        width: 100% !important;
+        height: min(360px, 92vw) !important;
+    }
+
+    .info-item,
+    .caso-unificado__dato,
+    .resumen-evaluacion__fila {
+        grid-template-columns: 1fr !important;
+        gap: 3px !important;
+    }
+
+    .stats-grid,
+    .buttons,
+    .delitos-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .stat-card { padding: 14px !important; }
+    .stat-value { font-size: 1.65rem !important; }
+    .section-titulo { font-size: .9rem !important; }
+
+    #modal-reporte > div {
+        width: calc(100% - 16px) !important;
+        max-width: none !important;
+        margin: 8px !important;
+        padding: 15px !important;
+    }
+
+    #contenido-reporte { font-size: 10px !important; }
+    .clasificacion-entrevista__cabecera { flex-wrap: wrap !important; }
+    .clasificacion-entrevista__nota { width: 100% !important; }
+}
+
+@media (max-width: 380px) {
+    .login-card,
+    .expediente-container,
+    .contexto-container,
+    .debriefing-container { padding: 12px !important; }
+    .theme-toggle { right: 8px !important; bottom: 8px !important; }
+}
+
+@media (max-height: 620px) and (orientation: landscape) {
+    body:not(.entrevista-unificada) { padding-block: 6px !important; }
+    .login-card { padding-block: 16px !important; }
+    .logo-badge { width: 48px !important; height: 48px !important; }
+    .header-section { margin-bottom: 12px !important; }
+    .nivel-introduccion { margin-bottom: 10px !important; padding: 10px 12px !important; }
+}
+
 * {
     letter-spacing: 0 !important;
 }
@@ -438,6 +582,47 @@ pre,
     }
 }
 
+/* Capa final de prioridad para resultados y expedientes en pantallas estrechas. */
+img,
+video,
+svg {
+    max-width: 100%;
+}
+
+@media (max-width: 820px) {
+    html:root body .debriefing-container .report-chart-grid,
+    html:root[data-theme] body .debriefing-container .report-chart-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    html:root body .debriefing-container .stats-grid,
+    html:root[data-theme] body .debriefing-container .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 600px) {
+    html:root body .debriefing-container .stats-grid,
+    html:root[data-theme] body .debriefing-container .stats-grid,
+    html:root body .debriefing-container .buttons,
+    html:root[data-theme] body .debriefing-container .buttons {
+        grid-template-columns: 1fr !important;
+    }
+
+    html:root body .debriefing-container .report-chart-card,
+    html:root[data-theme] body .debriefing-container .report-chart-card {
+        min-width: 0 !important;
+        padding: 12px !important;
+        overflow: hidden !important;
+    }
+
+    html:root body .debriefing-container .chart-slot,
+    html:root[data-theme] body .debriefing-container .chart-slot {
+        min-width: 0 !important;
+        overflow-x: auto !important;
+    }
+}
+
 :root[data-theme="dark"] {
     --sae-mint-25: #111f18;
     --sae-mint-50: #0b1710;
@@ -520,6 +705,74 @@ pre,
 .theme-toggle[data-theme-state="dark"] {
     background: var(--sae-mint-500);
     color: #06120b;
+}
+
+/* Selector de color integrado en el encabezado de las entrevistas. */
+.header-main .theme-toggle--chat {
+    position: static !important;
+    right: auto !important;
+    bottom: auto !important;
+    flex: 0 0 auto !important;
+    min-height: 38px !important;
+    margin-left: 10px !important;
+    padding: 0 12px !important;
+    border-color: var(--sae-line) !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-forest-800) !important;
+    box-shadow: none !important;
+}
+
+/* Tipografía clara y uniforme para las salas de entrevista. */
+body:has(.input-area-experto) header,
+body:has(.input-area-experto) .main,
+body:has(.input-area-experto) #chat,
+body:has(.input-area-experto) .input-area-experto,
+body:has(.input-area-experto) button,
+body:has(.input-area-experto) input {
+    font-family: "Segoe UI Variable Text", "Aptos", "Segoe UI", Arial, sans-serif !important;
+}
+
+body:has(.input-area-experto) .agency-name,
+body:has(.input-area-experto) .s-name {
+    font-weight: 750 !important;
+    letter-spacing: -.01em !important;
+}
+
+body:has(.input-area-experto) .agency-sub,
+body:has(.input-area-experto) .s-alias,
+body:has(.input-area-experto) .s-status,
+body:has(.input-area-experto) .intel-key,
+body:has(.input-area-experto) .intel-val,
+body:has(.input-area-experto) .msg-meta,
+body:has(.input-area-experto) .system-msg {
+    font-family: "Segoe UI Variable Text", "Aptos", "Segoe UI", Arial, sans-serif !important;
+    letter-spacing: .02em !important;
+}
+
+body:has(.input-area-experto) .msg-bubble {
+    font-family: "Segoe UI Variable Text", "Aptos", "Segoe UI", Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 450 !important;
+    line-height: 1.62 !important;
+    letter-spacing: .005em !important;
+}
+
+body:has(.input-area-experto) #inputPregunta {
+    font-size: 15px !important;
+    font-weight: 450 !important;
+    line-height: 1.4 !important;
+}
+
+@media (max-width: 720px) {
+    .header-main .theme-toggle--chat {
+        width: 38px !important;
+        min-width: 38px !important;
+        padding: 0 !important;
+    }
+
+    .header-main .theme-toggle--chat .theme-toggle__text {
+        display: none !important;
+    }
 }
 
 :root[data-theme="dark"] body {

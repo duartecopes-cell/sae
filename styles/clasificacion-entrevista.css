@@ -211,6 +211,13 @@ body:not(.sae-generando-pdf) .debriefing-container > .report-dashboard {
 @media print {
     @page { size: A4; margin: 12mm; }
 
+    html,
+    body,
+    body * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
     body {
         background: #fff !important;
         color: #111 !important;
@@ -234,6 +241,60 @@ body:not(.sae-generando-pdf) .debriefing-container > .report-dashboard {
     .debriefing-container > .report-dashboard {
         display: block !important;
         break-before: page;
+    }
+
+    .report-chart-grid,
+    .report-chart-grid.report-chart-grid--visual {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+    }
+
+    .report-chart-card,
+    .report-chart-card.chart-wide {
+        display: block !important;
+        width: 100% !important;
+        min-height: 0 !important;
+        padding: 14px !important;
+        border: 1px solid #c8d8cd !important;
+        background: #fff !important;
+    }
+
+    .report-chart-card > header {
+        display: block !important;
+        margin-bottom: 10px !important;
+        color: #143f27 !important;
+        font-weight: 800 !important;
+    }
+
+    .chart-slot,
+    .chart-slot > * {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .chart-slot {
+        display: block !important;
+        width: 100% !important;
+        min-height: 190px !important;
+        overflow: visible !important;
+        background: #fff !important;
+    }
+
+    .chart-slot svg {
+        display: block !important;
+        max-width: 100% !important;
+        opacity: 1 !important;
+    }
+
+    .bar-fill,
+    .gauge-rail i,
+    .stack-fill,
+    .heat-cell,
+    .chart-legend i,
+    .pie-legend i {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     .solo-pdf,
@@ -266,6 +327,9 @@ body:not(.sae-generando-pdf) .debriefing-container > .report-dashboard {
     }
 
     .analisis-grafica-pdf {
+        display: block !important;
+        clear: both;
+        width: 100%;
         margin-top: 12px;
         padding: 12px 14px;
         border-top: 1px solid #dcebe2;
