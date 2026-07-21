@@ -1,0 +1,109 @@
+.caso-unificado {
+    max-width: 980px !important;
+}
+
+.caso-unificado__encabezado {
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    text-align: center;
+    border-bottom: 2px solid var(--sae-forest-700);
+}
+
+.caso-unificado__encabezado h1 {
+    margin: 0 0 7px;
+}
+
+.caso-unificado__clasificado {
+    color: var(--sae-danger);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.caso-unificado__ficha {
+    display: grid;
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 22px;
+    margin-bottom: 22px;
+    padding: 20px;
+    border: 1px solid var(--sae-line);
+    border-radius: 8px;
+    background: var(--sae-mint-50);
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.caso-unificado__foto {
+    width: 190px;
+    height: 220px;
+    border: 3px solid var(--sae-white);
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center top;
+    box-shadow: 0 10px 26px rgba(20, 63, 39, .2);
+}
+
+.caso-unificado__datos {
+    display: grid;
+    align-content: center;
+    gap: 8px;
+}
+
+.caso-unificado__dato {
+    display: grid;
+    grid-template-columns: 125px minmax(0, 1fr);
+    gap: 12px;
+    padding: 9px 11px;
+    border-bottom: 1px solid var(--sae-line);
+}
+
+.caso-unificado__dato strong {
+    color: var(--sae-forest-700);
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.caso-unificado__dato span {
+    color: var(--sae-ink);
+    font-weight: 650;
+}
+
+.caso-unificado__seccion {
+    margin-bottom: 16px;
+    padding: 18px;
+    border: 1px solid var(--sae-line);
+    border-left: 4px solid var(--sae-forest-700);
+    border-radius: 8px;
+    background: var(--sae-white);
+}
+
+.caso-unificado__seccion h2 {
+    margin: 0 0 10px;
+    color: var(--sae-forest-800);
+    font-size: 15px;
+    text-transform: uppercase;
+}
+
+.caso-unificado__seccion p {
+    margin: 0;
+    color: var(--sae-muted);
+    line-height: 1.65;
+    white-space: pre-line;
+}
+
+.caso-unificado__objetivo {
+    border-left-color: var(--sae-gold);
+    background: var(--sae-mint-50);
+}
+
+.caso-unificado__acciones {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+@media (max-width: 650px) {
+    .caso-unificado__ficha { grid-template-columns: 1fr; }
+    .caso-unificado__foto { width: 100%; height: min(360px, 90vw); }
+    .caso-unificado__dato { grid-template-columns: 1fr; gap: 3px; }
+}
+

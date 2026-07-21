@@ -838,6 +838,8 @@ function guardarResultadosMision(estado, cred, contra, pregs, rango) {
     localStorage.setItem("evidenciasFinal",    contra.toString());
     localStorage.setItem("totalPreguntas",     pregs.toString());
     localStorage.setItem("preguntasCalificables", preguntasCalificables.toString());
+    localStorage.setItem("respuestasCorrectas", Object.keys(temasAbordados).length.toString());
+    localStorage.setItem("totalRespuestasDelCaso", Object.keys(casoActivo.temas_calificables || {}).length.toString());
     localStorage.setItem("rangoFinal",         rango);
     localStorage.setItem("tiempoTotalMs",      tiempoFinal.toString());
     localStorage.setItem("nombreSospechoso",   casoActivo.nombre);

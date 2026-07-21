@@ -2,6 +2,63 @@
     display: none !important;
 }
 
+/* La pantalla prioriza la explicación. Las gráficas se reservan para el PDF. */
+body:not(.sae-generando-pdf) .debriefing-container > .report-dashboard {
+    display: none !important;
+}
+
+.resumen-evaluacion {
+    margin: 0 0 18px;
+    padding: 20px 22px;
+    border: 1px solid var(--sae-line);
+    border-left: 4px solid var(--sae-forest-700);
+    border-radius: 8px;
+    background: var(--sae-white);
+    color: var(--sae-ink);
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.resumen-evaluacion h2 {
+    margin: 0 0 12px;
+    color: var(--sae-forest-800);
+    font-size: 1.05rem;
+}
+
+.resumen-evaluacion__lista {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+}
+
+.resumen-evaluacion__fila {
+    display: grid;
+    grid-template-columns: 145px minmax(0, 1fr);
+    gap: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--sae-line);
+}
+
+.resumen-evaluacion__fila:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.resumen-evaluacion__fila dt {
+    color: var(--sae-forest-700);
+    font-weight: 800;
+}
+
+.resumen-evaluacion__fila dd {
+    margin: 0;
+    color: var(--sae-muted);
+    line-height: 1.5;
+}
+
+.solo-pdf,
+.analisis-grafica-pdf {
+    display: none;
+}
+
 .clasificacion-entrevista {
     --clasificacion-color: var(--sae-forest-700);
     --clasificacion-suave: var(--sae-mint-100);
@@ -148,4 +205,104 @@
     .clasificacion-entrevista__cabecera { align-items: flex-start; flex-wrap: wrap; }
     .clasificacion-entrevista__icono { flex-basis: 50px; width: 50px; height: 50px; }
     .clasificacion-entrevista__nota { width: 100%; }
+    .resumen-evaluacion__fila { grid-template-columns: 1fr; gap: 3px; }
+}
+
+@media print {
+    @page { size: A4; margin: 12mm; }
+
+    body {
+        background: #fff !important;
+        color: #111 !important;
+    }
+
+    .theme-toggle,
+    .buttons,
+    .tiempo-total,
+    #modal-reporte {
+        display: none !important;
+    }
+
+    .debriefing-container {
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .debriefing-container > .report-dashboard {
+        display: block !important;
+        break-before: page;
+    }
+
+    .solo-pdf,
+    .analisis-grafica-pdf {
+        display: block !important;
+    }
+
+    .informe-ejecutivo-pdf {
+        margin: 18px 0;
+        padding: 18px;
+        border: 1px solid #b8cdbf;
+        border-left: 5px solid #23633b;
+        border-radius: 6px;
+        background: #f5fbf7;
+    }
+
+    .informe-ejecutivo-pdf h2,
+    .conclusion-ejecutiva-pdf h2 {
+        margin: 0 0 8px;
+        color: #143f27;
+        font-size: 18px;
+    }
+
+    .informe-ejecutivo-pdf p,
+    .conclusion-ejecutiva-pdf p {
+        margin: 6px 0;
+        color: #25352b;
+        font-size: 11px;
+        line-height: 1.55;
+    }
+
+    .analisis-grafica-pdf {
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-top: 1px solid #dcebe2;
+        background: #f8fbf9;
+        color: #26352c;
+        font-size: 10px;
+        line-height: 1.5;
+    }
+
+    .analisis-grafica-pdf h4 {
+        margin: 0 0 6px;
+        color: #143f27;
+        font-size: 11px;
+        text-transform: uppercase;
+    }
+
+    .analisis-grafica-pdf p {
+        margin: 4px 0;
+    }
+
+    .analisis-grafica-pdf strong {
+        color: #143f27;
+    }
+
+    .conclusion-ejecutiva-pdf {
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px solid #d8aa35;
+        border-radius: 6px;
+        background: #fffaf0;
+        break-inside: avoid;
+    }
+
+    .report-chart-card,
+    .stat-card,
+    .resumen-evaluacion,
+    .clasificacion-entrevista {
+        break-inside: avoid;
+    }
 }

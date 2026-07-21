@@ -1,0 +1,104 @@
+.chat-box#chat {
+    display: flex !important;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 420px;
+    padding: 22px !important;
+    overflow-y: auto;
+    background: var(--sae-mint-25) !important;
+}
+
+.chat-box#chat .msg.conversacion-mensaje {
+    display: flex;
+    align-items: flex-end;
+    width: min(78%, 720px);
+    margin: 0 !important;
+    gap: 10px;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.chat-box#chat .msg.conversacion-mensaje.user {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.chat-box#chat .msg.conversacion-mensaje.npc {
+    align-self: flex-start;
+}
+
+.chat-unificado__avatar {
+    flex: 0 0 42px;
+    width: 42px;
+    height: 42px;
+    border: 2px solid var(--sae-white);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--sae-forest-800);
+    color: #fff;
+    box-shadow: 0 5px 14px rgba(20, 63, 39, .18);
+}
+
+.chat-unificado__avatar--usuario {
+    display: grid;
+    place-items: center;
+    border-color: var(--sae-forest-700);
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.chat-unificado__contenido {
+    min-width: 0;
+}
+
+.chat-unificado__meta {
+    display: flex;
+    gap: 8px;
+    margin: 0 8px 5px;
+    color: var(--sae-muted);
+    font-size: 10px;
+}
+
+.conversacion-mensaje.user .chat-unificado__meta {
+    justify-content: flex-end;
+}
+
+.chat-unificado__burbuja {
+    padding: 12px 15px;
+    border: 1px solid var(--sae-line);
+    border-radius: 14px 14px 14px 4px;
+    background: var(--sae-white);
+    color: var(--sae-ink);
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    box-shadow: var(--sae-soft-shadow);
+}
+
+.conversacion-mensaje.user .chat-unificado__burbuja {
+    border-color: var(--sae-forest-700);
+    border-radius: 14px 14px 4px 14px;
+    background: var(--sae-forest-700);
+    color: #fff;
+}
+
+.chat-box#chat .msg.sistema:not(.conversacion-mensaje) {
+    align-self: center;
+    max-width: 88%;
+    margin: 3px auto !important;
+    padding: 7px 12px !important;
+    border: 1px solid var(--sae-line) !important;
+    border-radius: 999px !important;
+    background: var(--sae-mint-100) !important;
+    color: var(--sae-muted) !important;
+    font-size: 11px !important;
+    text-align: center;
+}
+
+@media (max-width: 650px) {
+    .chat-box#chat { min-height: 360px; padding: 14px !important; }
+    .chat-box#chat .msg.conversacion-mensaje { width: 94%; }
+    .chat-unificado__avatar { flex-basis: 36px; width: 36px; height: 36px; }
+}
+
