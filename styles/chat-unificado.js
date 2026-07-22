@@ -21,6 +21,8 @@
         mensaje.dataset.chatUnificado = "true";
         mensaje.classList.add("conversacion-mensaje");
         const esUsuario = mensaje.classList.contains("user");
+        const autorRepetido = mensaje.querySelector(":scope > strong");
+        autorRepetido?.remove();
         const contenidoAnterior = mensaje.innerHTML;
         const hora = new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
         const nombre = esUsuario ? "Investigador" : nombreSospechoso();
@@ -51,4 +53,3 @@
 
     window.addEventListener("DOMContentLoaded", iniciar);
 }());
-

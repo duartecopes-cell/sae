@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>SAE - Simulador Avanzado de Entrevistas</title>
-    <link rel="stylesheet" href="styles/platform.css">
+    <link rel="stylesheet" href="styles/platform.css?v=13">
     <script src="styles/theme-toggle.js" defer></script>
     <script src="styles/sae-alerts.js"></script>
     <link rel="icon" href="data:,">
@@ -21,46 +24,54 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="hero compact">
             <div class="hero-content">
-                <span class="eyebrow">Plataforma SAE</span>
-                <h1>Practica entrevistas con el nivel que necesitas.</h1>
-                <p>
-                    Selecciona una ruta de entrenamiento. Cada botón abre el nivel real del sistema:
-                    Básico, Avanzado o Experto.
-                </p>
+                <span class="eyebrow">Niveles funcionales</span>
+                <h1>Elige el nivel de entrevista.</h1>
+                <p>Selecciona el nivel de formación de acuerdo con las competencias que deseas desarrollar.</p>
             </div>
         </section>
 
-        <section class="levels" aria-label="Niveles disponibles">
-            <article class="level-card basic">
-                <div class="level-number">01</div>
-                <h2>Básico</h2>
-                <p>Ideal para empezar. Practica preguntas claras, ordenadas y fáciles de evaluar.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="frontend-basico/login_basico/login_basico.html">Ingresar a Básico</a>
-            </article>
+        <section class="levels-guide" aria-labelledby="levels-guide-title">
+            <div class="levels-guide__heading">
+                <span class="eyebrow">Competencias por nivel</span>
+                <h2 id="levels-guide-title">¿Qué comprende cada nivel?</h2>
+                <p>Conoce las capacidades que desarrollarás y los criterios que se tendrán en cuenta durante cada entrevista.</p>
+            </div>
 
-            <article class="level-card advanced">
-                <div class="level-number">02</div>
-                <h2>Avanzado</h2>
-                <p>Entrena mayor profundidad, seguimiento del caso y preguntas de contraste.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="frontend-avanzado/login_basico/login_basico.html">Ingresar a Avanzado</a>
-            </article>
+            <div class="levels-guide__grid">
+                <article class="level-explanation level-explanation--basic">
+                    <header class="level-explanation__header"><span>01</span><h3>Básico</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Comprende los principios fundamentales de la agilidad del recolector para establecer una comunicación efectiva con una fuente.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 10 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> saludo, respeto y comunicación</li><li><strong>Escritura:</strong> ortografía y redacción</li><li><strong>Objetivo:</strong> obtener información organizada</li>
+                    </ul>
+                    <a class="level-explanation__button" href="frontend-basico/login_basico/login_basico.html">Iniciar nivel Básico</a>
+                </article>
 
-            <article class="level-card expert">
-                <div class="level-number">03</div>
-                <h2>Experto</h2>
-                <p>Simulación más exigente para entrevistas complejas y análisis detallado.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="frontend-experto/login_experto/login_experto.html">Ingresar a Experto</a>
-            </article>
+                <article class="level-explanation level-explanation--advanced">
+                    <header class="level-explanation__header"><span>02</span><h3>Avanzado</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Mantiene una actitud respetuosa y profesional, logrando conducir la conversación, identificar inconsistencias y obtener información confiable sin afectar la relación con la fuente.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 15 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> estrategia y control</li><li><strong>Análisis:</strong> inconsistencias y contradicciones</li><li><strong>Objetivo:</strong> obtener información confiable</li>
+                    </ul>
+                    <a class="level-explanation__button" href="frontend-avanzado/login_basico/login_basico.html">Iniciar nivel Avanzado</a>
+                </article>
+
+                <article class="level-explanation level-explanation--expert">
+                    <header class="level-explanation__header"><span>03</span><h3>Experto</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Establece confianza, adapta su lenguaje y comportamiento al contexto y al perfil de la fuente para maximizar la calidad de la información obtenida.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 20 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> credibilidad y alto impacto</li><li><strong>Análisis:</strong> información precisa y verificable</li><li><strong>Objetivo:</strong> generar valor investigativo</li>
+                    </ul>
+                    <a class="level-explanation__button" href="frontend-experto/login_experto/login_experto.html">Iniciar nivel Experto</a>
+                </article>
+            </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p>SAE conserva las rutas originales del proyecto y abre directamente cada nivel funcional.</p>
+        <p><strong>SAE – Formación basada en competencias para la obtención y análisis de información de fuentes.</strong></p>
     </footer>
 </body>
 </html>

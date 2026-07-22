@@ -264,6 +264,115 @@ h1 {
     line-height: 1.68;
 }
 
+/* Tarjetas superiores según la estructura funcional solicitada. */
+.level-explanation {
+    display: grid;
+    grid-template-rows: auto minmax(210px, auto) 1fr auto;
+    gap: 14px;
+    padding: 18px;
+}
+
+.level-explanation__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 64px;
+    border: 1px solid color-mix(in srgb, var(--blue) 66%, var(--line));
+    border-radius: 9px;
+    background: var(--blue);
+    color: #fff;
+    text-align: center;
+}
+
+.level-explanation__header span {
+    display: grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 7px;
+    background: rgba(255,255,255,.18);
+    color: #fff !important;
+    font-size: .72rem;
+    font-weight: 900;
+}
+
+.level-explanation__header h3 {
+    margin: 0;
+    color: #fff !important;
+    font-size: 1.35rem;
+}
+
+.level-explanation__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--surface) 84%, var(--blue) 16%);
+    text-align: center;
+}
+
+.level-explanation__description > span {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--text);
+    font-size: .75rem;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.level-explanation__description p {
+    color: var(--text);
+    font-size: .9rem;
+    line-height: 1.58;
+}
+
+.level-explanation__criteria {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 17px 18px 17px 38px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--surface-soft);
+    color: var(--muted);
+    font-size: .84rem;
+    line-height: 1.4;
+}
+
+.level-explanation__criteria strong {
+    color: var(--text);
+}
+
+.level-explanation__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    border: 1px solid var(--blue);
+    border-radius: 999px;
+    background: var(--blue);
+    color: #fff !important;
+    font-size: .88rem;
+    font-weight: 900;
+    text-align: center;
+    box-shadow: 0 10px 24px rgba(24,119,242,.18);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.level-explanation__button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(24,119,242,.26);
+}
+
+@media (max-width: 1000px) {
+    .level-explanation { grid-template-rows: auto auto auto auto; }
+    .level-explanation__description { min-height: 0; }
+}
+
 @media (max-width: 960px) {
     .levels-guide__grid { grid-template-columns: 1fr; }
     .level-explanation { padding: 22px; }

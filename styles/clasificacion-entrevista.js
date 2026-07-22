@@ -15,6 +15,15 @@
         }
     }
 
+    function escaparHtml(valor) {
+        return String(valor ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function evaluarEntrevista() {
         const registros = leerPreguntas();
         const totalPreguntas = registros.length || numeroGuardado("totalPreguntas") || 0;
@@ -121,6 +130,33 @@
         const ruta = window.location.pathname.toLowerCase();
         const nivel = ruta.includes("experto") ? "Experto" : ruta.includes("avanzado") ? "Avanzado" : "Básico";
         const fecha = new Intl.DateTimeFormat("es-CO", { dateStyle: "long", timeStyle: "short" }).format(new Date());
+        const registrosInforme = leerPreguntas();
+        const trazabilidadInforme = registrosInforme.length
+            ? registrosInforme.map((registro, indice) => {
+                const detalleRegistro = registro.evaluacion || {};
+                const relacionada = Boolean(registro.correcta || registro.parcial || detalleRegistro.correcta || detalleRegistro.criterios?.relacionCaso || registro.tipo === "alta_valor" || registro.tipo === "exploratoria");
+                const estadoRegistro = registro.correcta || detalleRegistro.correcta
+                    ? "Hallazgo identificado"
+                    : registro.parcial ? "Aporte parcial" : relacionada ? "Pregunta contextual sin hallazgo concluyente" : "Pregunta sin conexión suficiente con el caso";
+                const recomendacionRegistro = detalleRegistro.recomendacion || registro.recomendacion || (relacionada
+                    ? "Profundizar y solicitar fechas, personas, lugares o soportes verificables."
+                    : "Reformular usando información concreta del expediente y un objetivo definido.");
+                return `<article class="trazabilidad-pdf__item">
+                    <div class="trazabilidad-pdf__numero">${indice + 1}</div>
+                    <div><h3>Pregunta del investigador</h3><p>${escaparHtml(registro.pregunta || "Sin texto registrado")}</p>
+                    <h3>Respuesta obtenida</h3><p>${escaparHtml(registro.respuesta || "No se registró una respuesta")}</p>
+                    <p class="trazabilidad-pdf__estado"><strong>Valoración:</strong> ${escaparHtml(estadoRegistro)}${registro.tema || registro.clave ? ` · <strong>Tema:</strong> ${escaparHtml(registro.tema || registro.clave)}` : ""}</p>
+                    <p><strong>Recomendación técnica:</strong> ${escaparHtml(recomendacionRegistro)}</p></div>
+                </article>`;
+            }).join("")
+            : `<p>No se encontraron preguntas almacenadas para construir la trazabilidad.</p>`;
+        const fundamentoNota = resultado.clase === "excelente"
+            ? "La calificación se sustenta en una cobertura amplia del expediente, formulación clara y obtención consistente de información útil."
+            : resultado.clase === "bueno"
+                ? "La calificación reconoce una comprensión importante del caso, aunque permanecen líneas investigativas y contradicciones sin cierre suficiente."
+                : resultado.clase === "regular"
+                    ? "La calificación refleja participación efectiva, pero evidencia limitaciones de redacción, precisión o cobertura que reducen el valor verificable de las respuestas."
+                    : "La calificación obedece a la ausencia de preguntas útiles, falta de contextualización o información insuficiente para demostrar conocimiento del caso.";
         const concepto = resultado.clase === "excelente"
             ? "La actuación evidencia dominio integral del expediente, formulación profesional y capacidad consistente para convertir respuestas en información verificable."
             : resultado.clase === "bueno"
@@ -170,6 +206,31 @@
                     <li><strong>Seguimiento:</strong> realizar una sesión complementaria sobre los temas pendientes y separar hechos confirmados, hipótesis e información por validar.</li>
                 </ol>
                 <p><strong>Concepto final:</strong> ${concepto} La información obtenida debe utilizarse de acuerdo con su nivel de corroboración y no como conclusión definitiva cuando existan vacíos o contradicciones pendientes.</p>
+            </section>`);
+        dashboard.insertAdjacentHTML("afterend", `
+            <section class="dictamen-evaluacion-pdf solo-pdf">
+                <h2>Dictamen técnico de la calificación</h2>
+                <p><strong>Calificación otorgada:</strong> ${resultado.nivel} — ${evaluacion.puntos}/50 puntos (${evaluacion.porcentaje} %).</p>
+                <p><strong>Fundamento:</strong> ${fundamentoNota}</p>
+                <table><thead><tr><th>Criterio</th><th>Resultado</th><th>Interpretación profesional</th></tr></thead><tbody>
+                    <tr><td>Conocimiento del caso</td><td>${evaluacion.correctas}/${evaluacion.totalCaso} temas</td><td>${cobertura} % de cobertura verificable.</td></tr>
+                    <tr><td>Contextualización</td><td>${evaluacion.contextuales}/${evaluacion.totalPreguntas}</td><td>Conexión con personas, lugares, fechas, documentos y hechos concretos.</td></tr>
+                    <tr><td>Ortografía y redacción</td><td>${evaluacion.bienRedactadas}/${evaluacion.totalPreguntas}</td><td>${redaccion} % de formulación clara y completa.</td></tr>
+                    <tr><td>Protocolo de apertura</td><td>${evaluacion.saludo ? "Cumplido" : "No cumplido"}</td><td>${evaluacion.saludo ? "Se estableció una apertura básica." : "No se identificó saludo en el registro."}</td></tr>
+                    <tr><td>Evidencias y contradicciones</td><td>${contradicciones}</td><td>Elementos disponibles para validación o seguimiento.</td></tr>
+                </tbody></table>
+                <h3>Decisión evaluativa</h3><p>${resultado.detalle} La nota prioriza la información concreta obtenida, su relación con el expediente y la calidad técnica de las preguntas.</p>
+            </section>
+            <section class="trazabilidad-pdf solo-pdf">
+                <h2>Anexo de trazabilidad de la entrevista</h2>
+                <p class="trazabilidad-pdf__introduccion">Secuencia completa utilizada para sustentar la evaluación. Cada registro presenta la pregunta, la respuesta, su valoración y la acción técnica recomendada.</p>
+                ${trazabilidadInforme}
+            </section>
+            <section class="cierre-informe-pdf solo-pdf">
+                <h2>Cierre y uso del informe</h2>
+                <p>Este documento constituye una evaluación formativa. Sus resultados orientan el fortalecimiento de competencias y deben contrastarse con el expediente, los soportes disponibles y la trazabilidad de la sesión.</p>
+                <div class="cierre-informe-pdf__firmas"><div><span>Evaluado</span><strong>${escaparHtml(investigador)}</strong></div><div><span>Emisión del sistema</span><strong>${escaparHtml(fecha)}</strong></div></div>
+                <p class="cierre-informe-pdf__codigo">SAE · Informe generado automáticamente · ${resultado.nivel} · ${evaluacion.puntos}/50</p>
             </section>`);
     }
 

@@ -289,7 +289,7 @@ function obtenerTerminosDelCaso() {
 }
 
 function buscarMejorCoincidencia(textoNormalizado) {
-    const genericas = ["si", "no", "ok", "aja", "bueno", "claro", "porque"];
+    const genericas = ["si", "no", "ok", "aja", "bueno", "claro", "porque", "que", "quien", "donde", "cuando", "como", "cual", "cuanto", "diga", "sabe", "paso", "hecho", "persona", "alguien"];
     let mejor = { item: null, index: -1, clave: "", peso: 0 };
 
     (casoActivo?.respuestas || []).forEach((item, index) => {
@@ -458,11 +458,13 @@ async function procesarPreguntaBasicaPedagogica() {
     if (!textoOriginal) return;
 
     const texto = normalizarTextoSAE(textoOriginal);
+    const respuestaAnterior = preguntasRealizadas.length ? preguntasRealizadas[preguntasRealizadas.length - 1].respuesta : "";
+    const esSeguimiento = Boolean(window.SAERespuestaContextual?.esPreguntaSeguimiento(textoOriginal));
     agregarChat("Usted", textoOriginal, "user");
     input.value = "";
 
     let respuestaFinal = null;
-    const coincidencia = buscarMejorCoincidencia(texto);
+    const coincidencia = esSeguimiento ? null : buscarMejorCoincidencia(texto);
     const esRepetida = coincidencia ? respuestasIntentadas.has(coincidencia.index) : false;
     const evaluacion = evaluarPreguntaPedagogica(textoOriginal, coincidencia, esRepetida);
 
@@ -479,9 +481,12 @@ async function procesarPreguntaBasicaPedagogica() {
             guardarLogro(coincidencia.clave);
         }
     } else {
-        agregarChat(casoActivo.personaje, "...", "npc pensando");
-        respuestaFinal = limpiarRespuestaSistema(await generarRespuestaOllama(textoOriginal));
+        respuestaFinal = limpiarRespuestaSistema(window.SAERespuestaContextual
+            ? window.SAERespuestaContextual.responder(textoOriginal, casoActivo, respuestaAnterior)
+            : await generarRespuestaOllama(textoOriginal));
     }
+
+    agregarChat(casoActivo.personaje, respuestaFinal, "npc");
 
     puntajeAcumulado += evaluacion.puntaje;
     criteriosHistorial.push(evaluacion);
@@ -497,6 +502,7 @@ async function procesarPreguntaBasicaPedagogica() {
     };
 
     preguntasRealizadas.push(registroPregunta);
+    window.SAERespuestaContextual?.registrarRespuesta(casoActivo, respuestaFinal, coincidencia?.item?.claves || []);
     mostrarRetroalimentacionPedagogica(evaluacion);
 
     if (window.SAEAuditoria) {
@@ -519,7 +525,7 @@ async function procesarPreguntaBasicaPedagogica() {
         });
     }
 
-    setTimeout(() => hablar(respuestaFinal), 400);
+    setTimeout(() => reproducirVozSAE(respuestaFinal), 400);
 }
 
 async function procesarPregunta() {
@@ -560,7 +566,9 @@ async function procesarPregunta() {
     // 2. SI NO HAY KEYWORD: generar con IA local
     if (!preguntaEncontrada) {
         agregarChat(casoActivo.personaje, "...", "npc pensando");
-        respuestaFinal = await generarRespuestaOllama(textoOriginal);
+        respuestaFinal = window.SAERespuestaContextual
+            ? window.SAERespuestaContextual.responder(textoOriginal, casoActivo)
+            : await generarRespuestaOllama(textoOriginal);
         preguntasRealizadas.push({
             pregunta: textoOriginal, respuesta: respuestaFinal, correcta: false
         });
@@ -663,16 +671,22 @@ function iniciarEscucha() {
 
 // 8. FUNCIONES DE APOYO
 function hablar(texto) {
-    const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(texto);
-    utterance.lang = 'es-ES';
-    
-    const avatar = document.getElementById('avatar');
-    utterance.onstart = () => avatar?.classList.add('hablando');
-    utterance.onend = () => avatar?.classList.remove('hablando');
-    
-    synth.speak(utterance);
     agregarChat(casoActivo.personaje, texto, "npc");
+    reproducirVozSAE(texto);
+}
+
+function reproducirVozSAE(texto) {
+    if (!window.speechSynthesis || typeof window.SpeechSynthesisUtterance !== "function") return;
+    try {
+        const utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'es-CO';
+        const avatar = document.getElementById('avatar');
+        utterance.onstart = () => avatar?.classList.add('hablando');
+        utterance.onend = () => avatar?.classList.remove('hablando');
+        window.speechSynthesis.speak(utterance);
+    } catch (error) {
+        console.warn("La voz no está disponible; la respuesta permanece visible en el chat.", error);
+    }
 }
 
 function agregarChat(autor, msg, clase = "sistema") {

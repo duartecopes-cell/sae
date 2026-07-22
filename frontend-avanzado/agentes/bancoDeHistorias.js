@@ -487,7 +487,7 @@ const bancoDeHistorias = {
             { claves: ["cuantos años tiene", "edad", "que edad tiene"], respuesta: "Tengo 34 años." },
             { claves: ["como esta la familia", "su familia", "todo bien en casa", "esposa", "mama"], respuesta: "Vivo con mi mamá, Doña Rosa, es diabética. Mi novia Camila es peluquera, no sabe nada de fraudes, por favor no la metan." },
             { claves: ["fin de semana", "descanso", "tiempo libre"], respuesta: "Juego videojuegos en línea o me pongo a programar en código Python. Soy muy introvertido." },
-            { claves: ["aficiones", "hobbies", "pasatiempos"], float: "Me gusta armar hardware, la electrónica, y los videojuegos tipo shooter." },
+            { claves: ["aficiones", "hobbies", "pasatiempos"], respuesta: "Me gusta armar hardware, la electrónica y los videojuegos tipo shooter." },
             { claves: ["le gusta su trabajo", "le gusta lo que hace"], respuesta: "Sí, me encantan las computadoras. Ojalá solo pudiera arreglarlas legalmente." },
             { claves: ["como empezo", "como inicio", "inicios"], respuesta: "Cacharreando equipos viejos en mi casa. Aprendí a soldar microchips viendo tutoriales." },
             { claves: ["mucho trabajo", "ocupada", "ocupado", "agenda"], respuesta: "El local no da plata, estaba al borde del desalojo por no pagar el arriendo. Vivo vaciado." },

@@ -191,6 +191,7 @@ function mostrarSaludoInicial() {
 
     const textoSaludo = casoActivo.saludo || "Estoy aquí, dígame qué quiere saber.";
     const abrev       = casoActivo.nombre.substring(0, 2).toUpperCase();
+    const hora        = new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
 
     const msg = document.createElement("div");
     msg.className = "msg-wrap suspect";
@@ -199,7 +200,7 @@ function mostrarSaludoInicial() {
             ? `<img class="msg-avatar msg-avatar--foto" src="${casoActivo.avatar}" alt="Foto de ${casoActivo.nombre}">`
             : `<div class="msg-avatar">${abrev}</div>`}
         <div class="msg-body">
-            <div class="msg-meta">${casoActivo.nombre}</div>
+            <div class="msg-meta">${casoActivo.nombre} · ${hora}</div>
             <div class="msg-bubble">${textoSaludo}</div>
         </div>
     `;
@@ -297,7 +298,10 @@ function obtenerRespuestaEvolutiva(tema) {
 /**
  * Respuesta cuando la pregunta no coincide con ningún tema ni exploratoria.
  */
-function respuestaGenerica() {
+function respuestaGenerica(pregunta = "") {
+    if (window.SAERespuestaContextual) {
+        return window.SAERespuestaContextual.responder(pregunta, casoActivo);
+    }
     const opciones = [
         "No sé de qué habla.",
         "Eso no tiene relevancia.",
@@ -358,7 +362,15 @@ function procesarPreguntaLibre() {
 
     // ← ÚNICO CAMBIO: el callback es async para poder usar await
     setTimeout(async () => {
-        const clasificacion = clasificarPregunta(pregunta);
+        const respuestaAnterior = historialPreguntas.length ? historialPreguntas[historialPreguntas.length - 1].respuesta : "";
+        const esSeguimiento = Boolean(window.SAERespuestaContextual?.esPreguntaSeguimiento(pregunta));
+        const clasificacion = esSeguimiento
+            ? {
+                tipo: "exploratoria",
+                respuesta: window.SAERespuestaContextual.responder(pregunta, casoActivo, respuestaAnterior),
+                coincidencias: 1
+            }
+            : clasificarPregunta(pregunta);
         console.log(`🎯 Tipo: ${clasificacion.tipo} | Coincidencias: ${clasificacion.coincidencias}`);
 
         let textoRespuesta  = "";
@@ -394,7 +406,7 @@ function procesarPreguntaLibre() {
         // ── GENÉRICA: sin coincidencia → IA genera la respuesta ─
         } else {
             console.log("🤖 GENÉRICA → consultando Ollama...");
-            textoRespuesta  = await generarRespuestaOllama(pregunta);
+            textoRespuesta  = respuestaGenerica(pregunta);
             impacto         = 0;           // ← puntaje intacto: sigue sin sumar ni restar
             esContradiccion = false;
             razonLog        = "Respuesta IA (sin impacto)";
@@ -434,6 +446,7 @@ function procesarPreguntaLibre() {
         };
 
         historialPreguntas.push(registroPregunta);
+        window.SAERespuestaContextual?.registrarRespuesta(casoActivo, textoRespuesta, clasificacion.tema?.palabras_clave || []);
 
         if (window.SAEAuditoria) {
             window.SAEAuditoria.registrarInteraccion({
@@ -520,11 +533,11 @@ Instrucciones:
 
         if (!res.ok) throw new Error(`Ollama HTTP ${res.status}`);
         const data = await res.json();
-        return data.response?.trim() || respuestaGenerica();
+        return data.response?.trim() || respuestaGenerica(pregunta);
 
     } catch (err) {
         console.warn("⚠️ Ollama no disponible, usando fallback:", err.message);
-        return respuestaGenerica();   // ← si Ollama está apagado, funciona igual que antes
+        return respuestaGenerica(pregunta);
     }
 }
 
@@ -537,13 +550,14 @@ function mostrarMensajeChat(tipo, texto) {
     if (!chat) return;
 
     const msg  = document.createElement("div");
+    const hora = new Date().toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
     msg.className = `msg-wrap ${tipo}`;
 
     if (tipo === "investigador") {
         msg.innerHTML = `
             <div class="msg-avatar">TÚ</div>
             <div class="msg-body">
-                <div class="msg-meta">INVESTIGADOR</div>
+                <div class="msg-meta">INVESTIGADOR · ${hora}</div>
                 <div class="msg-bubble">${texto}</div>
             </div>
         `;
@@ -554,7 +568,7 @@ function mostrarMensajeChat(tipo, texto) {
                 ? `<img class="msg-avatar msg-avatar--foto" src="${casoActivo.avatar}" alt="Foto de ${casoActivo.nombre}">`
                 : `<div class="msg-avatar">${abrev}</div>`}
             <div class="msg-body">
-                <div class="msg-meta">${casoActivo ? casoActivo.nombre : "Sospechoso"}</div>
+                <div class="msg-meta">${casoActivo ? casoActivo.nombre : "Sospechoso"} · ${hora}</div>
                 <div class="msg-bubble">${texto}</div>
             </div>
         `;

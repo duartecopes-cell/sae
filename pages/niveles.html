@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Niveles - SAE</title>
-    <link rel="stylesheet" href="../styles/platform.css">
+    <link rel="stylesheet" href="../styles/platform.css?v=13">
     <script src="../styles/theme-toggle.js" defer></script>
     <script src="../styles/sae-alerts.js"></script>
     <link rel="icon" href="data:,">
@@ -13,10 +13,7 @@
     <header class="site-header">
         <a class="brand" href="../index.html" aria-label="Inicio SAE">
             <span class="brand-mark">SAE</span>
-            <span>
-                <strong>Simulador Avanzado de Entrevistas</strong>
-                <small>Entrenamiento por niveles</small>
-            </span>
+            <span><strong>Simulador Avanzado de Entrevistas</strong><small>Entrenamiento por niveles</small></span>
         </a>
     </header>
 
@@ -37,50 +34,33 @@
             </div>
 
             <div class="levels-guide__grid">
-                <article class="level-explanation">
-                    <span class="level-explanation__number">01</span>
-                    <h3>Básico</h3>
-                    <p>Comprende los principios fundamentales de la agilidad del recolector para establecer una comunicación efectiva con una fuente humana. Se expresa con educación, respeto y cortesía, utilizando una comunicación asertiva, un lenguaje claro y una adecuada ortografía. Demuestra la capacidad de generar confianza y obtener información de manera organizada y profesional.</p>
+                <article class="level-explanation level-explanation--basic">
+                    <header class="level-explanation__header"><span>01</span><h3>Básico</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Comprende los principios fundamentales de la agilidad del recolector para establecer una comunicación efectiva con una fuente.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 10 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> saludo, respeto y comunicación</li><li><strong>Escritura:</strong> ortografía y redacción</li><li><strong>Objetivo:</strong> obtener información organizada</li>
+                    </ul>
+                    <a class="level-explanation__button" href="../frontend-basico/login_basico/login_basico.html">Iniciar nivel Básico</a>
                 </article>
 
-                <article class="level-explanation">
-                    <span class="level-explanation__number">02</span>
-                    <h3>Avanzado</h3>
-                    <p>Posee un mayor nivel de habilidad para interactuar con fuentes humanas que pueden mostrar resistencia, evasión o proporcionar información falsa o contradictoria. Mantiene una comunicación educada, respetuosa y profesional en todo momento, con excelente expresión oral y escrita, cuidando la ortografía y la claridad del mensaje. Conduce la conversación de manera estratégica, identifica inconsistencias y orienta la entrevista hacia la obtención de información confiable sin perder el control de la interacción.</p>
+                <article class="level-explanation level-explanation--advanced">
+                    <header class="level-explanation__header"><span>02</span><h3>Avanzado</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Mantiene una actitud respetuosa y profesional, emplea un lenguaje adecuado, con correcta ortografía y comunicación asertiva, logrando conducir la conversación, identificar inconsistencias y obtener información confiable sin afectar la relación con la fuente.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 15 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> estrategia y control</li><li><strong>Análisis:</strong> inconsistencias y contradicciones</li><li><strong>Objetivo:</strong> obtener información confiable</li>
+                    </ul>
+                    <a class="level-explanation__button" href="../frontend-avanzado/login_basico/login_basico.html">Iniciar nivel Avanzado</a>
                 </article>
 
-                <article class="level-explanation">
-                    <span class="level-explanation__number">03</span>
-                    <h3>Experto</h3>
-                    <p>Demuestra un dominio sobresaliente en la interacción con fuentes humanas de primera mano, especialmente aquellas que estuvieron presentes en el lugar donde ocurrió un hecho delictivo o que poseen conocimiento directo de los acontecimientos. Establece un alto nivel de confianza mediante una comunicación respetuosa, ética y profesional, utilizando un lenguaje preciso, una excelente dicción y una ortografía impecable en la documentación de la información obtenida. Conduce entrevistas de forma estratégica, evalúa la credibilidad de la fuente, detecta inconsistencias, identifica información relevante y obtiene datos precisos y útiles para el desarrollo del proceso investigativo.</p>
+                <article class="level-explanation level-explanation--expert">
+                    <header class="level-explanation__header"><span>03</span><h3>Experto</h3></header>
+                    <div class="level-explanation__description"><span>De qué se trata</span><p>Establece confianza, evalúa la credibilidad de la información, identifica inconsistencias, formula preguntas de alto impacto y obtiene información precisa, verificable y de alto valor para el proceso investigativo. Además, adapta su lenguaje y comportamiento al contexto y al perfil de la fuente para maximizar la calidad de la información obtenida.</p></div>
+                    <ul class="level-explanation__criteria">
+                        <li><strong>Tiempo:</strong> 20 minutos</li><li><strong>Casos:</strong> selección aleatoria</li><li><strong>Evaluación:</strong> credibilidad y alto impacto</li><li><strong>Análisis:</strong> información precisa y verificable</li><li><strong>Objetivo:</strong> generar valor investigativo</li>
+                    </ul>
+                    <a class="level-explanation__button" href="../frontend-experto/login_experto/login_experto.html">Iniciar nivel Experto</a>
                 </article>
             </div>
-        </section>
-
-        <section class="levels" aria-label="Niveles disponibles">
-            <article class="level-card basic">
-                <div class="level-number">01</div>
-                <h2>Básico</h2>
-                <p>Ruta inicial para practicar preguntas claras, respetuosas y relacionadas con el caso.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="../frontend-basico/login_basico/login_basico.html">Ingresar a Básico</a>
-            </article>
-
-            <article class="level-card advanced">
-                <div class="level-number">02</div>
-                <h2>Avanzado</h2>
-                <p>Ruta con mayor exigencia para profundizar, contrastar información y sostener la entrevista.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="../frontend-avanzado/login_basico/login_basico.html">Ingresar a Avanzado</a>
-            </article>
-
-            <article class="level-card expert">
-                <div class="level-number">03</div>
-                <h2>Experto</h2>
-                <p>Ruta avanzada para entrevistas complejas, contradicciones y evaluación detallada.</p>
-                <span class="level-status">Disponible</span>
-                <a class="level-button" href="../frontend-experto/login_experto/login_experto.html">Ingresar a Experto</a>
-            </article>
         </section>
     </main>
 
