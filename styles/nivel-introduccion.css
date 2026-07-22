@@ -1,5 +1,6 @@
 .nivel-introduccion {
-    margin: 0 0 18px;
+    width: min(100%, 620px);
+    margin: 0 auto 22px;
     padding: 15px 17px;
     border: 1px solid var(--sae-line);
     border-left: 4px solid var(--sae-forest-700);
@@ -8,9 +9,223 @@
     color: var(--sae-muted);
     font-size: 13px;
     line-height: 1.6;
+    text-align: left;
 }
 
 .nivel-introduccion strong {
     color: var(--sae-forest-800);
 }
 
+/* Mantiene el mismo orden visual en los tres accesos:
+   imagen, explicación del nivel y datos generales del sistema. */
+.login-page .header-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-page .header-section .logo-container {
+    order: 1;
+    margin-bottom: 12px;
+}
+
+.login-page .header-section .nivel-introduccion {
+    order: 2;
+}
+
+.login-page .header-section h1 {
+    order: 3;
+}
+
+.login-page .header-section .subtitle {
+    order: 4;
+}
+
+.login-page .header-section .badge-advanced {
+    order: 5;
+}
+
+.login-page .header-section .divider {
+    order: 6;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .nivel-introduccion {
+        padding: 13px 14px;
+        font-size: 12.5px;
+        line-height: 1.55;
+    }
+}
+
+/* Presentación profesional y compacta de los accesos. Esta hoja carga al final
+   para mantener idéntica la composición en Básico, Avanzado y Experto. */
+html:root body.login-page .login-wrapper {
+    width: min(1260px, calc(100vw - 40px)) !important;
+    min-height: auto !important;
+}
+
+html:root body.login-page .login-card {
+    grid-template-columns: minmax(340px, .9fr) minmax(460px, 1.1fr) !important;
+    grid-template-rows: auto 1fr auto auto !important;
+    column-gap: clamp(38px, 5vw, 70px) !important;
+    min-height: auto !important;
+    padding: clamp(28px, 3.5vw, 46px) !important;
+}
+
+html:root body.login-page .header-section {
+    min-height: 0 !important;
+    justify-content: flex-start !important;
+}
+
+/* Orden profesional: título, nivel, fotografía y explicación. */
+html:root body.login-page .header-section::after {
+    order: 5 !important;
+    min-height: 220px !important;
+    margin: 0 0 18px !important;
+    border-radius: 12px !important;
+    background:
+        linear-gradient(180deg, rgba(7, 23, 36, .04), rgba(7, 23, 36, .24)),
+        url("../assets/images/sae-interview-hero.png") center / cover no-repeat !important;
+    box-shadow: 0 14px 34px rgba(18, 54, 82, .14) !important;
+}
+
+html:root body.login-page .nivel-introduccion {
+    order: 6 !important;
+    width: 100% !important;
+    margin: 0 0 20px !important;
+    padding: 16px 18px !important;
+    border: 1px solid rgba(24, 119, 242, .18) !important;
+    border-left: 4px solid #1877f2 !important;
+    border-radius: 10px !important;
+    background: rgba(24, 119, 242, .055) !important;
+    font-size: .93rem !important;
+    line-height: 1.55 !important;
+}
+
+/* Se elimina el bloque aislado con la S; el nombre SAE funciona como marca. */
+html:root body.login-page .logo-container {
+    display: none !important;
+}
+
+html:root body.login-page .header-section h1 {
+    order: 1 !important;
+    margin: 0 0 4px !important;
+    font-size: clamp(2.6rem, 4vw, 3.5rem) !important;
+    line-height: 1 !important;
+}
+
+html:root body.login-page .subtitle {
+    order: 2 !important;
+    margin: 0 0 14px !important;
+    font-size: .9rem !important;
+    letter-spacing: .04em !important;
+}
+
+html:root body.login-page .badge-advanced {
+    order: 3 !important;
+    margin: 0 0 14px !important;
+    padding: 7px 14px !important;
+    font-size: .82rem !important;
+}
+
+html:root body.login-page .divider {
+    order: 4 !important;
+    width: 90px !important;
+    height: 3px !important;
+    margin: 0 0 18px !important;
+}
+
+html:root body.login-page .security-alert {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: min(620px, 100%) !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    padding: 15px 17px !important;
+    font-size: .9rem !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+}
+
+html:root[data-theme] body.login-page .login-card > .security-alert,
+html:root[data-theme="light"] body.login-page .login-card > .security-alert,
+html:root[data-theme="dark"] body.login-page .login-card > .security-alert {
+    grid-column: 1 / -1 !important;
+    grid-row: 3 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: min(620px, 100%) !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    text-align: center !important;
+}
+
+html:root[data-theme] body.login-page .login-card > .footer,
+html:root[data-theme="light"] body.login-page .login-card > .footer,
+html:root[data-theme="dark"] body.login-page .login-card > .footer {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    position: static !important;
+    width: 100% !important;
+    margin: 8px 0 0 !important;
+    padding-top: 18px !important;
+    border-top: 1px solid var(--sae-line) !important;
+    text-align: center !important;
+}
+
+html:root body.login-page .footer {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+}
+
+html:root body.login-page #loginForm {
+    gap: 20px !important;
+}
+
+html:root body.login-page .form-group input,
+html:root body.login-page .form-group select {
+    min-height: 56px !important;
+    padding: 0 18px !important;
+    font-size: 1rem !important;
+}
+
+html:root body.login-page .btn-primary,
+html:root body.login-page .btn-secondary {
+    min-height: 56px !important;
+    font-size: .94rem !important;
+}
+
+@media (max-width: 900px) {
+    html:root body.login-page .login-wrapper {
+        width: min(680px, calc(100vw - 24px)) !important;
+    }
+
+    html:root body.login-page .login-card {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+        gap: 24px !important;
+    }
+
+    html:root body.login-page .header-section,
+    html:root body.login-page #loginForm,
+    html:root body.login-page .security-alert,
+    html:root body.login-page .footer {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
+
+    html:root body.login-page .header-section::after {
+        min-height: 190px !important;
+    }
+}
+
+@media (max-width: 520px) {
+    html:root body.login-page { padding: 10px !important; }
+    html:root body.login-page .login-wrapper { width: 100% !important; }
+    html:root body.login-page .login-card { padding: 18px !important; }
+    html:root body.login-page .header-section::after { min-height: 155px !important; }
+    html:root body.login-page .action-buttons { grid-template-columns: 1fr !important; }
+}

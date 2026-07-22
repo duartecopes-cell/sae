@@ -194,6 +194,174 @@ h1 {
     backdrop-filter: blur(16px);
 }
 
+/* Guía de competencias ubicada antes de los accesos a los niveles. */
+.levels-guide {
+    width: min(1180px, calc(100% - clamp(32px, 8vw, 120px)));
+    margin: 0 auto 34px;
+}
+
+.levels-guide__heading {
+    max-width: 760px;
+    margin-bottom: 22px;
+}
+
+.levels-guide__heading h2 {
+    margin: 13px 0 8px;
+    color: var(--text);
+    font-size: clamp(1.8rem, 3vw, 2.55rem);
+    line-height: 1.12;
+}
+
+.levels-guide__heading > p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.levels-guide__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    align-items: stretch;
+}
+
+.level-explanation {
+    position: relative;
+    padding: 26px 24px 24px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: 12px;
+    background: var(--surface);
+    box-shadow: 0 14px 34px rgba(25, 75, 125, .08);
+}
+
+.level-explanation__number {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    margin-bottom: 18px;
+    place-items: center;
+    border-radius: 9px;
+    background: color-mix(in srgb, var(--blue) 10%, var(--surface));
+    color: var(--blue);
+    font-size: .8rem;
+    font-weight: 900;
+}
+
+.level-explanation h3 {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+.level-explanation p {
+    margin: 0;
+    color: var(--muted);
+    font-size: .91rem;
+    line-height: 1.68;
+}
+
+@media (max-width: 960px) {
+    .levels-guide__grid { grid-template-columns: 1fr; }
+    .level-explanation { padding: 22px; }
+}
+
+@media (max-width: 560px) {
+    .levels-guide { width: min(100% - 24px, 1180px); margin-bottom: 24px; }
+    .levels-guide__heading { margin-bottom: 16px; }
+    .level-explanation { padding: 19px 18px; }
+}
+
+/* Composición uniforme de la portada: todas las secciones comparten eje,
+   ancho y separación; las tarjetas de acceso ya no se superponen con la guía. */
+.site-header .brand,
+.hero-content,
+.levels-guide,
+.levels {
+    width: min(1180px, calc(100% - clamp(32px, 8vw, 120px)));
+    max-width: 1180px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.hero.compact {
+    min-height: 410px;
+    padding-top: 128px;
+    padding-bottom: 92px;
+}
+
+.levels-guide {
+    position: relative;
+    z-index: 2;
+    margin-top: -38px;
+    margin-bottom: 34px;
+}
+
+.levels-guide__grid,
+.levels {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.level-explanation,
+.level-card {
+    height: 100%;
+    border-radius: 12px;
+}
+
+.levels {
+    margin-top: 0;
+    margin-bottom: 64px;
+}
+
+.level-card {
+    min-height: 318px;
+}
+
+@media (max-width: 1000px) {
+    .site-header .brand,
+    .hero-content,
+    .levels-guide,
+    .levels {
+        width: min(100% - 40px, 760px);
+    }
+
+    .levels-guide__grid,
+    .levels {
+        grid-template-columns: 1fr;
+    }
+
+    .hero.compact {
+        min-height: 390px;
+    }
+
+    .level-explanation,
+    .level-card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .site-header .brand,
+    .hero-content,
+    .levels-guide,
+    .levels {
+        width: calc(100% - 24px);
+    }
+
+    .hero.compact {
+        min-height: 350px;
+        padding: 70px 12px 64px;
+    }
+
+    .levels-guide {
+        margin-top: -22px;
+    }
+}
+
 .level-card.basic {
     --accent: var(--green);
 }
@@ -724,6 +892,19 @@ body *::after {
 :root[data-theme="dark"] .theme-toggle[data-theme-state="dark"] {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Corrección final de respuesta adaptable para la portada de niveles. */
+.levels { margin-top: 0 !important; }
+
+@media (max-width: 1000px) {
+    .levels-guide__grid,
+    .levels { grid-template-columns: 1fr !important; }
+    .levels { margin-top: 0 !important; }
+}
+
+@media (max-width: 560px) {
+    .levels { margin-block: 0 32px !important; }
 }
 
 /* Portada final: claro estilo Facebook y oscuro de sistema SAE. */
