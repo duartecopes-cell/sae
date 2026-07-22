@@ -105,7 +105,76 @@
         };
     }
 
+    function agregarInformeEstrategico(evaluacion, resultado) {
+        const dashboard = document.querySelector(".report-dashboard");
+        if (!dashboard || document.querySelector(".portada-informe-pdf")) return;
+
+        const cobertura = Math.round(evaluacion.cobertura * 100);
+        const redaccion = Math.round(evaluacion.calidadRedaccion * 100);
+        const contradicciones = numeroGuardado("evidenciasFinal") || 0;
+        const eficiencia = evaluacion.totalPreguntas
+            ? Math.min(100, Math.round((evaluacion.correctas / evaluacion.totalPreguntas) * 100))
+            : 0;
+        const brecha = Math.max(0, 100 - cobertura);
+        const investigador = localStorage.getItem("nombreUsuario") || localStorage.getItem("nombreInvestigador") || "No registrado";
+        const caso = localStorage.getItem("nombreSospechoso") || localStorage.getItem("casoSeleccionado") || "Caso evaluado";
+        const ruta = window.location.pathname.toLowerCase();
+        const nivel = ruta.includes("experto") ? "Experto" : ruta.includes("avanzado") ? "Avanzado" : "Básico";
+        const fecha = new Intl.DateTimeFormat("es-CO", { dateStyle: "long", timeStyle: "short" }).format(new Date());
+        const concepto = resultado.clase === "excelente"
+            ? "La actuación evidencia dominio integral del expediente, formulación profesional y capacidad consistente para convertir respuestas en información verificable."
+            : resultado.clase === "bueno"
+                ? "La actuación presenta una base investigativa sólida, aunque conserva líneas relevantes sin cierre y requiere mayor profundización antes de emitir conclusiones definitivas."
+                : resultado.clase === "regular"
+                    ? "La actuación permitió obtener información parcial, pero las brechas de redacción, precisión o cobertura limitan su utilidad estratégica y exigen una sesión complementaria."
+                    : "La sesión no produjo elementos suficientes para sustentar conocimiento del caso; se requiere reiniciar la entrevista con objetivos, contexto y preguntas claramente definidos.";
+
+        dashboard.insertAdjacentHTML("beforebegin", `
+            <section class="portada-informe-pdf solo-pdf">
+                <div class="portada-informe-pdf__marca">SAE</div>
+                <p class="portada-informe-pdf__clasificacion">INFORME EJECUTIVO DE EVALUACIÓN</p>
+                <h1>Análisis estratégico de entrevista</h1>
+                <p class="portada-informe-pdf__bajada">Evaluación de competencias para la obtención, contrastación y análisis de información de fuentes humanas.</p>
+                <dl class="portada-informe-pdf__datos">
+                    <div><dt>Investigador evaluado</dt><dd>${investigador}</dd></div>
+                    <div><dt>Nivel</dt><dd>${nivel}</dd></div>
+                    <div><dt>Caso o fuente</dt><dd>${caso}</dd></div>
+                    <div><dt>Fecha de emisión</dt><dd>${fecha}</dd></div>
+                    <div><dt>Resultado</dt><dd>${resultado.nivel} · ${evaluacion.puntos}/50</dd></div>
+                </dl>
+                <p class="portada-informe-pdf__nota">Documento generado por el Sistema Avanzado de Entrevistas. Debe leerse junto con las preguntas, respuestas y evidencias registradas durante la sesión.</p>
+            </section>
+            <section class="diagnostico-estrategico-pdf solo-pdf">
+                <h2>Resumen y diagnóstico estratégico</h2>
+                <p class="diagnostico-estrategico-pdf__concepto"><strong>Concepto ejecutivo:</strong> ${concepto}</p>
+                <div class="informe-kpis">
+                    <div><strong>${evaluacion.puntos}/50</strong><span>Resultado global</span></div>
+                    <div><strong>${cobertura} %</strong><span>Cobertura del caso</span></div>
+                    <div><strong>${redaccion} %</strong><span>Calidad de redacción</span></div>
+                    <div><strong>${eficiencia} %</strong><span>Eficiencia investigativa</span></div>
+                </div>
+                <h3>Alcance y metodología</h3>
+                <p>El análisis integra ${evaluacion.totalPreguntas} preguntas; ${evaluacion.contextuales} estuvieron relacionadas con el expediente y ${evaluacion.bienRedactadas} cumplieron criterios básicos de formulación. La cobertura compara ${evaluacion.correctas} hallazgos únicos contra ${evaluacion.totalCaso} temas evaluables, evitando premiar preguntas repetidas.</p>
+                <h3>Hallazgo estratégico principal</h3>
+                <p>La entrevista alcanzó una cobertura del ${cobertura} % y dejó una brecha del ${brecha} %. Se registraron ${contradicciones} evidencias o inconsistencias para contraste. Por tanto, el volumen de actividad debe interpretarse según la pertinencia, profundidad y posibilidad real de verificar cada respuesta.</p>
+                <div class="criterio-lectura-pdf"><strong>Cómo leer las gráficas:</strong> cada visualización presenta una dimensión distinta. Debajo de cada gráfica se incluye su lectura, la implicación estratégica del comportamiento observado y la acción recomendada. Ningún indicador aislado sustituye la revisión de la conversación.</div>
+            </section>`);
+
+        dashboard.insertAdjacentHTML("afterend", `
+            <section class="plan-estrategico-pdf solo-pdf">
+                <h2>Plan de mejora priorizado</h2>
+                <ol>
+                    <li><strong>Preparación:</strong> convertir la brecha del ${brecha} % en objetivos verificables y ordenar la entrevista por actores, cronología, lugares, evidencias y contradicciones.</li>
+                    <li><strong>Ejecución:</strong> formular una idea por pregunta y profundizar con quién, cuándo, dónde, cómo y qué soporte permite corroborar la respuesta.</li>
+                    <li><strong>Control:</strong> cerrar cada bloque con una síntesis, registrar inconsistencias y no avanzar mientras existan respuestas ambiguas o sin fuente de verificación.</li>
+                    <li><strong>Seguimiento:</strong> realizar una sesión complementaria sobre los temas pendientes y separar hechos confirmados, hipótesis e información por validar.</li>
+                </ol>
+                <p><strong>Concepto final:</strong> ${concepto} La información obtenida debe utilizarse de acuerdo con su nivel de corroboración y no como conclusión definitiva cuando existan vacíos o contradicciones pendientes.</p>
+            </section>`);
+    }
+
     function agregarAnalisisGraficas(evaluacion, resultado) {
+        agregarInformeEstrategico(evaluacion, resultado);
         const contradicciones = numeroGuardado("evidenciasFinal") || 0;
         const cobertura = Math.round(evaluacion.cobertura * 100);
         const redaccion = Math.round(evaluacion.calidadRedaccion * 100);

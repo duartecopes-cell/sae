@@ -302,6 +302,181 @@ body:not(.sae-generando-pdf) .debriefing-container > .report-dashboard {
         display: block !important;
     }
 
+    .portada-informe-pdf {
+        position: relative;
+        display: flex !important;
+        min-height: 255mm;
+        flex-direction: column;
+        justify-content: center;
+        padding: 22mm 18mm;
+        border: 1px solid #b9cdc0;
+        border-top: 12px solid #174d30;
+        background: linear-gradient(145deg, #f4faf6 0%, #fff 58%, #e9f4ec 100%);
+        break-after: page;
+    }
+
+    .portada-informe-pdf__marca {
+        display: grid;
+        width: 24mm;
+        height: 24mm;
+        margin-bottom: 16mm;
+        place-items: center;
+        border-radius: 4px;
+        background: #174d30;
+        color: #fff !important;
+        font-size: 22px;
+        font-weight: 900;
+    }
+
+    .portada-informe-pdf__clasificacion {
+        margin: 0 0 5mm;
+        color: #326047 !important;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+    }
+
+    .portada-informe-pdf h1 {
+        max-width: 150mm;
+        margin: 0 0 6mm;
+        color: #102f1f !important;
+        font-size: 32px;
+        line-height: 1.08;
+        text-shadow: none !important;
+    }
+
+    .portada-informe-pdf__bajada {
+        max-width: 145mm;
+        margin: 0 0 16mm;
+        color: #486052 !important;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .portada-informe-pdf__datos {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        margin: 0;
+        border-top: 1px solid #b9cdc0;
+    }
+
+    .portada-informe-pdf__datos div {
+        padding: 4mm 3mm;
+        border-bottom: 1px solid #d7e4db;
+    }
+
+    .portada-informe-pdf__datos dt {
+        color: #587064 !important;
+        font-size: 8px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .portada-informe-pdf__datos dd {
+        margin: 1mm 0 0;
+        color: #17281f !important;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    .portada-informe-pdf__nota {
+        margin: auto 0 0;
+        padding-top: 10mm;
+        color: #63756b !important;
+        font-size: 8.5px;
+        line-height: 1.5;
+    }
+
+    .diagnostico-estrategico-pdf,
+    .plan-estrategico-pdf {
+        margin: 0 0 16px;
+        padding: 18px;
+        border: 1px solid #b8cdbf;
+        border-left: 5px solid #23633b;
+        border-radius: 6px;
+        background: #f7fbf8;
+        break-inside: avoid;
+    }
+
+    .diagnostico-estrategico-pdf h2,
+    .plan-estrategico-pdf h2 {
+        margin: 0 0 9px;
+        color: #143f27 !important;
+        font-size: 18px;
+    }
+
+    .diagnostico-estrategico-pdf h3 {
+        margin: 12px 0 5px;
+        color: #204d31 !important;
+        font-size: 12px;
+    }
+
+    .diagnostico-estrategico-pdf p,
+    .plan-estrategico-pdf p,
+    .plan-estrategico-pdf li {
+        color: #25352b !important;
+        font-size: 10.5px;
+        line-height: 1.55;
+    }
+
+    .informe-kpis {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+        margin: 12px 0;
+    }
+
+    .informe-kpis div {
+        padding: 10px 7px;
+        border: 1px solid #c8d8cd;
+        border-radius: 4px;
+        background: #fff;
+        text-align: center;
+    }
+
+    .informe-kpis strong,
+    .informe-kpis span {
+        display: block;
+    }
+
+    .informe-kpis strong {
+        color: #174d30 !important;
+        font-size: 17px;
+    }
+
+    .informe-kpis span {
+        margin-top: 3px;
+        color: #64756b !important;
+        font-size: 7.5px;
+        text-transform: uppercase;
+    }
+
+    .criterio-lectura-pdf {
+        margin-top: 12px;
+        padding: 10px 12px;
+        border-left: 4px solid #c49424;
+        background: #fff9e9;
+        color: #4c4123 !important;
+        font-size: 9.5px;
+        line-height: 1.5;
+    }
+
+    .plan-estrategico-pdf {
+        margin-top: 18px;
+        border-left-color: #b08017;
+        background: #fffaf0;
+    }
+
+    .plan-estrategico-pdf ol {
+        margin: 8px 0 12px;
+        padding-left: 20px;
+    }
+
+    .plan-estrategico-pdf li {
+        margin: 0 0 7px;
+    }
+
     .informe-ejecutivo-pdf {
         margin: 18px 0;
         padding: 18px;
